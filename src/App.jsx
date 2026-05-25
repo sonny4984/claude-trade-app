@@ -341,10 +341,10 @@ function AppInner(){
       const fmt = (v, decimals=2) => v==null ? "—" : Number(v).toLocaleString("ko-KR", {minimumFractionDigits:0, maximumFractionDigits:decimals});
       const fmtChg = (v) => v==null ? "" : (v>=0?"+":"") + Number(v).toFixed(2) + "%";
 
-      const kospiUp = (m.kospi?.changePct || 0) >= 0;
+      const usUp = (m.sp500?.changePct || 0) >= 0;
       const krwDown = (m.usdkrw?.changePct || 0) <= 0;
-      const headline = m.kospi?.price 
-        ? `KOSPI ${fmt(m.kospi?.price,2)} ${kospiUp?"상승":"하락"} ${fmtChg(m.kospi?.changePct)} · 원달러 ${fmt(m.usdkrw?.price)}원`
+      const headline = m.sp500?.price
+        ? `미국장 S&P ${fmtChg(m.sp500?.changePct)} · 나스닥 ${fmtChg(m.nasdaq?.changePct)} · 원달러 ${fmt(m.usdkrw?.price)}원`
         : "시세 가져오는 중...";
 
       // 종목 시세 → livePrice 자동 업데이트
@@ -378,12 +378,12 @@ function AppInner(){
         gold: m.gold?.price ? `금 $${fmt(m.gold?.price)} ${fmtChg(m.gold?.changePct)}` : "—",
         btc: m.btc?.price ? `BTC $${fmt(m.btc?.price, 0)} ${fmtChg(m.btc?.changePct)}` : "—",
         headline,
-        summary: m.kospi?.price 
-          ? `${kospiUp?"상승":"하락"} 흐름. NASDAQ ${fmtChg(m.nasdaq?.changePct)}, VIX ${fmt(m.vix?.price,1)}, BTC $${fmt(m.btc?.price,0)}.`
+        summary: m.sp500?.price
+          ? `미국장 ${usUp?"상승":"하락"} 흐름 (S&P ${fmtChg(m.sp500?.changePct)}, 나스닥 ${fmtChg(m.nasdaq?.changePct)}). 원달러 ${fmt(m.usdkrw?.price)}원, 금 $${fmt(m.gold?.price)}.`
           : "시세 데이터를 가져오지 못했어. 잠시 후 다시 시도해줘.",
         topStock,
-        risk: m.vix?.price > 25 ? `VIX ${fmt(m.vix?.price,1)} 고변동성` : `VIX ${fmt(m.vix?.price,1)} 안정 구간`,
-        method: "real_yahoo",
+        risk: m.vix?.price ? (m.vix.price > 25 ? `VIX ${fmt(m.vix?.price,1)} 고변동성` : `VIX ${fmt(m.vix?.price,1)} 안정 구간`) : "VIX 데이터 없음 (무료 플랜)",
+        method: "twelvedata",
         fetchedAt: Date.now(),
       };
 
