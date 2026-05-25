@@ -310,6 +310,12 @@ function AppInner(){
   const [showBrief,setShowBrief] = useState(false);
   const [openSig,setOpenSig] = useState(null);
   const [scoreOpen,setScoreOpen] = useState(null);
+  const [scanRankOpen,setScanRankOpen] = useState(null);
+  const [liveScan,setLiveScan] = useState(()=>{
+    try { const v=localStorage.getItem("ct_live_scan"); return v?JSON.parse(v):null; }
+    catch { return null; }
+  });
+  const [scanLoading,setScanLoading] = useState(false);
   const [openNews,setOpenNews] = useState(null);
   const [time,setTime] = useState(new Date("2026-04-23T08:35:00"));
 
@@ -555,6 +561,27 @@ function AppInner(){
     setTimeout(()=>setToast(null), 3500);
   };
 
+  // 🔍 종목 스캐너 — 한국 주요 종목 일괄 스캔
+  const fetchScan = async () => {
+    setScanLoading(true);
+    try {
+      const r = await fetch(`${BACKEND_URL}/api/scan`).then(x=>x.json());
+      if(r?.success && r.quotes?.length){
+        const obj = { quotes: r.quotes, fetchedAt: Date.now() };
+        setLiveScan(obj);
+        try { localStorage.setItem("ct_live_scan", JSON.stringify(obj)); } catch {}
+        setToast(`✅ ${r.count}개 종목 스캔 완료`);
+      } else {
+        setToast(`⚠ 스캔 실패: ${(r?.error||"데이터 없음").slice(0,40)}`);
+      }
+    } catch(e){
+      setToast(`⚠ 스캔 에러: ${e.message?.slice(0,40)}`);
+    } finally {
+      setScanLoading(false);
+      setTimeout(()=>setToast(null), 3000);
+    }
+  };
+
   // 사용자 입력 가격 적용
   const applyLivePrice = (ticker, price) => {
     const updated = {...livePrice, [ticker]:{price:parseFloat(price), at:Date.now()}};
@@ -585,7 +612,7 @@ function AppInner(){
 
   const TABS = [
     {id:"today",l:"🌅 오늘"},
-    {id:"signals",l:"🎯 매매타이밍"},
+    {id:"signals",l:"🔍 종목 스캐너"},
     {id:"stoplaps",l:"📊 스토랩스"},
     {id:"news",l:"📰 뉴스 TOP10"},
     {id:"watch",l:"⭐ 종목"},
@@ -989,110 +1016,69 @@ function AppInner(){
           </>
         )}
 
-        {tab==="signals" && (
-          <>
-            <div style={{background:`linear-gradient(135deg,${C.coral},${C.coralDark})`,borderRadius:14,padding:18,marginBottom:14,color:"#fff"}}>
-              <div style={{fontSize:11,opacity:.85,marginBottom:2}}>2026.04.23 · 컨센서스 + 기술적 분석</div>
-              <div style={{fontSize:18,fontWeight:800,letterSpacing:"-0.5px"}}>🎯 오늘의 매매 타이밍 5선</div>
-              <div style={{fontSize:12,opacity:.95,lineHeight:1.6,marginTop:8}}>다수 증권사 컨센 + 기술적 지지/저항선 기반 <b>참고 가이드</b>야. 진입가·손절·익절 분할 명시.</div>
-            </div>
-
-            <div style={{background:`${C.amber}15`,border:`1px solid ${C.amber}40`,borderRadius:12,padding:"12px 14px",marginBottom:14,display:"flex",gap:10}}>
-              <span style={{fontSize:18}}>⚠</span>
-              <div style={{fontSize:12,lineHeight:1.6}}><b style={{color:C.amber}}>이건 추천이 아니야 — 참고 가이드야.</b> 시장은 본질적으로 불확실해. 손절선 꼭 지켜.</div>
-            </div>
-
-            {SIGNALS.map((s,idx)=>{
-              const col = s.actCol==="green"?C.green:s.actCol==="amber"?C.amber:C.red;
-              const isOpen = openSig===idx;
-              return (
-                <div key={idx} style={{background:C.surface,border:`1px solid ${isOpen?col+"60":C.border}`,borderRadius:12,marginBottom:12,overflow:"hidden"}}>
-                  <div style={{padding:"14px 16px",cursor:"pointer",background:C.surfaceLight}} onClick={()=>setOpenSig(isOpen?null:idx)}>
-                    <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
-                      <div style={{background:col,color:"#fff",fontSize:13,fontWeight:800,width:30,height:30,borderRadius:15,display:"flex",alignItems:"center",justifyContent:"center"}}>{idx+1}</div>
-                      <div style={{flex:1,minWidth:0}}>
-                        <div style={{fontSize:14,fontWeight:800,letterSpacing:"-0.3px"}}>{s.t} <span style={{fontFamily:MO,fontSize:11,color:C.inkSubtle,fontWeight:500,marginLeft:4}}>{s.code}</span></div>
-                        <div style={{fontFamily:MO,fontSize:11,color:C.inkMute,marginTop:1}}>현재가 ₩{FMT(s.cur)}</div>
-                      </div>
-                      <div style={{textAlign:"right"}}>
-                        <div style={{background:col,color:"#fff",fontSize:11,fontWeight:700,padding:"3px 9px",borderRadius:12}}>{s.action}</div>
-                        <div style={{fontFamily:MO,fontSize:10,color:C.inkSubtle,marginTop:3}}>신뢰도 {s.conf}%</div>
-                      </div>
-                    </div>
-                    <div style={{display:"flex",gap:8,padding:"8px 10px",background:C.bg,borderRadius:8,border:`1px solid ${C.border}`}}>
-                      <span style={{fontSize:14}}>⏰</span>
-                      <div style={{fontSize:11,lineHeight:1.5}}>{s.timing}</div>
-                    </div>
-                    <div style={{textAlign:"center",fontSize:10,color:C.inkSubtle,marginTop:8}}>{isOpen?"▲ 접기":"▼ 매수/매도 가격 자세히"}</div>
-                  </div>
-
-                  {isOpen && (
-                    <div style={{padding:16,background:C.surface}}>
-                      <div style={{marginBottom:14}}>
-                        <div style={{fontSize:12,fontWeight:700,color:C.green,marginBottom:8}}>📥 매수 진입 (분할)</div>
-                        {s.entry.map((e,i)=>(
-                          <div key={i} style={{display:"flex",gap:10,padding:"10px 12px",background:`${C.green}10`,border:`1px solid ${C.green}30`,borderRadius:8,marginBottom:5}}>
-                            <span style={{minWidth:90,fontSize:11,fontWeight:700}}>{e.l}</span>
-                            <span style={{minWidth:100,fontFamily:MO,fontSize:13,fontWeight:700,color:C.green}}>₩{e.p}</span>
-                            <span style={{flex:1,fontSize:10.5,color:C.inkMute,lineHeight:1.5}}>{e.r}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div style={{marginBottom:14}}>
-                        <div style={{fontSize:12,fontWeight:700,color:C.coral,marginBottom:8}}>📤 익절 매도 (분할)</div>
-                        {s.exit.map((e,i)=>(
-                          <div key={i} style={{display:"flex",gap:10,padding:"10px 12px",background:`${C.coral}10`,border:`1px solid ${C.coral}30`,borderRadius:8,marginBottom:5}}>
-                            <span style={{minWidth:90,fontSize:11,fontWeight:700}}>{e.l}</span>
-                            <span style={{minWidth:100,fontFamily:MO,fontSize:13,fontWeight:700,color:C.coral}}>₩{e.p}</span>
-                            <span style={{flex:1,fontSize:10.5,color:C.inkMute,lineHeight:1.5}}>{e.r}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:14}}>
-                        <div style={{padding:"10px 12px",background:`${C.red}10`,border:`1px solid ${C.red}30`,borderRadius:8}}>
-                          <div style={{fontSize:10,color:C.red,fontWeight:700,marginBottom:4}}>🛑 손절선</div>
-                          <div style={{fontFamily:MO,fontSize:13,fontWeight:700,color:C.red}}>{s.stop}</div>
-                        </div>
-                        <div style={{padding:"10px 12px",background:`${C.blue}10`,border:`1px solid ${C.blue}30`,borderRadius:8}}>
-                          <div style={{fontSize:10,color:C.blue,fontWeight:700,marginBottom:4}}>⏳ 보유</div>
-                          <div style={{fontSize:12,fontWeight:700}}>{s.hold}</div>
-                        </div>
-                      </div>
-
-                      <div style={{padding:12,background:`${C.green}08`,borderLeft:`3px solid ${C.green}`,borderRadius:8,marginBottom:8}}>
-                        <div style={{fontSize:11,fontWeight:700,color:C.green,marginBottom:4}}>✅ Bull Case</div>
-                        <div style={{fontSize:11,lineHeight:1.6}}>{s.bull}</div>
-                      </div>
-                      <div style={{padding:12,background:`${C.red}08`,borderLeft:`3px solid ${C.red}`,borderRadius:8,marginBottom:14}}>
-                        <div style={{fontSize:11,fontWeight:700,color:C.red,marginBottom:4}}>⚠ Bear Case</div>
-                        <div style={{fontSize:11,lineHeight:1.6}}>{s.bear}</div>
-                      </div>
-
-                      <a href={naverUrl(s.code)} target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",display:"block"}}>
-                        <button style={{width:"100%",background:"#03C75A",border:"none",color:"#fff",fontFamily:KR,fontSize:13,fontWeight:700,padding:13,borderRadius:10,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
-                          <span style={{width:20,height:20,borderRadius:10,background:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:900,color:"#03C75A"}}>N</span>
-                          네이버 금융에서 실시간 가격 →
-                        </button>
-                      </a>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-
-            <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:12,padding:"14px 16px",marginTop:6}}>
-              <div style={{fontSize:12,fontWeight:700,color:C.coral,marginBottom:8}}>💭 동하야 꼭 기억해</div>
-              <div style={{fontSize:11.5,lineHeight:1.7}}>
-                ① <b>분할 매수가 핵심</b> — 몰빵 금지<br/>
-                ② <b>손절선 무조건 지키기</b> — "조금만 더"가 가장 위험<br/>
-                ③ <b>익절도 분할로</b> — 1차 도달 시 일부 차익실현<br/>
-                ④ <b>현금 20-30% 유지</b> — 기회는 또 와
+        {tab==="signals" && (()=>{
+          const newsBlob = (liveNews?.items||[]).map(n=>`${n.titleKo||""} ${n.title||""}`).join(" ");
+          const scored = (liveScan?.quotes||[]).map(s=>({s,...scoreStock(s,newsBlob)})).sort((a,b)=>b.total-a.total);
+          return (
+            <>
+              <div style={{background:`linear-gradient(135deg,${C.coral}20,${C.surface})`,border:`1px solid ${C.coral}40`,borderRadius:14,padding:"14px 16px",marginBottom:12}}>
+                <div style={{fontSize:15,fontWeight:800,letterSpacing:"-0.4px",marginBottom:6}}>🔍 종목 스캐너</div>
+                <div style={{fontSize:11.5,color:C.inkMute,lineHeight:1.6}}>한국 주요 50개 종목을 <b>10개 객관 지표</b>로 점수 매겨 랭킹. 지금 강한 종목 발굴용.</div>
+                <div style={{marginTop:8,padding:"7px 10px",background:`${C.amber}15`,border:`1px solid ${C.amber}40`,borderRadius:8,fontSize:10,color:C.amber,fontWeight:600,lineHeight:1.5}}>⚠ 현재 상태 점수일 뿐 — 미래 예측·매수 추천이 아니야</div>
               </div>
-            </div>
-          </>
-        )}
+
+              <button onClick={fetchScan} disabled={scanLoading} style={{width:"100%",background:scanLoading?C.surfaceLight:C.coral,border:"none",color:"#fff",fontFamily:KR,fontSize:14,fontWeight:700,padding:14,borderRadius:12,cursor:scanLoading?"wait":"pointer",letterSpacing:"-0.3px",marginBottom:12,opacity:scanLoading?0.6:1}}>
+                {scanLoading?"🔄 스캔 중... (수십 초)":"🔍 지금 스캔하기"}
+              </button>
+
+              {liveScan?.fetchedAt && (
+                <div style={{textAlign:"center",fontSize:10,color:C.inkSubtle,marginBottom:10}}>마지막 스캔 {timeAgo(liveScan.fetchedAt)} · {scored.length}개 종목</div>
+              )}
+
+              {scored.length>0 ? scored.map((row,i)=>{
+                const t=row.total;
+                const col=t>=70?C.red:t>=55?C.amber:t>=40?C.inkMute:C.blue;
+                const isOpen=scanRankOpen===row.s.code;
+                const up=(row.s.changePct||0)>=0;
+                return (
+                  <div key={row.s.code} style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:12,marginBottom:8,overflow:"hidden"}}>
+                    <div onClick={()=>setScanRankOpen(isOpen?null:row.s.code)} style={{display:"flex",alignItems:"center",gap:10,padding:"12px 16px",cursor:"pointer"}}>
+                      <div style={{fontSize:13,fontWeight:800,color:i<3?C.coral:C.inkSubtle,width:20}}>{i+1}</div>
+                      <div style={{flex:1,minWidth:0}}>
+                        <div style={{fontSize:13,fontWeight:700}}>{row.s.name} <span style={{fontSize:9,color:C.inkSubtle,fontWeight:500}}>🇰🇷 {row.s.sec}</span></div>
+                        <div style={{display:"flex",alignItems:"center",gap:8,marginTop:4}}>
+                          <div style={{flex:1,height:5,background:C.bg,borderRadius:3,overflow:"hidden"}}><div style={{width:`${t}%`,height:"100%",background:col}}/></div>
+                          <span style={{fontFamily:MO,fontSize:9.5,fontWeight:700,color:up?C.red:C.blue}}>₩{FMT(row.s.price)} {up?"▲":"▼"}{Math.abs(row.s.changePct||0).toFixed(1)}%</span>
+                        </div>
+                      </div>
+                      <div style={{textAlign:"right",minWidth:48}}>
+                        <div style={{fontFamily:MO,fontSize:18,fontWeight:800,color:col}}>{t}</div>
+                        <div style={{fontSize:9,color:col,fontWeight:700}}>{scoreGrade(t)}</div>
+                      </div>
+                    </div>
+                    {isOpen && (
+                      <div style={{padding:"0 16px 12px"}}>
+                        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:5}}>
+                          {row.b.map((it,j)=>(
+                            <div key={j} style={{display:"flex",justifyContent:"space-between",alignItems:"center",background:C.bg,borderRadius:6,padding:"6px 9px"}}>
+                              <span style={{fontSize:10,color:C.inkMute}}>{it.label}{it.note?` (${it.note})`:""}</span>
+                              <span style={{fontFamily:MO,fontSize:10.5,fontWeight:700,color:it.pts/it.max>=0.6?C.red:it.pts/it.max>=0.3?C.amber:C.inkSubtle}}>{it.pts}/{it.max}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <a href={`https://m.stock.naver.com/domestic/stock/${row.s.code}/total`} target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",display:"block",marginTop:8}}>
+                          <button style={{width:"100%",background:"#03C75A",border:"none",color:"#fff",fontFamily:KR,fontSize:12,fontWeight:700,padding:10,borderRadius:8,cursor:"pointer"}}>📡 네이버에서 자세히 →</button>
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                );
+              }) : (
+                <div style={{textAlign:"center",padding:"30px 16px",fontSize:12,color:C.inkMute,lineHeight:1.7}}>위 "🔍 지금 스캔하기" 버튼을 누르면<br/>한국 주요 50개 종목을 점수 매겨 보여줘.</div>
+              )}
+            </>
+          );
+        })()}
 
         {tab==="news" && (
           <>
