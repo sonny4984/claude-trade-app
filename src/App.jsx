@@ -289,6 +289,10 @@ function AppInner(){
   // Claude API 호출 — 견고한 파싱 + web_search fallback
   // 🚀 진짜 백엔드 — 시세 + 매크로 + 뉴스 통합 자동 갱신
   const BACKEND_URL = "https://claude-trade-backend.vercel.app";
+  const [liveMacro,setLiveMacro] = useState(()=>{
+    try { const v=localStorage.getItem("ct_live_macro"); return v?JSON.parse(v):null; }
+    catch { return null; }
+  });
   const [liveNews,setLiveNews] = useState(()=>{
     try { const v=localStorage.getItem("ct_live_news"); return v?JSON.parse(v):null; }
     catch { return null; }
@@ -389,6 +393,13 @@ function AppInner(){
 
       setAiBrief(brief);
       setLivePrice(newLivePrices);
+
+      // 매크로 raw 저장 (스토랩스 탭 실시간 그리드용)
+      if(marketOk && m && Object.keys(m).length){
+        const macroObj = { ...m, fetchedAt: Date.now() };
+        setLiveMacro(macroObj);
+        try { localStorage.setItem("ct_live_macro", JSON.stringify(macroObj)); } catch {}
+      }
 
       // 뉴스 저장
       if(newsData?.success && newsData.news?.length > 0) {
@@ -1009,14 +1020,32 @@ function AppInner(){
               <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:12,marginBottom:12,overflow:"hidden"}}>
                 <div style={{padding:"12px 14px",borderBottom:`1px solid ${C.border}`,fontSize:13,fontWeight:700,letterSpacing:"-0.3px"}}>🌍 매크로 대시보드</div>
                 <div style={{padding:12,display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:6}}>
-                  {MACRO.map((m,i)=>(
-                    <div key={i} style={{background:C.bg,borderRadius:8,padding:"10px 8px"}}>
-                      <div style={{fontSize:9,color:C.inkSubtle,marginBottom:4}}>{m.k}</div>
-                      <div style={{fontFamily:MO,fontSize:13,fontWeight:700,letterSpacing:"-0.3px"}}>{m.v}</div>
-                      <div style={{fontSize:9,color:m.blue?C.blue:m.up?C.red:C.blue,marginTop:2}}>{m.c}</div>
-                    </div>
-                  ))}
+                  {(()=>{
+                    const f=(v,d=2)=>v==null?"—":Number(v).toLocaleString("ko-KR",{maximumFractionDigits:d});
+                    const fc=(v)=>v==null?"":(v>=0?"+":"")+Number(v).toFixed(2)+"%";
+                    const LM=liveMacro;
+                    const rows = LM ? [
+                      {k:"S&P500", sub:LM.sp500?.tracker, v:f(LM.sp500?.price), c:fc(LM.sp500?.changePct), up:(LM.sp500?.changePct||0)>=0},
+                      {k:"나스닥",  sub:LM.nasdaq?.tracker, v:f(LM.nasdaq?.price), c:fc(LM.nasdaq?.changePct), up:(LM.nasdaq?.changePct||0)>=0},
+                      {k:"USD/KRW", v:f(LM.usdkrw?.price)+"원", c:fc(LM.usdkrw?.changePct), up:(LM.usdkrw?.changePct||0)>=0, blue:true},
+                      {k:"DXY",    sub:LM.dxy?.tracker, v:f(LM.dxy?.price), c:fc(LM.dxy?.changePct), up:(LM.dxy?.changePct||0)>=0},
+                      {k:"WTI",    sub:LM.wti?.tracker, v:"$"+f(LM.wti?.price), c:fc(LM.wti?.changePct), up:(LM.wti?.changePct||0)>=0},
+                      {k:"금",     v:"$"+f(LM.gold?.price), c:fc(LM.gold?.changePct), up:(LM.gold?.changePct||0)>=0},
+                    ] : MACRO;
+                    return rows.map((m,i)=>(
+                      <div key={i} style={{background:C.bg,borderRadius:8,padding:"10px 8px"}}>
+                        <div style={{fontSize:9,color:C.inkSubtle,marginBottom:4}}>{m.k}{m.sub?` (${m.sub})`:""}</div>
+                        <div style={{fontFamily:MO,fontSize:13,fontWeight:700,letterSpacing:"-0.3px"}}>{m.v}</div>
+                        <div style={{fontSize:9,color:m.blue?C.blue:m.up?C.red:C.blue,marginTop:2}}>{m.c}</div>
+                      </div>
+                    ));
+                  })()}
                 </div>
+                {liveMacro && (
+                  <div style={{padding:"0 14px 10px",fontSize:9,color:C.inkSubtle,lineHeight:1.5}}>
+                    ※ 지수는 추종 ETF(SPY/QQQ/UUP/USO) 가격 — 변동률은 실제 지수와 동일
+                  </div>
+                )}
               </div>
 
               {/* 매수 시드 선택 */}
