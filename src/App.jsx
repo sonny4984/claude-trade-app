@@ -246,9 +246,7 @@ class ErrBoundary extends Component {
 
 function AppInner(){
   const [tab,setTab] = useState("today");
-  const [showBrief,setShowBrief] = useState(()=>{
-    try { return localStorage.getItem("ct_seen_v2")!==TODAY_BRIEF.id; } catch { return true; }
-  });
+  const [showBrief,setShowBrief] = useState(false);
   const [openSig,setOpenSig] = useState(null);
   const [openNews,setOpenNews] = useState(null);
   const [time,setTime] = useState(new Date("2026-04-23T08:35:00"));
@@ -630,7 +628,6 @@ function AppInner(){
             <span style={{fontSize:12}}>🔄</span>
             <span style={{fontSize:9.5,color:C.inkSubtle}}>{timeAgo(lastRefresh)}</span>
           </button>
-          <button onClick={()=>setShowBrief(true)} style={{background:`${C.coral}15`,border:`1px solid ${C.coral}40`,color:C.coral,fontSize:11,padding:"6px 10px",borderRadius:14,cursor:"pointer",fontWeight:700,fontFamily:KR}}>🌅 브리핑</button>
         </div>
       </div>
 
@@ -679,8 +676,8 @@ function AppInner(){
                   </div>
                   <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:8}}>
                     <div style={{background:C.bg,borderRadius:8,padding:"8px 10px"}}>
-                      <div style={{fontSize:9,color:C.inkSubtle,marginBottom:2}}>KOSPI</div>
-                      <div style={{fontSize:12,fontWeight:700,letterSpacing:"-0.2px"}}>{aiBrief.kospi}</div>
+                      <div style={{fontSize:9,color:C.inkSubtle,marginBottom:2}}>나스닥(QQQ)</div>
+                      <div style={{fontSize:12,fontWeight:700,letterSpacing:"-0.2px"}}>{aiBrief.nasdaq}</div>
                     </div>
                     <div style={{background:C.bg,borderRadius:8,padding:"8px 10px"}}>
                       <div style={{fontSize:9,color:C.inkSubtle,marginBottom:2}}>원/달러</div>
@@ -702,65 +699,6 @@ function AppInner(){
                   <div style={{textAlign:"center",fontSize:9.5,color:C.inkSubtle,marginTop:10,lineHeight:1.5}}>{aiBrief?.method==="web_search" ? "🌐 Claude가 실제 웹 검색으로 가져온 정보야" : "🤖 Claude가 분석해서 작성한 정보야 (웹검색 미사용)"}</div>
             </div>
 
-            {/* 정적 브리핑 (4/23 박제) */}
-            <div style={{background:`linear-gradient(135deg,${C.coral},${C.coralDark})`,borderRadius:14,padding:"18px",marginBottom:14,color:"#fff"}}>
-              <div style={{fontSize:11,opacity:.9,marginBottom:3,fontWeight:600}}>{TODAY_BRIEF.date} (정적 데이터)</div>
-              <div style={{fontSize:20,fontWeight:800,marginBottom:8,letterSpacing:"-0.5px"}}>🌅 좋은 아침, 동하야</div>
-              <div style={{fontSize:13.5,fontWeight:700,marginBottom:10,lineHeight:1.5}}>{TODAY_BRIEF.headline}</div>
-              <div style={{fontSize:12,opacity:.92,lineHeight:1.65}}>{TODAY_BRIEF.oneLiner}</div>
-            </div>
-
-            <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:12,marginBottom:12,overflow:"hidden"}}>
-              <div style={{padding:"14px 16px",borderBottom:`1px solid ${C.border}`,fontSize:14,fontWeight:700,letterSpacing:"-0.3px"}}>📊 오늘의 시장 심리</div>
-              <div style={{padding:16}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:10}}>
-                  <span style={{fontSize:11,color:C.inkMute}}>0 ← 공포 · 탐욕 → 100</span>
-                  <span style={{fontFamily:MO,fontSize:28,fontWeight:800,color:C.green}}>{TODAY_BRIEF.sentiment}<span style={{fontSize:12,color:C.inkSubtle}}>/100</span></span>
-                </div>
-                <div style={{height:14,background:C.bg,borderRadius:7,overflow:"hidden",position:"relative"}}>
-                  <div style={{width:"100%",height:"100%",background:`linear-gradient(90deg,${C.red},${C.amber},${C.green})`,opacity:.25}}/>
-                  <div style={{position:"absolute",top:0,left:`${TODAY_BRIEF.sentiment}%`,width:4,height:14,background:"#fff",transform:"translateX(-2px)"}}/>
-                </div>
-              </div>
-            </div>
-
-            <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:12,marginBottom:12,overflow:"hidden"}}>
-              <div style={{padding:"14px 16px",borderBottom:`1px solid ${C.border}`,fontSize:14,fontWeight:700,letterSpacing:"-0.3px"}}>🌙 간밤 마감</div>
-              <div style={{padding:14,display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
-                {TODAY_BRIEF.overnight.map((o,i)=>(
-                  <div key={i} style={{background:C.bg,borderRadius:8,padding:"8px 10px"}}>
-                    <div style={{fontSize:9,color:C.inkSubtle}}>{o.k}</div>
-                    <div style={{fontFamily:MO,fontSize:13,fontWeight:700}}>{o.v}</div>
-                    <div style={{fontSize:9,color:o.up?C.green:C.red,marginTop:1}}>{o.c}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:12,marginBottom:12,overflow:"hidden"}}>
-              <div style={{padding:"14px 16px",borderBottom:`1px solid ${C.border}`,fontSize:14,fontWeight:700,letterSpacing:"-0.3px"}}>🎯 5대 지배 테마</div>
-              <div style={{padding:14}}>
-                {TODAY_BRIEF.themes.map((th,i)=>(
-                  <div key={i} style={{display:"flex",gap:10,padding:12,background:C.bg,borderRadius:8,marginBottom:6,borderLeft:`3px solid ${C.coral}`}}>
-                    <span style={{fontSize:22}}>{th.icon}</span>
-                    <div style={{flex:1}}>
-                      <div style={{fontSize:13,fontWeight:700,marginBottom:3}}>{th.title}</div>
-                      <div style={{fontSize:11,color:C.inkMute,lineHeight:1.5}}>{th.desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div style={{background:`linear-gradient(135deg,${C.blue}15,${C.surface})`,border:`1px solid ${C.blue}40`,borderRadius:12,marginBottom:12,overflow:"hidden"}}>
-              <div style={{padding:"14px 16px",borderBottom:`1px solid ${C.border}`,fontSize:14,fontWeight:700,letterSpacing:"-0.3px"}}>💡 오늘의 결론</div>
-              <div style={{padding:16}}>
-                <div style={{fontSize:12,lineHeight:1.7,marginBottom:8}}><b style={{color:C.green}}>✅ 베스트:</b> {TODAY_BRIEF.conclusion.best}</div>
-                <div style={{fontSize:12,lineHeight:1.7,marginBottom:8}}><b style={{color:C.red}}>⚠ 함정:</b> {TODAY_BRIEF.conclusion.trap}</div>
-                <div style={{fontSize:12,lineHeight:1.7,marginBottom:10}}><b style={{color:C.coral}}>💰 현금:</b> {TODAY_BRIEF.conclusion.cash}</div>
-                <div style={{fontSize:12,lineHeight:1.7,padding:12,background:C.bg,borderRadius:8,border:`1px solid ${C.border}`}}>{TODAY_BRIEF.conclusion.msg}</div>
-              </div>
-            </div>
           </>
         )}
 
@@ -898,28 +836,11 @@ function AppInner(){
               </div>
             )}
 
-            <div style={{background:`linear-gradient(135deg,#312e81,#1e1b4b)`,borderRadius:14,padding:16,marginBottom:14,color:"#fff"}}>
-              <div style={{fontSize:11,opacity:.85,marginBottom:2}}>2026.04.23 · 정적 분석 (백업)</div>
-              <div style={{fontSize:18,fontWeight:800,letterSpacing:"-0.5px"}}>📰 빅뉴스 TOP 10 (4/23)</div>
-            </div>
-            {NEWS_TOP10.map(n=>{
-              const isOpen = openNews===n.r;
-              return (
-                <div key={n.r} style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:12,marginBottom:12,overflow:"hidden",cursor:"pointer"}} onClick={()=>setOpenNews(isOpen?null:n.r)}>
-                  <div style={{padding:"12px 14px",display:"flex",gap:10}}>
-                    <div style={{background:n.r<=3?C.coral:C.surfaceLight,color:n.r<=3?"#fff":C.inkMute,fontSize:12,fontWeight:800,width:28,height:28,borderRadius:14,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{n.r}</div>
-                    <div style={{flex:1,minWidth:0}}>
-                      <div style={{display:"flex",gap:6,marginBottom:4,fontSize:10,alignItems:"center"}}>
-                        <span style={{color:C.coral,fontWeight:700}}>{n.cat}</span>
-                        <span style={{color:C.inkSubtle}}>· {n.src}</span>
-                      </div>
-                      <div style={{fontSize:13,fontWeight:700,lineHeight:1.5,marginBottom:isOpen?8:0,letterSpacing:"-0.2px"}}>{n.title}</div>
-                      {isOpen && <div style={{fontSize:11,color:C.inkMute,lineHeight:1.6,padding:"8px 10px",background:C.bg,borderRadius:8,marginTop:6}}>💡 {n.impact}</div>}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {(!liveNews || !liveNews.items?.length) && (
+              <div style={{textAlign:"center",padding:"24px 16px",fontSize:12,color:C.inkMute,lineHeight:1.6}}>
+                📰 상단 "🔄 갱신" 버튼을 누르면<br/>Yahoo Finance 실시간 뉴스를 가져와.
+              </div>
+            )}
           </>
         )}
 
