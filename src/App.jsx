@@ -232,6 +232,27 @@ function scoreStock(s, newsBlob){
 }
 function scoreGrade(t){ return t>=70?"강함":t>=55?"양호":t>=40?"보통":"약함"; }
 
+// 📰 뉴스 → 시장 영향 요약 (무료 규칙기반 키워드 분석)
+const NEWS_TOPICS = [
+  { cat:"금리·연준", icon:"🏦", kws:["fed","연준","금리","interest rate","rate cut","powell","파월","fomc","인플레","inflation"], impact:"금리 방향 → 성장주·채권 직결" },
+  { cat:"AI·반도체", icon:"🤖", kws:["ai","인공지능","반도체","chip","semiconductor","nvidia","엔비디아","gpu","hbm","tsmc"], impact:"AI 사이클 → 반도체·기술주 모멘텀" },
+  { cat:"실적", icon:"📊", kws:["실적","earnings","어닝","매출","revenue","profit","순이익","guidance","가이던스"], impact:"실적 시즌 변동성 확대" },
+  { cat:"관세·무역", icon:"🚢", kws:["관세","tariff","무역","trade war","수출","export","공급망","supply chain"], impact:"수출주·제조업 영향" },
+  { cat:"에너지·유가", icon:"🛢️", kws:["oil","유가","원유","brent","wti","opec","energy","천연가스"], impact:"정유·항공·물가 파급" },
+  { cat:"지정학", icon:"⚔️", kws:["war","전쟁","이란","iran","우크라이나","ukraine","중동","제재","sanction"], impact:"안전자산 선호·유가 변동" },
+  { cat:"암호화폐", icon:"₿", kws:["bitcoin","비트코인","crypto","ethereum","이더리움"], impact:"위험선호 심리 가늠자" },
+  { cat:"중국·경기", icon:"🐉", kws:["china","중국","경기침체","recession","gdp","소비","제조업"], impact:"글로벌 수요·경기민감주" },
+];
+function summarizeNews(items){
+  if(!items || !items.length) return null;
+  const blob = items.map(n=>`${n.titleKo||""} ${n.title||""}`).join(" ").toLowerCase();
+  const hits = NEWS_TOPICS.map(t=>{
+    let n=0; for(const k of t.kws){ const kk=k.toLowerCase(); n += blob.split(kk).length-1; }
+    return { ...t, n };
+  }).filter(t=>t.n>0).sort((a,b)=>b.n-a.n);
+  return hits;
+}
+
 /* ════ 스토랩스 시스템 데이터 ════ */
 const MACRO = [
   {k:"NASDAQ", v:"24,468", c:"+1.52%", up:true},
@@ -998,6 +1019,33 @@ function AppInner(){
               );
             })()}
 
+            {/* 📰 오늘 뉴스 핵심 (시장 영향 요약) */}
+            {(()=>{
+              const topics = summarizeNews(liveNews?.items);
+              if(!topics?.length) return null;
+              return (
+                <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:14,marginBottom:12,overflow:"hidden"}}>
+                  <div style={{padding:"12px 16px",borderBottom:`1px solid ${C.border}`}}>
+                    <div style={{fontSize:14,fontWeight:700,letterSpacing:"-0.3px"}}>📰 오늘 뉴스 핵심</div>
+                    <div style={{fontSize:9.5,color:C.inkSubtle,marginTop:2}}>실시간 뉴스 {liveNews?.items?.length||0}건에서 추출한 시장 영향 키워드</div>
+                  </div>
+                  {topics.slice(0,5).map((t,i)=>(
+                    <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 16px",borderBottom:i<Math.min(5,topics.length)-1?`1px solid ${C.border}`:"none"}}>
+                      <span style={{fontSize:18}}>{t.icon}</span>
+                      <div style={{flex:1,minWidth:0}}>
+                        <div style={{fontSize:12.5,fontWeight:700}}>{t.cat} <span style={{fontSize:10,color:C.coral,fontWeight:700}}>{t.n}건</span></div>
+                        <div style={{fontSize:10,color:C.inkMute,marginTop:1,lineHeight:1.4}}>{t.impact}</div>
+                      </div>
+                      <div style={{width:40,height:5,background:C.bg,borderRadius:3,overflow:"hidden"}}>
+                        <div style={{width:`${Math.min(100,t.n*25)}%`,height:"100%",background:C.coral}}/>
+                      </div>
+                    </div>
+                  ))}
+                  <div style={{padding:"8px 16px 10px",fontSize:9,color:C.inkSubtle,lineHeight:1.5}}>※ 뉴스 키워드 빈도 기반 자동 분석 — 참고용</div>
+                </div>
+              );
+            })()}
+
             {/* 📚 초보 투자 원칙 */}
             <div style={{background:`linear-gradient(135deg,${C.coral}12,${C.surface})`,border:`1px solid ${C.coral}40`,borderRadius:14,padding:"14px 16px",marginBottom:12}}>
               <div style={{fontSize:13,fontWeight:800,color:C.coral,marginBottom:10,letterSpacing:"-0.3px"}}>📚 초보 투자 원칙</div>
@@ -1023,7 +1071,7 @@ function AppInner(){
             <>
               <div style={{background:`linear-gradient(135deg,${C.coral}20,${C.surface})`,border:`1px solid ${C.coral}40`,borderRadius:14,padding:"14px 16px",marginBottom:12}}>
                 <div style={{fontSize:15,fontWeight:800,letterSpacing:"-0.4px",marginBottom:6}}>🔍 종목 스캐너</div>
-                <div style={{fontSize:11.5,color:C.inkMute,lineHeight:1.6}}>한국 주요 50개 종목을 <b>10개 객관 지표</b>로 점수 매겨 랭킹. 지금 강한 종목 발굴용.</div>
+                <div style={{fontSize:11.5,color:C.inkMute,lineHeight:1.6}}>코스피·코스닥 주요 180개 종목을 <b>10개 객관 지표</b>로 점수 매겨 랭킹. 지금 강한 종목 발굴용.</div>
                 <div style={{marginTop:8,padding:"7px 10px",background:`${C.amber}15`,border:`1px solid ${C.amber}40`,borderRadius:8,fontSize:10,color:C.amber,fontWeight:600,lineHeight:1.5}}>⚠ 현재 상태 점수일 뿐 — 미래 예측·매수 추천이 아니야</div>
               </div>
 
@@ -1074,7 +1122,7 @@ function AppInner(){
                   </div>
                 );
               }) : (
-                <div style={{textAlign:"center",padding:"30px 16px",fontSize:12,color:C.inkMute,lineHeight:1.7}}>위 "🔍 지금 스캔하기" 버튼을 누르면<br/>한국 주요 50개 종목을 점수 매겨 보여줘.</div>
+                <div style={{textAlign:"center",padding:"30px 16px",fontSize:12,color:C.inkMute,lineHeight:1.7}}>위 "🔍 지금 스캔하기" 버튼을 누르면<br/>코스피·코스닥 주요 180개 종목을 점수 매겨 보여줘.</div>
               )}
             </>
           );
