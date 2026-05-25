@@ -192,6 +192,46 @@ const WATCH_US = [
   { sym:"RKLB", name:"로켓랩",    sec:"우주발사체" },
 ];
 
+// 📊 종목 스코어카드 — 현재 상태 10지표 점수 (예측 아님, 객관 지표 요약)
+const HOT_THEMES = ["AI","반도체","우주","위성","양자","방산","데이터센터","드론","원전","조선","로봇"];
+function scoreStock(s, newsBlob){
+  const b=[]; let total=0;
+  const add=(label,pts,max,note)=>{ const p=Math.max(0,Math.min(max,pts)); total+=p; b.push({label,pts:Math.round(p),max,note}); };
+  const cp=s.changePct||0;
+  const hi=s.high52w, lo=s.low52w, pr=s.price;
+  // 1. 모멘텀 (당일 등락률)
+  add("모멘텀", 7.5+cp*1.5, 15, `당일 ${cp>=0?"+":""}${cp.toFixed(1)}%`);
+  // 2. 52주 위치
+  const pos=(hi&&lo&&pr)?((pr-lo)/(hi-lo)):0.5;
+  add("52주 위치", pos*15, 15, `${Math.round(pos*100)}% 지점`);
+  // 3. 신고가 근접
+  const near=(hi&&pr)?(pr/hi):0.5;
+  add("신고가 근접", (near-0.5)*24, 12, `고점의 ${Math.round(near*100)}%`);
+  // 4. 저점 회복력
+  const rec=(lo&&pr)?(pr/lo):1;
+  add("저점 회복력", (rec-1)*5, 10, `저점比 +${Math.round((rec-1)*100)}%`);
+  // 5. 거래 활발도
+  const vol=s.volume||0;
+  add("거래 활발도", vol>5e6?10:vol>1e6?7:vol>3e5?4:2, 10, `${(vol/1e4).toFixed(0)}만주`);
+  // 6. 유동성 (거래대금 규모)
+  const turn=(pr||0)*vol;
+  add("유동성", turn>1e9?10:turn>1e8?7:turn>1e7?4:2, 10, "");
+  // 7. 뉴스 노출
+  const nameHit=newsBlob&&(newsBlob.includes(s.name)||newsBlob.includes(s.code))?1:0;
+  const secHit=newsBlob&&s.sec&&newsBlob.includes(s.sec)?1:0;
+  add("뉴스 노출", nameHit*7+secHit*3, 10, nameHit?"직접 언급":secHit?"섹터 언급":"없음");
+  // 8. 추세 방향
+  add("추세", cp>0.5?8:cp<-0.5?2:5, 8, cp>0.5?"상승":cp<-0.5?"하락":"보합");
+  // 9. 변동성 안정
+  const range=(hi&&lo)?((hi-lo)/lo):1;
+  add("변동성", range<1?5:range<3?3:1, 5, range<1?"안정":range<3?"보통":"높음");
+  // 10. 성장 테마
+  const isHot=s.sec&&HOT_THEMES.some(h=>s.sec.includes(h));
+  add("성장 테마", isHot?5:2, 5, isHot?s.sec:"일반");
+  return { total:Math.round(total), b };
+}
+function scoreGrade(t){ return t>=70?"강함":t>=55?"양호":t>=40?"보통":"약함"; }
+
 /* ════ 스토랩스 시스템 데이터 ════ */
 const MACRO = [
   {k:"NASDAQ", v:"24,468", c:"+1.52%", up:true},
@@ -269,6 +309,7 @@ function AppInner(){
   const [tab,setTab] = useState("today");
   const [showBrief,setShowBrief] = useState(false);
   const [openSig,setOpenSig] = useState(null);
+  const [scoreOpen,setScoreOpen] = useState(null);
   const [openNews,setOpenNews] = useState(null);
   const [time,setTime] = useState(new Date("2026-04-23T08:35:00"));
 
@@ -843,6 +884,55 @@ function AppInner(){
               );
             })()}
 
+            {/* 📊 종목 스코어카드 */}
+            {liveStocks?.items?.length && (()=>{
+              const newsBlob = (liveNews?.items||[]).map(n=>`${n.titleKo||""} ${n.title||""}`).join(" ");
+              const scored = liveStocks.items.map(s=>({s, ...scoreStock(s, newsBlob)})).sort((a,bb)=>bb.total-a.total);
+              const [open,setOpenLocal] = [scoreOpen, setScoreOpen];
+              return (
+                <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:14,marginBottom:12,overflow:"hidden"}}>
+                  <div style={{padding:"12px 16px",borderBottom:`1px solid ${C.border}`}}>
+                    <div style={{fontSize:14,fontWeight:700,letterSpacing:"-0.3px"}}>📊 종목 스코어카드</div>
+                    <div style={{fontSize:9.5,color:C.inkSubtle,marginTop:2,lineHeight:1.4}}>10개 객관 지표로 매긴 <b>현재 상태 점수</b> — 미래 예측·매수 추천 아님</div>
+                  </div>
+                  {scored.map((row,i)=>{
+                    const t=row.total;
+                    const col=t>=70?C.red:t>=55?C.amber:t>=40?C.inkMute:C.blue;
+                    const isOpen=open===row.s.key;
+                    return (
+                      <div key={i} style={{borderBottom:i<scored.length-1?`1px solid ${C.border}`:"none"}}>
+                        <div onClick={()=>setOpenLocal(isOpen?null:row.s.key)} style={{display:"flex",alignItems:"center",gap:10,padding:"11px 16px",cursor:"pointer"}}>
+                          <div style={{fontSize:11,fontWeight:800,color:C.inkSubtle,width:18}}>{i+1}</div>
+                          <div style={{flex:1,minWidth:0}}>
+                            <div style={{fontSize:13,fontWeight:700}}>{row.s.name} <span style={{fontSize:9,color:C.inkSubtle,fontWeight:500}}>{row.s.market==="US"?"🇺🇸":"🇰🇷"} {row.s.sec}</span></div>
+                            <div style={{height:5,background:C.bg,borderRadius:3,marginTop:5,overflow:"hidden"}}>
+                              <div style={{width:`${t}%`,height:"100%",background:col}}/>
+                            </div>
+                          </div>
+                          <div style={{textAlign:"right",minWidth:54}}>
+                            <div style={{fontFamily:MO,fontSize:17,fontWeight:800,color:col}}>{t}</div>
+                            <div style={{fontSize:9,color:col,fontWeight:700}}>{scoreGrade(t)}</div>
+                          </div>
+                        </div>
+                        {isOpen && (
+                          <div style={{padding:"0 16px 12px"}}>
+                            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:5}}>
+                              {row.b.map((it,j)=>(
+                                <div key={j} style={{display:"flex",justifyContent:"space-between",alignItems:"center",background:C.bg,borderRadius:6,padding:"6px 9px"}}>
+                                  <span style={{fontSize:10,color:C.inkMute}}>{it.label}{it.note?` (${it.note})`:""}</span>
+                                  <span style={{fontFamily:MO,fontSize:10.5,fontWeight:700,color:it.pts/it.max>=0.6?C.red:it.pts/it.max>=0.3?C.amber:C.inkSubtle}}>{it.pts}/{it.max}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+
             {/* 🌍 미국 시장 + 💱 환율·원자재 */}
             {liveMacro && (()=>{
               const fc=(v)=>v==null?"—":(v>=0?"+":"")+Number(v).toFixed(2)+"%";
@@ -1025,8 +1115,8 @@ function AppInner(){
                         <span>{n.src}</span>
                         {n.date && <><span>·</span><span>{new Date(n.date).toLocaleDateString("ko-KR",{month:"2-digit",day:"2-digit"})}</span></>}
                       </div>
-                      <div style={{fontSize:12,fontWeight:700,lineHeight:1.5,color:C.ink,letterSpacing:"-0.2px"}}>{n.title}</div>
-                      {n.summary && <div style={{fontSize:10.5,color:C.inkMute,marginTop:4,lineHeight:1.5}}>{n.summary.slice(0,120)}...</div>}
+                      <div style={{fontSize:12,fontWeight:700,lineHeight:1.5,color:C.ink,letterSpacing:"-0.2px"}}>{n.titleKo || n.title}</div>
+                      {n.titleKo && n.titleKo!==n.title && <div style={{fontSize:9.5,color:C.inkSubtle,marginTop:3,lineHeight:1.4}}>{n.title}</div>}
                     </div>
                   </a>
                 ))}
