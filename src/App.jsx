@@ -12,12 +12,14 @@ try {
 } catch(e) {}
 
 const C = {
-  coral:"#d97757", coralDark:"#b85e42",
-  bg:"#1f1e1d", surface:"#2a2826", surfaceLight:"#36332f",
-  ink:"#faf9f5", inkMute:"#a39e94", inkSubtle:"#6b6660",
-  border:"#3d3a36",
-  green:"#7ca982", red:"#c97064", amber:"#d4a574", blue:"#7a9cc6",
+  // 토스 검정 다크 팔레트
+  coral:"#3182f6", coralDark:"#1b64da",        // 포인트 = 토스 블루
+  bg:"#0e0f11", surface:"#17181c", surfaceLight:"#202228",
+  ink:"#ffffff", inkMute:"#9ea3ad", inkSubtle:"#5e636e",
+  border:"#26282e",
+  green:"#f04452", red:"#f04452", amber:"#ffa726", blue:"#3d8bff",  // 상승=빨강, 하락=파랑
 };
+
 
 const TODAY_BRIEF = {
   id:"2026-04-23",
@@ -171,6 +173,25 @@ const TICKERS = {
 
 const FMT = v => v==null||isNaN(+v)?"—":(+v).toLocaleString("ko-KR");
 
+// 💼 내 보유종목 (2026-05-22 새벽 매수, 시드 160만원)
+// buyUsd = 5/21 미국 종가(매수단가 추정), krAmount = 투자 원금(원화)
+const HOLDINGS = [
+  { sym:"VRT",  name:"버티브 홀딩스",      sec:"데이터센터",  krAmount:136567, buyUsd:323.40 },
+  { sym:"IONQ", name:"아이온큐",          sec:"양자컴퓨팅",  krAmount:287048, buyUsd:58.89  },
+  { sym:"AVAV", name:"에어로바이런먼트",   sec:"드론·방산",   krAmount:710543, buyUsd:163.09 },
+  { sym:"AMD",  name:"AMD",              sec:"반도체",      krAmount:340860, buyUsd:449.59 },
+  { sym:"ASTS", name:"AST 스페이스모바일", sec:"위성통신",    krAmount:201347, buyUsd:96.23  },
+];
+const HOLDING_SYMS = HOLDINGS.map(h=>h.sym);
+const BUY_FX = 1500; // 매수 시점(5/22 새벽) 환율 추정
+
+// ⭐ 관심 미국주 (추천)
+const WATCH_US = [
+  { sym:"NVDA", name:"엔비디아",  sec:"AI 반도체" },
+  { sym:"PLTR", name:"팔란티어",  sec:"AI 소프트웨어" },
+  { sym:"RKLB", name:"로켓랩",    sec:"우주발사체" },
+];
+
 /* ════ 스토랩스 시스템 데이터 ════ */
 const MACRO = [
   {k:"NASDAQ", v:"24,468", c:"+1.52%", up:true},
@@ -312,7 +333,7 @@ function AppInner(){
       // 4개 API 동시 호출 (실패해도 다른 거 받기 위해 Promise.allSettled)
       const [marketR, quoteR, krR, newsR] = await Promise.allSettled([
         fetch(`${BACKEND_URL}/api/market`).then(r=>r.json()),
-        fetch(`${BACKEND_URL}/api/quote?symbols=RKLB`).then(r=>r.json()),
+        fetch(`${BACKEND_URL}/api/quote?symbols=VRT,IONQ,AVAV,AMD,ASTS,NVDA,PLTR,RKLB`).then(r=>r.json()),
         fetch(`${BACKEND_URL}/api/krquote?codes=000660,005930,329180,034020,042700,064350,012450,005380`).then(r=>r.json()),
         fetch(`${BACKEND_URL}/api/news`).then(r=>r.json()).catch(()=>({success:false,error:"news endpoint 없음"})),
       ]);
@@ -382,12 +403,12 @@ function AppInner(){
         if(q.price) { newLivePrices[name] = { price:q.price, at:Date.now() }; updateCount++; }
         if((q.changePct||-999) > topChange) { topChange=q.changePct; topStock=`${name} ${fmtChg(q.changePct)}`; }
       });
-      // 미국주 (RKLB)
+      // 미국주 (보유 5 + 관심 3)
       (quoteData?.quotes || []).forEach(q => {
-        stocksList.push({ key:"RKLB", name:q.name||"RKLB", code:q.symbol, sec:"우주", market:"US",
-          price:q.price, change:q.change, changePct:q.changePct, volume:q.volume, high:q.high52w, low:q.low52w });
-        if(q.price) { newLivePrices["RKLB"] = { price:q.price, at:Date.now() }; updateCount++; }
-        if((q.changePct||-999) > topChange) { topChange=q.changePct; topStock=`${q.name||"RKLB"} ${fmtChg(q.changePct)}`; }
+        stocksList.push({ key:q.symbol, name:q.name||q.symbol, code:q.symbol, sec:"", market:"US",
+          price:q.price, change:q.change, changePct:q.changePct, volume:q.volume, high52w:q.high52w, low52w:q.low52w });
+        if(q.price) { newLivePrices[q.symbol] = { price:q.price, at:Date.now() }; updateCount++; }
+        if((q.changePct||-999) > topChange) { topChange=q.changePct; topStock=`${q.name||q.symbol} ${fmtChg(q.changePct)}`; }
       });
       debugLog.push(`종목 ${updateCount}개 업데이트 (한국 ${krData?.quotes?.length||0} + 미국 ${quoteData?.quotes?.length||0})`);
 
@@ -725,33 +746,102 @@ function AppInner(){
                   <div style={{textAlign:"center",fontSize:9.5,color:C.inkSubtle,marginTop:10,lineHeight:1.5}}>{aiBrief?.method==="web_search" ? "🌐 Claude가 실제 웹 검색으로 가져온 정보야" : "🤖 Claude가 분석해서 작성한 정보야 (웹검색 미사용)"}</div>
             </div>
 
-            {/* ⭐ 내 관심 종목 (실시간) */}
-            <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:14,marginBottom:12,overflow:"hidden"}}>
-              <div style={{padding:"12px 16px",borderBottom:`1px solid ${C.border}`,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                <span style={{fontSize:14,fontWeight:700,letterSpacing:"-0.3px"}}>⭐ 내 관심 종목</span>
-                {liveStocks?.fetchedAt && <span style={{fontSize:9.5,color:C.inkSubtle}}>{timeAgo(liveStocks.fetchedAt)}</span>}
-              </div>
-              {liveStocks?.items?.length ? (
-                liveStocks.items.map((s,i)=>{
-                  const up=(s.changePct||0)>=0;
-                  const col=up?C.red:C.blue;
-                  return (
-                    <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 16px",borderBottom:i<liveStocks.items.length-1?`1px solid ${C.border}`:"none"}}>
-                      <div style={{flex:1,minWidth:0}}>
-                        <div style={{fontSize:13,fontWeight:700,letterSpacing:"-0.3px"}}>{s.name} <span style={{fontSize:9,color:C.inkSubtle,fontWeight:500}}>{s.market==="US"?"🇺🇸":"🇰🇷"} {s.sec}</span></div>
-                        <div style={{fontSize:9.5,color:C.inkSubtle,fontFamily:MO,marginTop:1}}>거래량 {FMT(s.volume)}</div>
+            {/* 💼 내 보유종목 (실시간 수익률) */}
+            {(()=>{
+              const fx = liveMacro?.usdkrw?.price || BUY_FX;
+              const find = (sym)=> liveStocks?.items?.find(s=>s.code===sym && s.market==="US");
+              let totalCost=0, totalVal=0, hasData=false;
+              const rows = HOLDINGS.map(h=>{
+                const q=find(h.sym);
+                const shares=h.krAmount/(h.buyUsd*BUY_FX);
+                const curUsd=q?.price ?? null;
+                const curVal=curUsd!=null ? shares*curUsd*fx : null;
+                totalCost+=h.krAmount;
+                if(curVal!=null){ totalVal+=curVal; hasData=true; }
+                const pnlPct=curVal!=null ? (curVal/h.krAmount-1)*100 : null;
+                const pnl=curVal!=null ? curVal-h.krAmount : null;
+                return {h,q,curUsd,curVal,pnl,pnlPct,shares};
+              });
+              const totalPnl=hasData ? totalVal-totalCost : null;
+              const totalPct=hasData ? (totalVal/totalCost-1)*100 : null;
+              const tup=(totalPct||0)>=0;
+              return (
+                <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:14,marginBottom:12,overflow:"hidden"}}>
+                  <div style={{padding:"12px 16px",borderBottom:`1px solid ${C.border}`,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <span style={{fontSize:14,fontWeight:700,letterSpacing:"-0.3px"}}>💼 내 보유종목</span>
+                    {liveStocks?.fetchedAt && <span style={{fontSize:9.5,color:C.inkSubtle}}>{timeAgo(liveStocks.fetchedAt)}</span>}
+                  </div>
+                  {/* 총 평가손익 */}
+                  <div style={{padding:"14px 16px",borderBottom:`1px solid ${C.border}`,background:C.bg}}>
+                    <div style={{fontSize:10.5,color:C.inkMute,marginBottom:4}}>총 평가손익 (원금 ₩{FMT(Math.round(totalCost))})</div>
+                    {hasData ? (
+                      <div style={{display:"flex",alignItems:"baseline",gap:8}}>
+                        <span style={{fontFamily:MO,fontSize:22,fontWeight:800,color:tup?C.red:C.blue}}>{tup?"+":""}{FMT(Math.round(totalPnl))}원</span>
+                        <span style={{fontFamily:MO,fontSize:13,fontWeight:700,color:tup?C.red:C.blue}}>({tup?"+":""}{totalPct.toFixed(2)}%)</span>
                       </div>
-                      <div style={{textAlign:"right"}}>
-                        <div style={{fontFamily:MO,fontSize:13,fontWeight:700}}>{s.market==="US"?"$":"₩"}{FMT(s.price)}</div>
-                        <div style={{fontFamily:MO,fontSize:10.5,fontWeight:700,color:col,marginTop:1}}>{up?"▲":"▼"} {s.changePct==null?"—":Math.abs(s.changePct).toFixed(2)+"%"}</div>
+                    ) : <div style={{fontSize:12,color:C.inkMute}}>🔄 갱신하면 실시간 평가</div>}
+                  </div>
+                  {rows.map((r,i)=>{
+                    const up=(r.pnlPct||0)>=0;
+                    const col=up?C.red:C.blue;
+                    return (
+                      <div key={i} style={{padding:"12px 16px",borderBottom:i<rows.length-1?`1px solid ${C.border}`:"none"}}>
+                        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
+                          <div style={{flex:1,minWidth:0}}>
+                            <div style={{fontSize:13,fontWeight:700,letterSpacing:"-0.3px"}}>{r.h.name} <span style={{fontSize:9,color:C.inkSubtle,fontWeight:500}}>🇺🇸 {r.h.sec}</span></div>
+                            <div style={{fontSize:9.5,color:C.inkSubtle,fontFamily:MO,marginTop:1}}>{r.shares.toFixed(2)}주 · 매수 ${r.h.buyUsd} → 현재 {r.curUsd!=null?`$${r.curUsd}`:"—"}</div>
+                          </div>
+                          <div style={{textAlign:"right"}}>
+                            <div style={{fontFamily:MO,fontSize:13,fontWeight:700}}>{r.curVal!=null?`₩${FMT(Math.round(r.curVal))}`:"—"}</div>
+                            <div style={{fontFamily:MO,fontSize:11,fontWeight:700,color:col,marginTop:1}}>{r.pnlPct!=null?`${up?"▲":"▼"} ${Math.abs(r.pnlPct).toFixed(2)}%`:"—"}</div>
+                          </div>
+                        </div>
+                        {/* 목표 참고선 (52주 고/저) */}
+                        {r.q?.low52w && r.q?.high52w && (
+                          <div style={{display:"flex",gap:6,fontSize:9.5,fontFamily:MO}}>
+                            <span style={{flex:1,color:C.blue,background:`${C.blue}12`,borderRadius:6,padding:"4px 8px"}}>📉 참고매수 ${r.q.low52w} <span style={{color:C.inkSubtle}}>(52주저)</span></span>
+                            <span style={{flex:1,color:C.red,background:`${C.red}12`,borderRadius:6,padding:"4px 8px",textAlign:"right"}}>참고매도 ${r.q.high52w} <span style={{color:C.inkSubtle}}>(52주고)</span> 📈</span>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  );
-                })
-              ) : (
-                <div style={{padding:"20px 16px",textAlign:"center",fontSize:12,color:C.inkMute,lineHeight:1.6}}>🔄 상단 갱신 버튼을 누르면<br/>내 종목 실시간 시세가 떠</div>
-              )}
-            </div>
+                    );
+                  })}
+                  <div style={{padding:"8px 16px 10px",fontSize:9,color:C.inkSubtle,lineHeight:1.5}}>
+                    ※ 매수단가는 5/21 미국 종가 추정 · 환율 {Math.round(fx)}원 적용 · 참고선은 52주 고저(분석용, 추천 아님)
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* ⭐ 관심종목 (추천 미국주 + 한국주) */}
+            {(()=>{
+              const watchUsItems = WATCH_US.map(w=>{
+                const q=liveStocks?.items?.find(s=>s.code===w.sym && s.market==="US");
+                return q ? {...q, name:w.name, sec:w.sec} : null;
+              }).filter(Boolean);
+              const krItems = liveStocks?.items?.filter(s=>s.market==="KR") || [];
+              const all=[...watchUsItems, ...krItems];
+              return (
+                <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:14,marginBottom:12,overflow:"hidden"}}>
+                  <div style={{padding:"12px 16px",borderBottom:`1px solid ${C.border}`,fontSize:14,fontWeight:700,letterSpacing:"-0.3px"}}>⭐ 관심종목</div>
+                  {all.length ? all.map((s,i)=>{
+                    const up=(s.changePct||0)>=0; const col=up?C.red:C.blue;
+                    return (
+                      <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 16px",borderBottom:i<all.length-1?`1px solid ${C.border}`:"none"}}>
+                        <div style={{flex:1,minWidth:0}}>
+                          <div style={{fontSize:13,fontWeight:700,letterSpacing:"-0.3px"}}>{s.name} <span style={{fontSize:9,color:C.inkSubtle,fontWeight:500}}>{s.market==="US"?"🇺🇸":"🇰🇷"} {s.sec}</span></div>
+                          <div style={{fontSize:9.5,color:C.inkSubtle,fontFamily:MO,marginTop:1}}>거래량 {FMT(s.volume)}</div>
+                        </div>
+                        <div style={{textAlign:"right"}}>
+                          <div style={{fontFamily:MO,fontSize:13,fontWeight:700}}>{s.market==="US"?"$":"₩"}{FMT(s.price)}</div>
+                          <div style={{fontFamily:MO,fontSize:10.5,fontWeight:700,color:col,marginTop:1}}>{up?"▲":"▼"} {s.changePct==null?"—":Math.abs(s.changePct).toFixed(2)+"%"}</div>
+                        </div>
+                      </div>
+                    );
+                  }) : <div style={{padding:"20px 16px",textAlign:"center",fontSize:12,color:C.inkMute,lineHeight:1.6}}>🔄 갱신하면 실시간 시세가 떠</div>}
+                </div>
+              );
+            })()}
 
             {/* 🌍 미국 시장 + 💱 환율·원자재 */}
             {liveMacro && (()=>{
