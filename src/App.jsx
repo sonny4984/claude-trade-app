@@ -622,7 +622,7 @@ function AppInner(){
           <div style={{width:32,height:32,borderRadius:8,background:`linear-gradient(135deg,${C.coral},${C.coralDark})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16}}>✦</div>
           <div style={{minWidth:0}}>
             <div style={{fontSize:15,fontWeight:800,letterSpacing:"-0.5px"}}>Claude Trade <span style={{color:C.coral}}>MAX</span></div>
-            <div style={{fontSize:10.5,color:C.inkSubtle,marginTop:1}}>{time.toLocaleTimeString("ko-KR",{hour12:false})} · 4월 23일 (목)</div>
+            <div style={{fontSize:10.5,color:C.inkSubtle,marginTop:1}}>{time.toLocaleTimeString("ko-KR",{hour12:false})} · {time.toLocaleDateString("ko-KR",{month:"long",day:"numeric",weekday:"short"})}</div>
           </div>
         </div>
         <div style={{display:"flex",gap:6,alignItems:"center"}}>
