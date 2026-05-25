@@ -1093,10 +1093,10 @@ function AppInner(){
                     <div onClick={()=>setScanRankOpen(isOpen?null:row.s.code)} style={{display:"flex",alignItems:"center",gap:10,padding:"12px 16px",cursor:"pointer"}}>
                       <div style={{fontSize:13,fontWeight:800,color:i<3?C.coral:C.inkSubtle,width:20}}>{i+1}</div>
                       <div style={{flex:1,minWidth:0}}>
-                        <div style={{fontSize:13,fontWeight:700}}>{row.s.name} <span style={{fontSize:9,color:C.inkSubtle,fontWeight:500}}>🇰🇷 {row.s.sec}</span></div>
+                        <div style={{fontSize:13,fontWeight:700}}>{row.s.name} <span style={{fontSize:9,color:C.inkSubtle,fontWeight:500}}>{row.s.market==="US"?"🇺🇸":"🇰🇷"} {row.s.sec||row.s.code}</span></div>
                         <div style={{display:"flex",alignItems:"center",gap:8,marginTop:4}}>
                           <div style={{flex:1,height:5,background:C.bg,borderRadius:3,overflow:"hidden"}}><div style={{width:`${t}%`,height:"100%",background:col}}/></div>
-                          <span style={{fontFamily:MO,fontSize:9.5,fontWeight:700,color:up?C.red:C.blue}}>₩{FMT(row.s.price)} {up?"▲":"▼"}{Math.abs(row.s.changePct||0).toFixed(1)}%</span>
+                          <span style={{fontFamily:MO,fontSize:9.5,fontWeight:700,color:up?C.red:C.blue}}>{row.s.market==="US"?"$":"₩"}{FMT(row.s.price)} {up?"▲":"▼"}{Math.abs(row.s.changePct||0).toFixed(1)}%</span>
                         </div>
                       </div>
                       <div style={{textAlign:"right",minWidth:48}}>
@@ -1114,7 +1114,7 @@ function AppInner(){
                             </div>
                           ))}
                         </div>
-                        <a href={`https://m.stock.naver.com/domestic/stock/${row.s.code}/total`} target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",display:"block",marginTop:8}}>
+                        <a href={row.s.market==="US"?`https://m.stock.naver.com/worldstock/stock/${row.s.code}.O/total`:`https://m.stock.naver.com/domestic/stock/${row.s.code}/total`} target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",display:"block",marginTop:8}}>
                           <button style={{width:"100%",background:"#03C75A",border:"none",color:"#fff",fontFamily:KR,fontSize:12,fontWeight:700,padding:10,borderRadius:8,cursor:"pointer"}}>📡 네이버에서 자세히 →</button>
                         </a>
                       </div>
