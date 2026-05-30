@@ -173,17 +173,20 @@ const TICKERS = {
 
 const FMT = v => v==null||isNaN(+v)?"—":(+v).toLocaleString("ko-KR");
 
-// 💼 내 보유종목 (2026-05-22 새벽 매수, 시드 160만원)
-// buyUsd = 5/21 미국 종가(매수단가 추정), krAmount = 투자 원금(원화)
+// 💼 내 보유종목 (4차 대회 포트폴리오 스냅샷)
+// krValue = 입력 시점 평가금(원), returnPct = 입력 시점 수익률, pick = 4차 대회 픽
 const HOLDINGS = [
-  { sym:"VRT",  name:"버티브 홀딩스",      sec:"데이터센터",  krAmount:136567, buyUsd:323.40 },
-  { sym:"IONQ", name:"아이온큐",          sec:"양자컴퓨팅",  krAmount:287048, buyUsd:58.89  },
-  { sym:"AVAV", name:"에어로바이런먼트",   sec:"드론·방산",   krAmount:710543, buyUsd:163.09 },
-  { sym:"AMD",  name:"AMD",              sec:"반도체",      krAmount:340860, buyUsd:449.59 },
-  { sym:"ASTS", name:"AST 스페이스모바일", sec:"위성통신",    krAmount:201347, buyUsd:96.23  },
+  { sym:"SNDK", name:"샌디스크",     sec:"메모리반도체", krValue:724883, returnPct:6.8  },
+  { sym:"NBIS", name:"네비우스",     sec:"AI 인프라",    krValue:721123, returnPct:3.7,   pick:true },
+  { sym:"COHR", name:"코히어런트",   sec:"광학반도체",   krValue:696351, returnPct:0.1,   pick:true },
+  { sym:"AVGO", name:"브로드컴",     sec:"반도체",       krValue:500120, returnPct:2.3  },
+  { sym:"KTOS", name:"크라토스",     sec:"방산",         krValue:447005, returnPct:-0.05, pick:true },
+  { sym:"NVT",  name:"엔벤트",       sec:"전기설비",     krValue:399197, returnPct:0.5  },
+  { sym:"MU",   name:"마이크론",     sec:"메모리반도체", krValue:396504, returnPct:-0.2,  pick:true },
+  { sym:"AMD",  name:"AMD",         sec:"반도체",       krValue:373296, returnPct:8.4  },
 ];
 const HOLDING_SYMS = HOLDINGS.map(h=>h.sym);
-const BUY_FX = 1500; // 매수 시점(5/22 새벽) 환율 추정
+const PORTFOLIO_LABEL = "4차 대회 포트폴리오";
 
 // ⭐ 관심 미국주 (추천)
 const WATCH_US = [
@@ -401,7 +404,7 @@ function AppInner(){
       // 4개 API 동시 호출 (실패해도 다른 거 받기 위해 Promise.allSettled)
       const [marketR, quoteR, krR, newsR] = await Promise.allSettled([
         fetch(`${BACKEND_URL}/api/market`).then(r=>r.json()),
-        fetch(`${BACKEND_URL}/api/quote?symbols=VRT,IONQ,AVAV,AMD,ASTS,NVDA,PLTR,RKLB`).then(r=>r.json()),
+        fetch(`${BACKEND_URL}/api/quote?symbols=${HOLDING_SYMS.join(',')}`).then(r=>r.json()),
         fetch(`${BACKEND_URL}/api/krquote?codes=000660,005930,329180,034020,042700,064350,012450,005380`).then(r=>r.json()),
         fetch(`${BACKEND_URL}/api/news`).then(r=>r.json()).catch(()=>({success:false,error:"news endpoint 없음"})),
       ]);
@@ -740,68 +743,74 @@ function AppInner(){
                   <div style={{textAlign:"center",fontSize:9.5,color:C.inkSubtle,marginTop:10,lineHeight:1.5}}>{aiBrief?.method==="web_search" ? "🌐 Claude가 실제 웹 검색으로 가져온 정보야" : "🤖 Claude가 분석해서 작성한 정보야 (웹검색 미사용)"}</div>
             </div>
 
-            {/* 💼 내 보유종목 (실시간 수익률) */}
+            {/* 💼 내 보유종목 ({PORTFOLIO_LABEL}) */}
             {(()=>{
-              const fx = liveMacro?.usdkrw?.price || BUY_FX;
               const find = (sym)=> liveStocks?.items?.find(s=>s.code===sym && s.market==="US");
-              let totalCost=0, totalVal=0, hasData=false;
-              const rows = HOLDINGS.map(h=>{
-                const q=find(h.sym);
-                const shares=h.krAmount/(h.buyUsd*BUY_FX);
-                const curUsd=q?.price ?? null;
-                const curVal=curUsd!=null ? shares*curUsd*fx : null;
-                totalCost+=h.krAmount;
-                if(curVal!=null){ totalVal+=curVal; hasData=true; }
-                const pnlPct=curVal!=null ? (curVal/h.krAmount-1)*100 : null;
-                const pnl=curVal!=null ? curVal-h.krAmount : null;
-                return {h,q,curUsd,curVal,pnl,pnlPct,shares};
-              });
-              const totalPnl=hasData ? totalVal-totalCost : null;
-              const totalPct=hasData ? (totalVal/totalCost-1)*100 : null;
-              const tup=(totalPct||0)>=0;
+              const totalKr = HOLDINGS.reduce((a,h)=>a+h.krValue, 0);
+              const totalCost = HOLDINGS.reduce((a,h)=>a+(h.krValue/(1+h.returnPct/100)), 0);
+              const totalPnl = totalKr - totalCost;
+              const totalPct = totalCost>0 ? (totalKr/totalCost-1)*100 : 0;
+              const tup = totalPct>=0;
               return (
                 <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:14,marginBottom:12,overflow:"hidden"}}>
                   <div style={{padding:"12px 16px",borderBottom:`1px solid ${C.border}`,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                    <span style={{fontSize:14,fontWeight:700,letterSpacing:"-0.3px"}}>💼 내 보유종목</span>
+                    <span style={{fontSize:14,fontWeight:700,letterSpacing:"-0.3px"}}>💼 내 보유종목 <span style={{fontSize:9,color:C.inkSubtle,fontWeight:500,marginLeft:4}}>{PORTFOLIO_LABEL}</span></span>
                     {liveStocks?.fetchedAt && <span style={{fontSize:9.5,color:C.inkSubtle}}>{timeAgo(liveStocks.fetchedAt)}</span>}
                   </div>
-                  {/* 총 평가손익 */}
+                  {/* 총 평가 (스냅샷) */}
                   <div style={{padding:"14px 16px",borderBottom:`1px solid ${C.border}`,background:C.bg}}>
-                    <div style={{fontSize:10.5,color:C.inkMute,marginBottom:4}}>총 평가손익 (원금 ₩{FMT(Math.round(totalCost))})</div>
-                    {hasData ? (
-                      <div style={{display:"flex",alignItems:"baseline",gap:8}}>
-                        <span style={{fontFamily:MO,fontSize:22,fontWeight:800,color:tup?C.red:C.blue}}>{tup?"+":""}{FMT(Math.round(totalPnl))}원</span>
-                        <span style={{fontFamily:MO,fontSize:13,fontWeight:700,color:tup?C.red:C.blue}}>({tup?"+":""}{totalPct.toFixed(2)}%)</span>
-                      </div>
-                    ) : <div style={{fontSize:12,color:C.inkMute}}>🔄 갱신하면 실시간 평가</div>}
+                    <div style={{fontSize:10.5,color:C.inkMute,marginBottom:4}}>총 평가 (입력 시점 스냅샷)</div>
+                    <div style={{display:"flex",alignItems:"baseline",gap:8}}>
+                      <span style={{fontFamily:MO,fontSize:22,fontWeight:800,color:C.ink}}>₩{FMT(Math.round(totalKr))}</span>
+                      <span style={{fontFamily:MO,fontSize:13,fontWeight:700,color:tup?C.red:C.blue}}>({tup?"+":""}{totalPct.toFixed(2)}%)</span>
+                    </div>
+                    <div style={{fontSize:9,color:C.inkSubtle,marginTop:2}}>원금 ₩{FMT(Math.round(totalCost))} → 평가 ₩{FMT(Math.round(totalKr))} (수익 {tup?"+":""}₩{FMT(Math.round(totalPnl))})</div>
                   </div>
-                  {rows.map((r,i)=>{
-                    const up=(r.pnlPct||0)>=0;
-                    const col=up?C.red:C.blue;
+                  {HOLDINGS.map((h,i)=>{
+                    const q = find(h.sym);
+                    const snapUp = h.returnPct>=0;
+                    const snapCol = snapUp?C.red:C.blue;
+                    const todayUp = (q?.changePct||0)>=0;
+                    const todayCol = todayUp?C.red:C.blue;
                     return (
-                      <div key={i} style={{padding:"12px 16px",borderBottom:i<rows.length-1?`1px solid ${C.border}`:"none"}}>
+                      <div key={i} style={{padding:"12px 16px",borderBottom:i<HOLDINGS.length-1?`1px solid ${C.border}`:"none"}}>
                         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
                           <div style={{flex:1,minWidth:0}}>
-                            <div style={{fontSize:13,fontWeight:700,letterSpacing:"-0.3px"}}>{r.h.name} <span style={{fontSize:9,color:C.inkSubtle,fontWeight:500}}>🇺🇸 {r.h.sec}</span></div>
-                            <div style={{fontSize:9.5,color:C.inkSubtle,fontFamily:MO,marginTop:1}}>{r.shares.toFixed(2)}주 · 매수 ${r.h.buyUsd} → 현재 {r.curUsd!=null?`$${r.curUsd}`:"—"}</div>
+                            <div style={{fontSize:13,fontWeight:700,letterSpacing:"-0.3px"}}>
+                              {h.name} <span style={{fontFamily:MO,fontSize:10,color:C.inkSubtle,fontWeight:500}}>{h.sym}</span>
+                              {h.pick && <span style={{marginLeft:4,fontSize:10,color:C.amber}}>⭐</span>}
+                              <span style={{fontSize:9,color:C.inkSubtle,fontWeight:500,marginLeft:4}}>🇺🇸 {h.sec}</span>
+                            </div>
+                            <div style={{fontSize:9.5,color:C.inkSubtle,fontFamily:MO,marginTop:1}}>
+                              스냅샷 ₩{FMT(h.krValue)} <span style={{color:snapCol,fontWeight:700}}>({snapUp?"+":""}{h.returnPct.toFixed(2)}%)</span>
+                            </div>
                           </div>
                           <div style={{textAlign:"right"}}>
-                            <div style={{fontFamily:MO,fontSize:13,fontWeight:700}}>{r.curVal!=null?`₩${FMT(Math.round(r.curVal))}`:"—"}</div>
-                            <div style={{fontFamily:MO,fontSize:11,fontWeight:700,color:col,marginTop:1}}>{r.pnlPct!=null?`${up?"▲":"▼"} ${Math.abs(r.pnlPct).toFixed(2)}%`:"—"}</div>
+                            <div style={{fontFamily:MO,fontSize:13,fontWeight:700}}>{q?.price!=null?`$${FMT(q.price)}`:"—"}</div>
+                            <div style={{fontFamily:MO,fontSize:10.5,fontWeight:700,color:todayCol,marginTop:1}}>{q?.changePct!=null?`${todayUp?"▲":"▼"} ${Math.abs(q.changePct).toFixed(2)}% (오늘)`:"—"}</div>
                           </div>
                         </div>
-                        {/* 목표 참고선 (52주 고/저) */}
-                        {r.q?.low52w && r.q?.high52w && (
-                          <div style={{display:"flex",gap:6,fontSize:9.5,fontFamily:MO}}>
-                            <span style={{flex:1,color:C.blue,background:`${C.blue}12`,borderRadius:6,padding:"4px 8px"}}>📉 참고매수 ${r.q.low52w} <span style={{color:C.inkSubtle}}>(52주저)</span></span>
-                            <span style={{flex:1,color:C.red,background:`${C.red}12`,borderRadius:6,padding:"4px 8px",textAlign:"right"}}>참고매도 ${r.q.high52w} <span style={{color:C.inkSubtle}}>(52주고)</span> 📈</span>
-                          </div>
-                        )}
+                        {/* 52주 참고매수/매도 + 위치 */}
+                        {q?.low52w && q?.high52w && q?.price && (()=>{
+                          const pos = ((q.price-q.low52w)/(q.high52w-q.low52w))*100;
+                          return (
+                            <div>
+                              <div style={{display:"flex",gap:6,fontSize:9.5,fontFamily:MO,marginBottom:4}}>
+                                <span style={{flex:1,color:C.blue,background:`${C.blue}12`,borderRadius:6,padding:"4px 8px"}}>📉 참고매수 ${FMT(q.low52w)} <span style={{color:C.inkSubtle}}>(52주저)</span></span>
+                                <span style={{flex:1,color:C.red,background:`${C.red}12`,borderRadius:6,padding:"4px 8px",textAlign:"right"}}>참고매도 ${FMT(q.high52w)} <span style={{color:C.inkSubtle}}>(52주고)</span> 📈</span>
+                              </div>
+                              <div style={{position:"relative",height:4,background:C.bg,borderRadius:2,overflow:"hidden"}}>
+                                <div style={{position:"absolute",left:`${Math.min(100,Math.max(0,pos))}%`,top:-2,width:2,height:8,background:C.amber,transform:"translateX(-1px)"}}/>
+                              </div>
+                              <div style={{fontSize:8.5,color:C.inkSubtle,marginTop:2,textAlign:"center"}}>52주 {pos.toFixed(0)}% 지점 {pos>=90?"(신고가 근처)":pos<=20?"(저점 근처)":""}</div>
+                            </div>
+                          );
+                        })()}
                       </div>
                     );
                   })}
                   <div style={{padding:"8px 16px 10px",fontSize:9,color:C.inkSubtle,lineHeight:1.5}}>
-                    ※ 매수단가는 5/21 미국 종가 추정 · 환율 {Math.round(fx)}원 적용 · 참고선은 52주 고저(분석용, 추천 아님)
+                    ※ 평가금·수익률은 입력 시점 스냅샷 · 현재가/오늘 변동은 실시간 · 참고선은 52주 고저 (분석용, 추천 아님)
                   </div>
                 </div>
               );
