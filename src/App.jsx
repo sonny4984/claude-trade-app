@@ -340,6 +340,7 @@ function AppInner(){
     catch { return null; }
   });
   const [scanLoading,setScanLoading] = useState(false);
+  const [aiAnalysis,setAiAnalysis] = useState({}); // {sym: {text|error|loading, at}}
   const [openNews,setOpenNews] = useState(null);
   const [time,setTime] = useState(new Date("2026-04-23T08:35:00"));
 
@@ -585,6 +586,30 @@ function AppInner(){
     setTimeout(()=>setToast(null), 3500);
   };
 
+  // 🤖 Gemini AI 종목 분석
+  const fetchAi = async (h) => {
+    if (aiAnalysis[h.sym]?.loading) return;
+    setAiAnalysis(p => ({...p, [h.sym]: {loading:true}}));
+    try {
+      const q = liveStocks?.items?.find(s => s.code === h.sym);
+      const topics = (summarizeNews(liveNews?.items) || []).slice(0,3).map(t => t.cat).join(', ');
+      const r = await fetch(`${BACKEND_URL}/api/ai`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          sym: h.sym, name: h.name, sec: h.sec,
+          price: q?.price, changePct: q?.changePct,
+          high52w: q?.high52w, low52w: q?.low52w,
+          newsTopics: topics,
+        }),
+      }).then(x => x.json());
+      if (r?.success) setAiAnalysis(p => ({...p, [h.sym]: {text:r.analysis, at:Date.now()}}));
+      else setAiAnalysis(p => ({...p, [h.sym]: {error: r?.error || '실패'}}));
+    } catch (e) {
+      setAiAnalysis(p => ({...p, [h.sym]: {error: e.message}}));
+    }
+  };
+
   // 🔍 종목 스캐너 — 한국 주요 종목 일괄 스캔
   const fetchScan = async () => {
     setScanLoading(true);
@@ -806,12 +831,67 @@ function AppInner(){
                             </div>
                           );
                         })()}
+                        {/* 🤖 AI 분석 (Gemini) */}
+                        <div style={{marginTop:8}}>
+                          {!aiAnalysis[h.sym] && (
+                            <button onClick={()=>fetchAi(h)} style={{width:"100%",background:`${C.coral}15`,border:`1px solid ${C.coral}40`,color:C.coral,fontFamily:KR,fontSize:11,fontWeight:700,padding:"7px 10px",borderRadius:6,cursor:"pointer"}}>🤖 AI 분석 보기</button>
+                          )}
+                          {aiAnalysis[h.sym]?.loading && (
+                            <div style={{textAlign:"center",fontSize:10.5,color:C.inkMute,padding:"8px 10px"}}>🤖 Gemini 분석 중...</div>
+                          )}
+                          {aiAnalysis[h.sym]?.text && (
+                            <div style={{padding:"9px 12px",background:`${C.coral}10`,borderLeft:`3px solid ${C.coral}`,borderRadius:6,fontSize:11,lineHeight:1.6,color:C.ink,whiteSpace:"pre-wrap"}}>
+                              <span style={{color:C.coral,fontWeight:700}}>🤖 AI: </span>{aiAnalysis[h.sym].text}
+                            </div>
+                          )}
+                          {aiAnalysis[h.sym]?.error && (
+                            <div style={{padding:"7px 10px",background:`${C.blue}10`,border:`1px solid ${C.blue}30`,borderRadius:6,fontSize:10,color:C.blue}}>⚠ AI 실패: {aiAnalysis[h.sym].error.slice(0,80)}</div>
+                          )}
+                        </div>
                       </div>
                     );
                   })}
                   <div style={{padding:"8px 16px 10px",fontSize:9,color:C.inkSubtle,lineHeight:1.5}}>
                     ※ 평가금·수익률은 입력 시점 스냅샷 · 현재가/오늘 변동은 실시간 · 참고선은 52주 고저 (분석용, 추천 아님)
                   </div>
+                </div>
+              );
+            })()}
+
+            {/* 🥧 섹터 분산 분석 */}
+            {(()=>{
+              const total = HOLDINGS.reduce((a,h)=>a+h.krValue, 0);
+              const bySec = {};
+              HOLDINGS.forEach(h => { bySec[h.sec] = (bySec[h.sec]||0) + h.krValue; });
+              const sectors = Object.entries(bySec).map(([sec,v])=>({sec, v, pct: v/total*100})).sort((a,b)=>b.v-a.v);
+              const top = sectors[0];
+              const concentrated = top.pct >= 40;
+              const palette = [C.coral, C.amber, C.red, C.blue, "#7a9cc6", "#9ea3ad"];
+              return (
+                <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:14,marginBottom:12,overflow:"hidden"}}>
+                  <div style={{padding:"12px 16px",borderBottom:`1px solid ${C.border}`}}>
+                    <div style={{fontSize:14,fontWeight:700,letterSpacing:"-0.3px"}}>🥧 섹터 분산</div>
+                    <div style={{fontSize:9.5,color:C.inkSubtle,marginTop:2}}>보유종목 섹터별 비중 · 총 ₩{FMT(Math.round(total))}</div>
+                  </div>
+                  {/* 가로 막대 (전체 100% 분할) */}
+                  <div style={{display:"flex",height:10,margin:"12px 16px 6px",borderRadius:5,overflow:"hidden",background:C.bg}}>
+                    {sectors.map((s,i)=>(
+                      <div key={s.sec} style={{width:`${s.pct}%`,background:palette[i%palette.length]}} title={`${s.sec} ${s.pct.toFixed(1)}%`}/>
+                    ))}
+                  </div>
+                  {sectors.map((s,i)=>(
+                    <div key={s.sec} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 16px",borderBottom:i<sectors.length-1?`1px solid ${C.border}`:"none"}}>
+                      <div style={{width:10,height:10,borderRadius:2,background:palette[i%palette.length],flexShrink:0}}/>
+                      <div style={{flex:1,fontSize:12,fontWeight:700}}>{s.sec}</div>
+                      <div style={{fontFamily:MO,fontSize:11,color:C.inkMute}}>₩{FMT(Math.round(s.v))}</div>
+                      <div style={{fontFamily:MO,fontSize:12,fontWeight:700,minWidth:46,textAlign:"right"}}>{s.pct.toFixed(1)}%</div>
+                    </div>
+                  ))}
+                  {concentrated && (
+                    <div style={{margin:"8px 16px 12px",padding:"8px 10px",background:`${C.amber}15`,border:`1px solid ${C.amber}40`,borderRadius:8,fontSize:10.5,color:C.amber,fontWeight:600,lineHeight:1.5}}>
+                      ⚠ <b>{top.sec}</b> 비중 {top.pct.toFixed(1)}% — 한 섹터 집중도 높음, 분산 점검 권장
+                    </div>
+                  )}
                 </div>
               );
             })()}
