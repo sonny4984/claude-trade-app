@@ -1,4 +1,5 @@
 import { useState, useEffect, Component } from "react";
+import { downloadReportDocx } from "./reportDoc.js";
 
 /*
  * 사랑의 교실 결과통보서 도우미
@@ -285,6 +286,30 @@ function todayStr() {
   return `${d.getFullYear()}. ${p(d.getMonth() + 1)}. ${p(d.getDate())}.`;
 }
 
+// 직전 관리번호에서 다음 번호를 제안 (예: 2026-080 → 2026-081)
+function suggestNextDocNo(prev) {
+  const m = String(prev || "").match(/^(.*?)(\d+)\s*$/);
+  if (m) {
+    const n = String(Number(m[2]) + 1).padStart(m[2].length, "0");
+    return m[1] + n;
+  }
+  return `${new Date().getFullYear()}-`;
+}
+
+// 생년월일 6자리(YYMMDD) → 연나이 (통보서 표기 방식: 올해 - 출생연도)
+function calcAge(birth6) {
+  const yy = Number(String(birth6).slice(0, 2));
+  const now = new Date().getFullYear();
+  const year = 2000 + yy > now ? 1900 + yy : 2000 + yy;
+  return now - year;
+}
+
+const DEFAULT_SESSIONS = [
+  { date: "", content: "오리엔테이션 및 미술치료(이수)", hours: "3시간" },
+  { date: "", content: "독서치료를 통한 감정표현 프로그램(이수)", hours: "4시간" },
+  { date: "", content: "공감능력 및 자아존중감 향상 프로그램(이수)", hours: "3시간" },
+];
+
 /* ── 메인 ────────────────────────────────────────────────────── */
 function AppInner() {
   const [images, setImages] = useState([]); // {preview, base64, mimeType}
@@ -303,6 +328,27 @@ function AppInner() {
   const [apiKey, setApiKey] = useState(() => localStorage.getItem("gemini_api_key") || "");
   const [showSettings, setShowSettings] = useState(false);
   const [toast, setToast] = useState("");
+
+  // 통보서(최종 제출 문서) 정보 — 기관·프로그램 정보는 기기에 저장해 재사용
+  const [form, setForm] = useState(() => {
+    let saved = {};
+    try {
+      saved = JSON.parse(localStorage.getItem("report_form") || "{}");
+    } catch (e) {}
+    return {
+      recipient: saved.recipient || "상산 경찰서",
+      docNo: suggestNextDocNo(saved.docNo),
+      birth: "",
+      age: "",
+      job: "중학생",
+      offense: "특별교육",
+      org: saved.org || "(사단법인)한국청소년지원센터장",
+      sessions: saved.sessions && saved.sessions.length ? saved.sessions : DEFAULT_SESSIONS,
+    };
+  });
+  const setF = (k, v) => setForm((f) => ({ ...f, [k]: v }));
+  const setSessionRow = (i, k, v) =>
+    setForm((f) => ({ ...f, sessions: f.sessions.map((s, j) => (j === i ? { ...s, [k]: v } : s)) }));
 
   useEffect(() => {
     localStorage.setItem("counselor_name", counselor);
@@ -405,10 +451,40 @@ function AppInner() {
 
   const canGenerate = images.length > 0 && !loading;
 
+  // 통보서에 들어갈 전체 데이터
+  const reportData = () => ({
+    ...form,
+    name,
+    participation: result?.participation || "적극",
+    opinion: result?.opinion || "",
+    counselor,
+    issueDate: dateStr,
+  });
+
+  const saveFormDefaults = () => {
+    localStorage.setItem(
+      "report_form",
+      JSON.stringify({ recipient: form.recipient, docNo: form.docNo, org: form.org, sessions: form.sessions })
+    );
+  };
+
+  const downloadDocx = async () => {
+    try {
+      saveFormDefaults();
+      await downloadReportDocx(reportData());
+      setToast("✓ 파일이 저장되었어요. 한글2020에서 열어 확인하세요!");
+      setTimeout(() => setToast(""), 5000);
+    } catch (e) {
+      setError("파일 생성 오류: " + (e.message || e));
+    }
+  };
+
+
   return (
     <div style={{ fontFamily: KR, background: C.bg, minHeight: "100vh", color: C.ink }}>
       {/* 헤더 */}
       <header
+        className="no-print"
         style={{
           background: C.surface,
           borderBottom: `1px solid ${C.border}`,
@@ -434,7 +510,7 @@ function AppInner() {
         </button>
       </header>
 
-      <main style={{ maxWidth: 640, margin: "0 auto", padding: "16px 16px 120px" }}>
+      <main className="no-print" style={{ maxWidth: 640, margin: "0 auto", padding: "16px 16px 120px" }}>
         {/* 설정 패널 */}
         {showSettings && (
           <Card>
@@ -714,6 +790,81 @@ function AppInner() {
               </div>
             </Card>
 
+            {/* STEP 4: 통보서 완성 */}
+            <Card>
+              <StepTitle n="4" t="통보서 완성 (한글 제출용)" />
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                <Field label="수신 (경찰서)">
+                  <input value={form.recipient} onChange={(e) => setF("recipient", e.target.value)} style={inputStyle} />
+                </Field>
+                <Field label="관리번호">
+                  <input value={form.docNo} onChange={(e) => setF("docNo", e.target.value)} placeholder="예: 2026-081" style={inputStyle} />
+                </Field>
+                <Field label="생년월일 (6자리)">
+                  <input
+                    value={form.birth}
+                    inputMode="numeric"
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      setForm((f) => ({ ...f, birth: v, age: /^\d{6}$/.test(v) ? String(calcAge(v)) : f.age }));
+                    }}
+                    placeholder="예: 100803"
+                    style={inputStyle}
+                  />
+                </Field>
+                <Field label="나이 (자동계산)">
+                  <input value={form.age} onChange={(e) => setF("age", e.target.value)} style={inputStyle} />
+                </Field>
+                <Field label="직업">
+                  <input value={form.job} onChange={(e) => setF("job", e.target.value)} placeholder="예: 중학생" style={inputStyle} />
+                </Field>
+                <Field label="비행내용">
+                  <input value={form.offense} onChange={(e) => setF("offense", e.target.value)} placeholder="예: 특별교육" style={inputStyle} />
+                </Field>
+              </div>
+
+              <div style={{ marginTop: 14 }}>
+                <Label>교육내용 (일자 · 내용 · 시간)</Label>
+                {form.sessions.map((s, i) => (
+                  <div key={i} style={{ display: "grid", gridTemplateColumns: "86px 1fr 62px", gap: 6, marginBottom: 6 }}>
+                    <input
+                      value={s.date}
+                      onChange={(e) => setSessionRow(i, "date", e.target.value)}
+                      placeholder="07월08일"
+                      style={{ ...inputStyle, padding: "9px 8px", fontSize: 13 }}
+                    />
+                    <input
+                      value={s.content}
+                      onChange={(e) => setSessionRow(i, "content", e.target.value)}
+                      style={{ ...inputStyle, padding: "9px 10px", fontSize: 13 }}
+                    />
+                    <input
+                      value={s.hours}
+                      onChange={(e) => setSessionRow(i, "hours", e.target.value)}
+                      placeholder="3시간"
+                      style={{ ...inputStyle, padding: "9px 8px", fontSize: 13 }}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ marginTop: 8 }}>
+                <Field label="발급 기관장 명의">
+                  <input value={form.org} onChange={(e) => setF("org", e.target.value)} style={inputStyle} />
+                </Field>
+              </div>
+
+              <div style={{ marginTop: 14 }}>
+                <button onClick={downloadDocx} style={{ ...btnPrimary, width: "100%", padding: "13px" }}>
+                  📄 한글용 통보서 파일 받기
+                </button>
+              </div>
+              <div style={{ fontSize: 12, color: C.inkSubtle, marginTop: 10, lineHeight: 1.55 }}>
+                받은 파일(.docx)은 한글2020에서 바로 열립니다. 내용 확인 후 저장·출력하고, 직인은 기존 방식대로
+                날인해 주세요. 수신·관리번호·교육내용은 다음에도 자동으로 기억됩니다.
+              </div>
+            </Card>
+
             <button onClick={generate} disabled={loading} style={{ ...btnGhost, width: "100%", padding: "13px", marginTop: 10 }}>
               🔄 다시 생성
             </button>
@@ -723,6 +874,7 @@ function AppInner() {
 
       {toast && (
         <div
+          className="no-print"
           style={{
             position: "fixed",
             bottom: 28,
@@ -830,6 +982,102 @@ function Field({ label, children }) {
       <div style={{ fontSize: 12.5, color: C.inkMute, marginBottom: 6, fontWeight: 600 }}>{label}</div>
       {children}
     </label>
+  );
+}
+
+/* ── 인쇄 전용 통보서 (화면에는 숨김, 인쇄할 때만 A4 양식으로 표시) ── */
+function PrintSheet({ data }) {
+  const td = { border: "1px solid #000", padding: "4px 7px", textAlign: "center", verticalAlign: "middle" };
+  const th = { ...td, fontWeight: 700 };
+  const p = data.participation || "적극";
+  const mark = (v) => (p === v ? "✔" : "   ");
+  const sessions = [...(data.sessions || [])];
+  while (sessions.length < 5) sessions.push({ date: "", content: "", hours: "" });
+  const opinionParas = String(data.opinion || "").split(/\n+/).filter((t) => t.trim());
+  return (
+    <div
+      className="print-sheet"
+      style={{ fontFamily: "'Batang', '바탕', serif", color: "#000", fontSize: "10.5pt", lineHeight: 1.55 }}
+    >
+      <div style={{ textAlign: "center", fontSize: "15pt", fontWeight: 800, marginBottom: "5mm" }}>
+        「전문기관 연계 선도프로그램(사랑의 교실)」 교육결과 통보서
+      </div>
+      <table style={{ borderCollapse: "collapse", width: "100%", tableLayout: "fixed" }}>
+        <colgroup>
+          {Array.from({ length: 24 }).map((_, i) => (
+            <col key={i} style={{ width: `${100 / 24}%` }} />
+          ))}
+        </colgroup>
+        <tbody>
+          <tr>
+            <td colSpan={4} style={th}>수    신</td>
+            <td colSpan={8} style={td}>{data.recipient}</td>
+            <td colSpan={4} style={th}>관리번호</td>
+            <td colSpan={8} style={td}>{data.docNo}</td>
+          </tr>
+          <tr>
+            <td colSpan={24} style={th}>인    적    사    항</td>
+          </tr>
+          <tr>
+            <td colSpan={4} style={th}>성    명</td>
+            <td colSpan={4} style={td}>{data.name}</td>
+            <td colSpan={4} style={th}>생년월일</td>
+            <td colSpan={4} style={td}>{data.birth}</td>
+            <td colSpan={4} style={th}>나    이</td>
+            <td colSpan={4} style={td}>{data.age}</td>
+          </tr>
+          <tr>
+            <td colSpan={4} style={th}>직    업</td>
+            <td colSpan={8} style={td}>{data.job}</td>
+            <td colSpan={4} style={th}>비행내용</td>
+            <td colSpan={8} style={td}>{data.offense}</td>
+          </tr>
+          <tr>
+            <td colSpan={24} style={th}>교    육    내    용</td>
+          </tr>
+          <tr>
+            <td colSpan={4} style={th}>교육일자</td>
+            <td colSpan={14} style={th}>내용 및 결과</td>
+            <td colSpan={3} style={th}>운영시간</td>
+            <td colSpan={3} style={th}>강사명</td>
+          </tr>
+          {sessions.map((s, i) => (
+            <tr key={i}>
+              <td colSpan={4} style={td}>{s.date || "월      일"}</td>
+              <td colSpan={14} style={{ ...td, textAlign: "left" }}>{s.content}</td>
+              <td colSpan={3} style={td}>{s.hours}</td>
+              <td colSpan={3} style={td}>{s.date || s.content ? data.counselor : ""}</td>
+            </tr>
+          ))}
+          <tr>
+            <td colSpan={24} style={th}>종    합    의    견</td>
+          </tr>
+          <tr>
+            <td colSpan={4} style={th}>참여태도</td>
+            <td colSpan={20} style={{ ...td, textAlign: "left" }}>
+              {`적극(  ${mark("적극")}  ),      보통(  ${mark("보통")}  ),      소극(  ${mark("소극")}  )`}
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={4} style={th}>의    견</td>
+            <td colSpan={20} style={{ ...td, textAlign: "left", height: "85mm", padding: "8px 10px" }}>
+              {opinionParas.map((t, i) => (
+                <div key={i} style={{ textAlign: "justify", marginBottom: "3mm", textIndent: "0.5em" }}>
+                  {t}
+                </div>
+              ))}
+              <div style={{ textAlign: "right", marginTop: "6mm" }}>상담사    {data.counselor}      </div>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={24} style={{ ...td, fontSize: "12pt", padding: "7px" }}>{data.issueDate}</td>
+          </tr>
+          <tr>
+            <td colSpan={24} style={{ ...td, fontSize: "15pt", fontWeight: 800, padding: "8px" }}>{data.org}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   );
 }
 

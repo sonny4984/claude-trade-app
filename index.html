@@ -25,6 +25,13 @@
       }
       #root { min-height: 100vh; }
       textarea, input { font-family: inherit; }
+      .print-sheet { display: none; }
+      @media print {
+        @page { size: A4 portrait; margin: 12mm 11mm; }
+        .no-print { display: none !important; }
+        .print-sheet { display: block !important; }
+        html, body { background: #fff !important; color: #000 !important; }
+      }
     </style>
   </head>
   <body>
