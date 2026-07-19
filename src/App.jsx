@@ -13,7 +13,9 @@ import { useState, useEffect, Component } from "react";
 const KR = "'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif";
 
 // Vision 지원 모델 (앞에서부터 시도, 없으면 다음 모델로 자동 대체)
-const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"];
+// gemini-flash-latest: 항상 최신 Flash를 가리키는 별칭. 신규 발급 키는 구버전
+// 모델(2.5/2.0)을 못 쓰는 경우가 있어 별칭을 1순위로 둔다.
+const MODELS = ["gemini-flash-latest", "gemini-2.5-flash", "gemini-2.0-flash"];
 
 // 밝고 따뜻한 팔레트
 const C = {
@@ -204,9 +206,14 @@ async function callGeminiVision(prompt, images, apiKey) {
   let lastErr = null;
   for (const model of MODELS) {
     try {
+      // 키는 URL이 아닌 헤더로 전달 (신형 AQ. 키·구형 AIza 키 모두 지원)
       const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
-        { method: "POST", headers: { "Content-Type": "application/json" }, body }
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "X-goog-api-key": apiKey },
+          body,
+        }
       );
       const data = await res.json();
       if (!res.ok) {
@@ -437,7 +444,7 @@ function AppInner() {
                 type="password"
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
-                placeholder="AIzaSy..."
+                placeholder="발급받은 키 붙여넣기 (AIza… 또는 AQ.…)"
                 style={inputStyle}
               />
               <button
