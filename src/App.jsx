@@ -283,7 +283,7 @@ class ErrBoundary extends Component {
 function todayStr() {
   const d = new Date();
   const p = (n) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}. ${p(d.getMonth() + 1)}. ${p(d.getDate())}.`;
+  return `${d.getFullYear()}. ${p(d.getMonth() + 1)}. ${p(d.getDate())}`;
 }
 
 // 직전 관리번호에서 다음 번호를 제안 (예: 2026-080 → 2026-081)
@@ -336,7 +336,7 @@ function AppInner() {
       saved = JSON.parse(localStorage.getItem("report_form") || "{}");
     } catch (e) {}
     return {
-      recipient: saved.recipient || "상산 경찰서",
+      recipient: saved.recipient || "삼산 경찰서",
       docNo: suggestNextDocNo(saved.docNo),
       birth: "",
       age: "",
