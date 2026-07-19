@@ -409,6 +409,8 @@ const DEFAULT_SESSIONS = [
 /* ── 메인 ────────────────────────────────────────────────────── */
 function AppInner() {
   const [images, setImages] = useState([]); // {preview, base64, mimeType}
+  const [zoomIdx, setZoomIdx] = useState(null); // 크게 보기 중인 사진 번호
+  const [zoomed, setZoomed] = useState(false); // 크게 보기에서 원본 크기 확대 여부
   const [name, setName] = useState("");
   const [session, setSession] = useState("");
   const [dateStr, setDateStr] = useState(todayStr());
@@ -678,10 +680,35 @@ function AppInner() {
           <StepTitle n="1" t="활동지 사진 올리기" />
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(92px, 1fr))", gap: 10, marginTop: 4 }}>
             {images.map((img, i) => (
-              <div key={i} style={{ position: "relative", aspectRatio: "3/4", borderRadius: 10, overflow: "hidden", border: `1px solid ${C.border}` }}>
+              <div
+                key={i}
+                onClick={() => {
+                  setZoomIdx(i);
+                  setZoomed(false);
+                }}
+                style={{ position: "relative", aspectRatio: "3/4", borderRadius: 10, overflow: "hidden", border: `1px solid ${C.border}`, cursor: "zoom-in" }}
+              >
                 <img src={img.preview} alt={`활동지 ${i + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <span
+                  style={{
+                    position: "absolute",
+                    bottom: 4,
+                    right: 4,
+                    background: "rgba(0,0,0,0.55)",
+                    color: "#fff",
+                    borderRadius: 6,
+                    fontSize: 11,
+                    padding: "2px 6px",
+                  }}
+                >
+                  🔍 크게
+                </span>
                 <button
-                  onClick={() => removeImage(i)}
+                  aria-label={`사진 ${i + 1} 삭제`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeImage(i);
+                  }}
                   style={{
                     position: "absolute",
                     top: 4,
@@ -734,9 +761,123 @@ function AppInner() {
             </label>
           </div>
           <div style={{ fontSize: 12, color: C.inkSubtle, marginTop: 10 }}>
-            여러 장(앞·뒷면)을 함께 올릴 수 있어요. 글씨가 선명하게 나오도록 밝은 곳에서 찍어 주세요.
+            여러 장(앞·뒷면)을 함께 올릴 수 있어요. 올린 사진을 누르면 크게 확인할 수 있어요.
           </div>
         </Card>
+
+        {/* 사진 크게 보기 (썸네일 탭 → 전체화면, 화면 탭 → 확대/축소) */}
+        {zoomIdx !== null && images[zoomIdx] && (
+          <div
+            onClick={() => setZoomIdx(null)}
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "rgba(0,0,0,0.93)",
+              zIndex: 1000,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "12px 16px",
+                color: "#fff",
+                flexShrink: 0,
+              }}
+            >
+              <span style={{ fontSize: 14, fontWeight: 700 }}>
+                활동지 {zoomIdx + 1} / {images.length}
+              </span>
+              <button
+                aria-label="크게 보기 닫기"
+                onClick={() => setZoomIdx(null)}
+                style={{
+                  background: "rgba(255,255,255,0.18)",
+                  color: "#fff",
+                  border: 0,
+                  borderRadius: 999,
+                  width: 36,
+                  height: 36,
+                  fontSize: 19,
+                  cursor: "pointer",
+                  lineHeight: 1,
+                }}
+              >
+                ×
+              </button>
+            </div>
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{ flex: 1, overflow: "auto", WebkitOverflowScrolling: "touch", display: "flex", minHeight: 0 }}
+            >
+              <img
+                src={images[zoomIdx].preview}
+                alt={`활동지 ${zoomIdx + 1} 크게 보기`}
+                onClick={() => setZoomed((z) => !z)}
+                style={
+                  zoomed
+                    ? { width: "190%", maxWidth: "none", margin: "auto", cursor: "zoom-out" }
+                    : { maxWidth: "100%", maxHeight: "100%", margin: "auto", objectFit: "contain", cursor: "zoom-in" }
+                }
+              />
+            </div>
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 14,
+                padding: "10px 12px 18px",
+                color: "#fff",
+                flexShrink: 0,
+              }}
+            >
+              {images.length > 1 && (
+                <button
+                  onClick={() => {
+                    setZoomed(false);
+                    setZoomIdx((zoomIdx - 1 + images.length) % images.length);
+                  }}
+                  style={{
+                    background: "rgba(255,255,255,0.18)",
+                    color: "#fff",
+                    border: 0,
+                    borderRadius: 8,
+                    padding: "8px 14px",
+                    fontSize: 14,
+                    cursor: "pointer",
+                  }}
+                >
+                  ‹ 이전
+                </button>
+              )}
+              <span style={{ fontSize: 12, opacity: 0.8 }}>사진을 누르면 {zoomed ? "다시 축소" : "글씨 크기로 확대"}</span>
+              {images.length > 1 && (
+                <button
+                  onClick={() => {
+                    setZoomed(false);
+                    setZoomIdx((zoomIdx + 1) % images.length);
+                  }}
+                  style={{
+                    background: "rgba(255,255,255,0.18)",
+                    color: "#fff",
+                    border: 0,
+                    borderRadius: 8,
+                    padding: "8px 14px",
+                    fontSize: 14,
+                    cursor: "pointer",
+                  }}
+                >
+                  다음 ›
+                </button>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* STEP 2: 기본 정보 */}
         <Card>
