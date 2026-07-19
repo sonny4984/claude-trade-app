@@ -151,11 +151,13 @@ ${exampleText}
 
 [출력 형식]
 반드시 아래 JSON 형식으로만 답하세요. 다른 설명은 붙이지 마세요.
+키 순서를 꼭 지키세요(name → participation → opinion → answers).
+answers의 "a" 값 안에서는 큰따옴표(") 대신 작은따옴표(')를 사용하세요.
 {
   "name": "활동지 이름 칸에서 읽은 이름(없으면 빈 문자열)",
   "participation": "적극|보통|소극 중 하나",
-  "answers": [{"q": "문항(그림 관찰은 '그림')", "a": "읽어낸 손글씨 답 또는 그림 관찰 내용"}],
-  "opinion": "종합의견 서술 문단"
+  "opinion": "종합의견 서술 문단",
+  "answers": [{"q": "문항(그림 관찰은 '그림')", "a": "읽어낸 손글씨 답 또는 그림 관찰 내용"}]
 }`;
 }
 
@@ -201,7 +203,7 @@ async function callGeminiVision(prompt, images, apiKey) {
   }
   const body = JSON.stringify({
     contents: [{ parts }],
-    generationConfig: { temperature: 0.4, responseMimeType: "application/json" },
+    generationConfig: { temperature: 0.4, responseMimeType: "application/json", maxOutputTokens: 8192 },
   });
 
   let lastErr = null;
@@ -242,15 +244,109 @@ async function callGeminiVision(prompt, images, apiKey) {
   throw lastErr || new Error("생성에 실패했습니다.");
 }
 
-function parseResult(text) {
-  let t = text.trim();
-  // ```json ... ``` 방어적 제거
-  t = t.replace(/^```(json)?/i, "").replace(/```$/i, "").trim();
-  // 첫 { 부터 마지막 } 까지
+/* ── 관대한 JSON 파서 ────────────────────────────────────────────
+ * 응답이 토큰 한도로 중간에 잘리거나, 따옴표·제어문자가 어긋나도
+ * 복구를 시도한다. 어떤 경우에도 JSON.parse 원시 오류를 밖으로
+ * 던지지 않는다(실패 시 null → 호출부에서 자동 재시도). */
+function tryParse(t) {
+  try {
+    const v = JSON.parse(t);
+    return v && typeof v === "object" ? v : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+// 문자열 내부 제어문자를 이스케이프하면서 괄호·문자열 상태를 추적
+function cleanScan(t) {
+  let out = "";
+  const stack = [];
+  let inStr = false;
+  let esc = false;
+  for (let i = 0; i < t.length; i++) {
+    const c = t[i];
+    if (inStr) {
+      if (esc) {
+        esc = false;
+        out += c;
+      } else if (c === "\\") {
+        esc = true;
+        out += c;
+      } else if (c === '"') {
+        inStr = false;
+        out += c;
+      } else if (c === "\n") out += "\\n";
+      else if (c === "\r") continue;
+      else if (c === "\t") out += "\\t";
+      else out += c;
+      continue;
+    }
+    if (c === '"') {
+      inStr = true;
+      out += c;
+    } else if (c === "{" || c === "[") {
+      stack.push(c === "{" ? "}" : "]");
+      out += c;
+    } else if (c === "}" || c === "]") {
+      stack.pop();
+      out += c;
+    } else out += c;
+  }
+  return { out, stack, inStr };
+}
+
+// 열린 문자열/괄호를 닫아서 파싱 가능한 형태로 마감
+function closeUp(t) {
+  const { out, stack, inStr } = cleanScan(t);
+  let s = out;
+  if (inStr) s += '"';
+  for (let i = stack.length - 1; i >= 0; i--) {
+    s = s.replace(/,\s*$/, "").replace(/"[^"]*"\s*:\s*$/, "").replace(/,\s*$/, "");
+    s += stack[i];
+  }
+  return s;
+}
+
+function repairJson(raw) {
+  let t = String(raw ?? "").trim().replace(/```(json)?/gi, "").trim();
   const s = t.indexOf("{");
-  const e = t.lastIndexOf("}");
-  if (s !== -1 && e !== -1) t = t.slice(s, e + 1);
-  return JSON.parse(t);
+  if (s > 0) t = t.slice(s);
+  if (!t.startsWith("{")) return null;
+  let v = tryParse(t) || tryParse(closeUp(t));
+  if (v) return v;
+  // 문자열 밖 콤마 위치를 모아 뒤에서부터 잘라 가며 복구
+  const commas = [];
+  let inStr = false;
+  let esc = false;
+  for (let i = 0; i < t.length; i++) {
+    const c = t[i];
+    if (inStr) {
+      if (esc) esc = false;
+      else if (c === "\\") esc = true;
+      else if (c === '"') inStr = false;
+    } else if (c === '"') inStr = true;
+    else if (c === ",") commas.push(i);
+  }
+  for (let k = commas.length - 1, n = 0; k >= 0 && n < 80; k--, n++) {
+    v = tryParse(closeUp(t.slice(0, commas[k])));
+    if (v) return v;
+  }
+  return null;
+}
+
+function parseResult(text) {
+  const v = repairJson(text);
+  if (v) return v;
+  // 마지막 안전망: 원문에서 핵심 필드만 직접 추출
+  const pick = (key) => {
+    const m = String(text ?? "").match(new RegExp(`"${key}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)`));
+    return m ? m[1].replace(/\\n/g, "\n").replace(/\\"/g, '"').replace(/\\\\/g, "\\") : "";
+  };
+  const opinion = pick("opinion");
+  if (opinion.trim()) {
+    return { name: pick("name"), participation: pick("participation") || "적극", answers: [], opinion: opinion.trim() };
+  }
+  return null;
 }
 
 /* ── 오류 경계 ───────────────────────────────────────────────── */
@@ -400,8 +496,22 @@ function AppInner() {
     setResult(null);
     try {
       const prompt = buildPrompt({ name, notes });
-      const text = await callGeminiVision(prompt, images, apiKey);
-      const parsed = parseResult(text);
+      // 응답 JSON이 잘리거나 어긋나면 복구하고, 그래도 안 되면 한 번 더 자동 재시도
+      let parsed = null;
+      let lastErr = null;
+      for (let attempt = 0; attempt < 2 && !parsed; attempt++) {
+        try {
+          const text = await callGeminiVision(prompt, images, apiKey);
+          parsed = parseResult(text);
+          if (parsed && !String(parsed.opinion || "").trim()) parsed = null;
+        } catch (e) {
+          lastErr = e;
+          if (/API 키/i.test(e.message || "")) throw e;
+        }
+      }
+      if (!parsed) {
+        throw lastErr || new Error("AI 응답을 정리하지 못했어요. 잠시 후 버튼을 한 번만 다시 눌러 주세요.");
+      }
       const part = ["적극", "보통", "소극"].includes(parsed.participation)
         ? parsed.participation
         : "적극";
