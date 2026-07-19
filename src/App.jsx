@@ -295,10 +295,27 @@ function AppInner() {
 
   const [apiKey, setApiKey] = useState(() => localStorage.getItem("gemini_api_key") || "");
   const [showSettings, setShowSettings] = useState(false);
+  const [toast, setToast] = useState("");
 
   useEffect(() => {
     localStorage.setItem("counselor_name", counselor);
   }, [counselor]);
+
+  // 원클릭 키 등록: 주소 뒤에 #key=AIza... 를 붙여 열면 키가 자동 저장됩니다.
+  // (키는 주소창의 # 뒤에만 있어 서버로 전송되지 않으며, 저장 즉시 주소에서 지웁니다)
+  useEffect(() => {
+    const m = location.hash.match(/[#&]key=([^&\s]+)/);
+    if (m) {
+      const k = decodeURIComponent(m[1]).trim();
+      if (k) {
+        localStorage.setItem("gemini_api_key", k);
+        setApiKey(k);
+        setToast("✓ API 키가 자동으로 저장되었어요. 이제 그냥 쓰시면 됩니다!");
+        setTimeout(() => setToast(""), 6000);
+      }
+      history.replaceState(null, "", location.pathname + location.search);
+    }
+  }, []);
 
   const addFiles = async (fileList) => {
     setError("");
@@ -434,6 +451,11 @@ function AppInner() {
                 저장
               </button>
             </div>
+            {apiKey && (
+              <div style={{ fontSize: 12.5, color: C.green, marginTop: 8, fontWeight: 700 }}>
+                ✓ 키가 등록되어 있어요
+              </div>
+            )}
             <div style={{ fontSize: 12, color: C.inkSubtle, marginTop: 8, lineHeight: 1.6 }}>
               키는 이 기기(브라우저)에만 저장되며 서버로 전송되지 않습니다.
               <br />
@@ -691,6 +713,29 @@ function AppInner() {
           </div>
         )}
       </main>
+
+      {toast && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: 28,
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: C.green,
+            color: "#fff",
+            padding: "13px 22px",
+            borderRadius: 999,
+            fontSize: 14.5,
+            fontWeight: 700,
+            boxShadow: "0 6px 20px rgba(0,0,0,0.22)",
+            zIndex: 50,
+            maxWidth: "92vw",
+            textAlign: "center",
+          }}
+        >
+          {toast}
+        </div>
+      )}
     </div>
   );
 }
