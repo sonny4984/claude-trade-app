@@ -534,11 +534,11 @@ function AppInner() {
             >
               <span style={{ fontSize: 26 }}>＋</span>
               사진 추가
+              {/* capture 속성을 빼서 카메라/갤러리를 선택할 수 있게 한다 */}
               <input
                 type="file"
                 accept="image/*"
                 multiple
-                capture="environment"
                 onChange={(e) => {
                   addFiles(e.target.files);
                   e.target.value = "";
