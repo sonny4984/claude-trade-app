@@ -14,9 +14,16 @@ import { downloadReportDocx } from "./reportDoc.js";
 const KR = "'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif";
 
 // Vision 지원 모델 (앞에서부터 시도, 없으면 다음 모델로 자동 대체)
-// gemini-flash-latest: 항상 최신 Flash를 가리키는 별칭. 신규 발급 키는 구버전
-// 모델(2.5/2.0)을 못 쓰는 경우가 있어 별칭을 1순위로 둔다.
-const MODELS = ["gemini-flash-latest", "gemini-2.5-flash", "gemini-2.0-flash"];
+// 앞의 모델이 붐비거나(429/503) 폐기되면(404) 순서대로 다음 모델로 넘어간다.
+// 2026-08 기준 실제 호출로 확인한 사용 가능 모델만 남긴다.
+// (구버전 2.5/2.0-flash는 폐기되어 404가 나므로 제외)
+const MODELS = [
+  "gemini-3.6-flash",
+  "gemini-3.5-flash",
+  "gemini-3-flash-preview",
+  "gemini-flash-latest",
+  "gemini-3.1-flash-lite",
+];
 
 // 밝고 따뜻한 팔레트
 const C = {
@@ -215,16 +222,20 @@ async function callGeminiVision(prompt, images, apiKey, onStatus) {
     generationConfig: { temperature: 0.4, responseMimeType: "application/json", maxOutputTokens: 8192 },
   });
 
-  const BACKOFF = [0, 1500, 4000]; // 같은 모델에서 다시 시도하기까지 기다리는 시간
+  // 한 모델이 붐빈다고 거기서 기다리지 않는다. 먼저 모든 모델을 빠르게
+  // 한 바퀴 돌아 여유 있는 모델을 찾고, 전부 붐빌 때만 잠시 쉬었다 재시도한다.
+  const ROUND_WAIT = [0, 1500, 4000];
+  const dead = new Set(); // 폐기(404)된 모델은 다시 부르지 않는다
   let lastErr = null;
   let busy = false; // 혼잡 때문에 실패했는지
 
-  for (const model of MODELS) {
-    for (let attempt = 0; attempt < BACKOFF.length; attempt++) {
-      if (BACKOFF[attempt]) {
-        onStatus?.("AI 서버가 붐벼서 자동으로 다시 시도하는 중이에요…");
-        await sleep(BACKOFF[attempt]);
-      }
+  for (let round = 0; round < ROUND_WAIT.length; round++) {
+    if (ROUND_WAIT[round]) {
+      onStatus?.("AI 서버가 붐벼서 자동으로 다시 시도하는 중이에요…");
+      await sleep(ROUND_WAIT[round]);
+    }
+    for (const model of MODELS) {
+      if (dead.has(model)) continue;
       try {
         // 키는 URL이 아닌 헤더로 전달 (신형 AQ. 키·구형 AIza 키 모두 지원)
         const res = await fetch(
@@ -248,12 +259,13 @@ async function callGeminiVision(prompt, images, apiKey, onStatus) {
             throw fatalError("Gemini API 키가 올바르지 않습니다. 설정(⚙️)에서 다시 확인해 주세요.");
           if (res.status === 401 || res.status === 403)
             throw fatalError("Gemini API 키에 권한이 없습니다. 설정(⚙️)에서 키를 다시 확인해 주세요.");
-          // 모델을 못 찾으면 기다릴 필요 없이 바로 다음 모델로
-          if (res.status === 404 || /not found|not supported/i.test(msg)) {
+          // 폐기됐거나 못 쓰는 모델 → 이번 실행에서 다시 부르지 않는다
+          if (res.status === 404 || /not found|not supported|no longer available/i.test(msg)) {
+            dead.add(model);
             lastErr = new Error(msg);
-            break;
+            continue;
           }
-          // 혼잡·일시 장애 → 잠시 뒤 자동 재시도
+          // 혼잡·일시 장애 → 기다리지 말고 곧바로 다음 모델을 시도
           if (RETRYABLE_STATUS.has(res.status) || BUSY_TEXT.test(msg)) {
             busy = true;
             lastErr = new Error(msg);
