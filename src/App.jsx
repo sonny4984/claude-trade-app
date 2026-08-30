@@ -194,9 +194,18 @@ function readImage(file) {
   });
 }
 
-/* ── Gemini Vision 호출 (모델 자동 대체) ──────────────────────── */
-async function callGeminiVision(prompt, images, apiKey) {
-  if (!apiKey) throw new Error("먼저 Gemini API 키를 입력해 주세요. (하단 ⚙️ 설정)");
+/* ── Gemini Vision 호출 (혼잡 시 자동 재시도 + 모델 자동 대체) ──
+ * AI 서버가 붐비면(과부하·요청량 초과·일시 장애) 영어 오류를 그대로
+ * 보여 주는 대신, 잠시 기다렸다 스스로 다시 시도하고 다른 모델로도
+ * 넘어간다. 그래도 안 되면 우리말 안내문만 남긴다. */
+const RETRYABLE_STATUS = new Set([408, 425, 429, 500, 502, 503, 504]);
+const BUSY_TEXT = /overload|unavailable|rate.?limit|quota|too many|try again|high demand|busy/i;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+// 재시도해도 소용없는 오류(키·권한 등)는 즉시 사용자에게 알린다
+const fatalError = (m) => Object.assign(new Error(m), { fatal: true });
+
+async function callGeminiVision(prompt, images, apiKey, onStatus) {
+  if (!apiKey) throw fatalError("먼저 Gemini API 키를 입력해 주세요. (하단 ⚙️ 설정)");
   const parts = [{ text: prompt }];
   for (const img of images) {
     parts.push({ inline_data: { mime_type: img.mimeType, data: img.base64 } });
@@ -206,42 +215,78 @@ async function callGeminiVision(prompt, images, apiKey) {
     generationConfig: { temperature: 0.4, responseMimeType: "application/json", maxOutputTokens: 8192 },
   });
 
+  const BACKOFF = [0, 1500, 4000]; // 같은 모델에서 다시 시도하기까지 기다리는 시간
   let lastErr = null;
+  let busy = false; // 혼잡 때문에 실패했는지
+
   for (const model of MODELS) {
-    try {
-      // 키는 URL이 아닌 헤더로 전달 (신형 AQ. 키·구형 AIza 키 모두 지원)
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "X-goog-api-key": apiKey },
-          body,
+    for (let attempt = 0; attempt < BACKOFF.length; attempt++) {
+      if (BACKOFF[attempt]) {
+        onStatus?.("AI 서버가 붐벼서 자동으로 다시 시도하는 중이에요…");
+        await sleep(BACKOFF[attempt]);
+      }
+      try {
+        // 키는 URL이 아닌 헤더로 전달 (신형 AQ. 키·구형 AIza 키 모두 지원)
+        const res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "X-goog-api-key": apiKey },
+            body,
+          }
+        );
+        let data = null;
+        try {
+          data = await res.json();
+        } catch {
+          data = null;
         }
-      );
-      const data = await res.json();
-      if (!res.ok) {
-        const msg = data?.error?.message || "생성에 실패했습니다.";
-        // 모델을 못 찾는 경우만 다음 모델로 대체, 그 외(키 오류 등)는 즉시 표시
-        if (res.status === 404 || /not found|not supported|is not found/i.test(msg)) {
-          lastErr = new Error(msg);
+
+        if (!res.ok) {
+          const msg = data?.error?.message || `요청이 실패했습니다. (${res.status})`;
+          if (res.status === 400 && /api.?key/i.test(msg))
+            throw fatalError("Gemini API 키가 올바르지 않습니다. 설정(⚙️)에서 다시 확인해 주세요.");
+          if (res.status === 401 || res.status === 403)
+            throw fatalError("Gemini API 키에 권한이 없습니다. 설정(⚙️)에서 키를 다시 확인해 주세요.");
+          // 모델을 못 찾으면 기다릴 필요 없이 바로 다음 모델로
+          if (res.status === 404 || /not found|not supported/i.test(msg)) {
+            lastErr = new Error(msg);
+            break;
+          }
+          // 혼잡·일시 장애 → 잠시 뒤 자동 재시도
+          if (RETRYABLE_STATUS.has(res.status) || BUSY_TEXT.test(msg)) {
+            busy = true;
+            lastErr = new Error(msg);
+            continue;
+          }
+          throw fatalError(msg);
+        }
+
+        const text = (data?.candidates?.[0]?.content?.parts || []).map((p) => p.text || "").join("");
+        if (!text) {
+          // 빈 응답도 일시적일 수 있으니 한 번 더 시도
+          lastErr = new Error("응답이 비어 있습니다.");
           continue;
         }
-        if (res.status === 400 && /api key/i.test(msg))
-          throw new Error("Gemini API 키가 올바르지 않습니다. 설정에서 다시 확인해 주세요.");
-        throw new Error(msg);
+        return text;
+      } catch (e) {
+        if (e?.fatal) throw e;
+        // 네트워크 끊김 등은 혼잡과 같이 취급해 자동 재시도
+        lastErr = e;
+        busy = true;
       }
-      const text = (data.candidates?.[0]?.content?.parts || [])
-        .map((p) => p.text || "")
-        .join("");
-      if (!text) throw new Error("응답이 비어 있습니다. 사진을 다시 확인해 주세요.");
-      return text;
-    } catch (e) {
-      lastErr = e;
-      // 네트워크/기타 오류는 다음 모델로 굳이 재시도하지 않음
-      if (!/not found|not supported/i.test(e.message)) throw e;
     }
   }
-  throw lastErr || new Error("생성에 실패했습니다.");
+
+  if (busy) {
+    throw Object.assign(
+      new Error(
+        "지금 AI 서버가 많이 붐벼요. 자동으로 여러 번 시도했지만 실패했습니다. 1~2분 뒤 ‘종합의견 만들기’를 다시 눌러 주세요. (올린 사진과 입력한 내용은 그대로 있어요)"
+      ),
+      { busy: true }
+    );
+  }
+  throw lastErr || new Error("생성에 실패했습니다. 잠시 후 다시 시도해 주세요.");
 }
 
 /* ── 관대한 JSON 파서 ────────────────────────────────────────────
@@ -418,6 +463,7 @@ function AppInner() {
   const [notes, setNotes] = useState("");
 
   const [loading, setLoading] = useState(false);
+  const [busyNote, setBusyNote] = useState(""); // 서버 혼잡으로 자동 재시도 중일 때 안내
   const [error, setError] = useState("");
   const [result, setResult] = useState(null); // {participation, opinion, answers, name}
   const [showAnswers, setShowAnswers] = useState(false);
@@ -495,6 +541,7 @@ function AppInner() {
       return;
     }
     setLoading(true);
+    setBusyNote("");
     setResult(null);
     try {
       const prompt = buildPrompt({ name, notes });
@@ -503,12 +550,13 @@ function AppInner() {
       let lastErr = null;
       for (let attempt = 0; attempt < 2 && !parsed; attempt++) {
         try {
-          const text = await callGeminiVision(prompt, images, apiKey);
+          const text = await callGeminiVision(prompt, images, apiKey, setBusyNote);
           parsed = parseResult(text);
           if (parsed && !String(parsed.opinion || "").trim()) parsed = null;
         } catch (e) {
           lastErr = e;
-          if (/API 키/i.test(e.message || "")) throw e;
+          // 키 오류나 '서버 혼잡'은 더 눌러도 소용없으니 바로 안내
+          if (e?.fatal || e?.busy) throw e;
         }
       }
       if (!parsed) {
@@ -528,6 +576,7 @@ function AppInner() {
       setError(e.message || "생성 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
+      setBusyNote("");
     }
   };
 
@@ -930,6 +979,23 @@ function AppInner() {
         >
           {loading ? "생성 중… 잠시만요 ⏳" : "종합의견 만들기"}
         </button>
+
+        {loading && busyNote && (
+          <div
+            style={{
+              marginTop: 12,
+              background: "#fff7e6",
+              color: "#8a5a00",
+              padding: "12px 14px",
+              borderRadius: 12,
+              fontSize: 14,
+              lineHeight: 1.5,
+            }}
+          >
+            ⏳ {busyNote}
+            <div style={{ fontSize: 12, marginTop: 4, opacity: 0.85 }}>창을 닫지 말고 조금만 기다려 주세요.</div>
+          </div>
+        )}
 
         {error && (
           <div style={{ marginTop: 12, background: "#fdecec", color: C.red, padding: "12px 14px", borderRadius: 12, fontSize: 14, lineHeight: 1.5 }}>
