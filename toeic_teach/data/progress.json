@@ -1,9 +1,69 @@
 {
-  "x2-107": {"history": [{"date": "2026-10-23", "result": "wrong"}], "streak": 0, "next_review": "2026-10-23"},
-  "x2-108": {"history": [{"date": "2026-10-23", "result": "wrong"}], "streak": 0, "next_review": "2026-10-23"},
-  "x2-114": {"history": [{"date": "2026-10-23", "result": "wrong"}], "streak": 0, "next_review": "2026-10-23"},
-  "x2-115": {"history": [{"date": "2026-10-23", "result": "wrong"}], "streak": 0, "next_review": "2026-10-23"},
-  "x2-124": {"history": [{"date": "2026-10-23", "result": "wrong"}], "streak": 0, "next_review": "2026-10-23"},
-  "x2-126": {"history": [{"date": "2026-10-23", "result": "wrong"}], "streak": 0, "next_review": "2026-10-23"},
-  "t5-107": {"history": [], "streak": 0, "next_review": "2026-10-23", "note": "문제 출제됨, 답변 대기 중"}
+  "x2-107": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "wrong"
+      }
+    ],
+    "streak": 0,
+    "next_review": "2026-10-23"
+  },
+  "x2-108": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "wrong"
+      }
+    ],
+    "streak": 0,
+    "next_review": "2026-10-23"
+  },
+  "x2-114": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "wrong"
+      }
+    ],
+    "streak": 0,
+    "next_review": "2026-10-23"
+  },
+  "x2-115": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "wrong"
+      }
+    ],
+    "streak": 0,
+    "next_review": "2026-10-23"
+  },
+  "x2-124": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "wrong"
+      }
+    ],
+    "streak": 0,
+    "next_review": "2026-10-23"
+  },
+  "x2-126": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "wrong"
+      }
+    ],
+    "streak": 0,
+    "next_review": "2026-10-24",
+    "variant_ok": "2026-10-23"
+  },
+  "t5-107": {
+    "history": [],
+    "streak": 0,
+    "next_review": "2026-10-23",
+    "note": "문제 출제됨, 답변 대기 중 (건너뜀)"
+  }
 }
