@@ -173,5 +173,89 @@
     "status": "미숙",
     "streak": 0,
     "next_review": "2026-10-23"
+  },
+  "tA-110": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "wrong",
+        "note": "while→where"
+      }
+    ],
+    "status": "미숙",
+    "streak": 0,
+    "next_review": "2026-10-23"
+  },
+  "tA-116": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "wrong",
+        "note": "to work→to working"
+      }
+    ],
+    "status": "미숙",
+    "streak": 0,
+    "next_review": "2026-10-23"
+  },
+  "tA-117": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "wrong",
+        "note": "Because of→In order to"
+      }
+    ],
+    "status": "미숙",
+    "streak": 0,
+    "next_review": "2026-10-23"
+  },
+  "tA-126": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "wrong",
+        "note": "stable→tangible"
+      }
+    ],
+    "status": "미숙",
+    "streak": 0,
+    "next_review": "2026-10-23"
+  },
+  "tA-113": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "correct-unsure",
+        "note": "정답이나 clean 자/타동사 근거 불확실"
+      }
+    ],
+    "status": "부분 숙달",
+    "streak": 0,
+    "next_review": "2026-10-24"
+  },
+  "tA-119": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "correct-unsure",
+        "note": "정답이나 '?' 표시, go into effect 연어 불안"
+      }
+    ],
+    "status": "부분 숙달",
+    "streak": 0,
+    "next_review": "2026-10-24"
+  },
+  "tA-109": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "correct?",
+        "note": "원이 A·B에 걸쳐 있어 A로 읽음, 확인 대기"
+      }
+    ],
+    "status": "확인 대기",
+    "streak": 0,
+    "next_review": "2026-10-24"
   }
 }
