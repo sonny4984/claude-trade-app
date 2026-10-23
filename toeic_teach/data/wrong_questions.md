@@ -73,3 +73,23 @@ ANS: C. 근거: "the supervisor informs the division director of major personnel
 
 ## Part 5 ETS Test 6/8/9 + Test 5 + 모의 100Q 오답: data/part5_cards.json 의 mcq 26개 (id 예: t6-101 ... t9-128)
 모의 100Q 오답 번호: 15,17,31,35,36,37,40,43,45,46,50,54,56,59,64,67,86,87,88,89,91,98 / 애매 68,74 / 타이핑 실수(제외) 38,39,79,84
+
+## 10/23 추가: P5 104-128 사진 캡처 (iPad 스크린샷, 시험 회차 [?]) — 동하가 직접 설명한 오답 6개
+### X2-107 [시제·정동사] Dr. Carlton Major ______ the role of organizing a research team for the upcoming expedition to study plant life.
+(A) undertake (B) to undertake (C) undertaking (D) will undertake
+ANS: D. MINE: A. RULE: 주어 뒤 빈칸 = 정동사 자리. 단수 주어에 s 없는 원형(A)·to V(B)·-ing 단독(C) 탈락 → will + 원형만 남음. upcoming 은 확인용
+### X2-108 [어휘] For several days, leaders from both businesses ______ about the details of the agreement for the corporate merger.
+(A) deliberated (B) observed (C) moderated (D) interfered
+ANS: A. MINE: C. RULE: deliberate about = 숙고·논의하다. moderate = 사회 보다/완화하다(타동사), observe = 관찰·준수(타동사), interfere = with/in
+### X2-114 [시제·부정] The reporter who wrote the article ______ the name of the person who wants to remain anonymous.
+(A) release (B) will not release (C) will release (D) released
+ANS: B [?] 정답지 확인 필요(논리상 B). MINE: D. RULE: 단수 주어 → (A) 탈락. 익명 원함 → 공개 안 함 → not 있는 B. will 은 증거를 따로 찾는 게 아니라 B 선지 구성품
+### X2-115 [품사] ... they must be tested to ensure that they are ______ for use by consumers.
+(A) safe (B) safety (C) saves (D) safely
+ANS: A. MINE: B. RULE: be + 빈칸 = 형용사. -ty/-ity = 명사 접미사. safe(형)/safety(명)/safely(부)
+### X2-124 [어휘·분사] Following the workshop, marketing team members showed ______ improvement in their development of creative ideas and concepts.
+(A) substantial (B) satisfied (C) motivated (D) received
+ANS: A. MINE: B. RULE: satisfied/motivated = 사람이 느끼는 -ed. improvement(사물) 수식 불가. substantial(크기) vs sustained(기간)
+### X2-126 [어휘·연어] The guest lecturer stated that strong skills in mathematics and knowledge of tax laws are ______ to become a competent accountant.
+(A) loyal (B) necessary (C) available (D) memorable
+ANS: B. MINE: C (be available 익숙해서). RULE: be necessary/essential to V ✔. "necessary 는 to 와 안 어울린다"는 판단이 틀림 → 익숙한 짝 함정
