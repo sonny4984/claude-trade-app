@@ -1,6 +1,6 @@
 """Build an original TOEIC-style RC practice test PDF (Parts 5-7, 100 questions) + answer sheet + Korean answer key.
-Usage: python3 tools/make_mock.py  -> data/workbook/RC_Mock1_*.pdf"""
-import random, sys
+Usage: python3 tools/make_mock.py [items_module] [number]  -> data/workbook/RC_Mock<number>_*.pdf"""
+import importlib, random, sys
 from pathlib import Path
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
@@ -14,13 +14,16 @@ from reportlab.platypus import (BaseDocTemplate, PageTemplate, Frame, Paragraph,
 
 root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root / "tools"))
-from mock1_items import PART5, PART6, PART7
+MOD = sys.argv[1] if len(sys.argv) > 1 else "mock1_items"
+NUM = sys.argv[2] if len(sys.argv) > 2 else "1"
+_m = importlib.import_module(MOD)
+PART5, PART6, PART7 = _m.PART5, _m.PART6, _m.PART7
 
 pdfmetrics.registerFont(TTFont("NG", str(root / "tools/fonts/NanumGothic-Regular.ttf")))
 pdfmetrics.registerFont(TTFont("NG-B", str(root / "tools/fonts/NanumGothic-Bold.ttf")))
 out_dir = root / "data/workbook"
 out_dir.mkdir(parents=True, exist_ok=True)
-NAME = "RC Practice Test 1"
+NAME = f"RC Practice Test {NUM}"
 
 PW, PH = A4
 LM = RM = 14 * mm
@@ -56,9 +59,9 @@ def place(items, seed):
             out.append((stem, order, p, note))
     return out
 
-p5 = place(PART5, 501)
-p6_flat = place([q for s in PART6 for q in s["qs"]], 601)
-p7_flat = place([q for s in PART7 for q in s["qs"]], 701)
+p5 = place(PART5, 500 + int(NUM))
+p6_flat = place([q for s in PART6 for q in s["qs"]], 600 + int(NUM))
+p7_flat = place([q for s in PART7 for q in s["qs"]], 700 + int(NUM))
 key = []  # (num, letter, correct_text, note)
 
 def q_flow(num, stem, ch, width_note=False):
@@ -143,7 +146,7 @@ class Box(Flowable):
             y -= h; f.drawOn(c, 5 * mm, y); y -= 2
 
 # ---------- document
-doc = BaseDocTemplate(str(out_dir / "RC_Mock1_Test.pdf"), pagesize=A4, leftMargin=LM, rightMargin=RM, topMargin=TM,
+doc = BaseDocTemplate(str(out_dir / f"RC_Mock{NUM}_Test.pdf"), pagesize=A4, leftMargin=LM, rightMargin=RM, topMargin=TM,
                       bottomMargin=BM, title=NAME, author="")
 HDR = 50 * mm
 def cols(top):
@@ -288,7 +291,7 @@ story += [NextPageTemplate("sheet"), PageBreak(), Sheet()]
 doc.build(story)
 
 # ---------- answer key (Korean)
-kd = BaseDocTemplate(str(out_dir / "RC_Mock1_Answers.pdf"), pagesize=A4, leftMargin=LM, rightMargin=RM, topMargin=TM,
+kd = BaseDocTemplate(str(out_dir / f"RC_Mock{NUM}_Answers.pdf"), pagesize=A4, leftMargin=LM, rightMargin=RM, topMargin=TM,
                      bottomMargin=BM, title=f"{NAME} Answer Key")
 kd.addPageTemplates([PageTemplate(id="k", frames=full, onPage=lambda c, d: (c.setFont("NG", 8), c.drawCentredString(PW / 2, 9 * mm, str(d.page))))])
 h = st(fontName="NG-B", fontSize=14, leading=19, spaceAfter=4)
@@ -312,4 +315,4 @@ for label, lo, hi in (("Part 5", 101, 130), ("Part 6", 131, 146), ("Part 7", 147
 kd.build(ks)
 from collections import Counter
 print("answers:", Counter(k[1] for k in key), "total", len(key))
-(out_dir / "RC_Mock1_key.txt").write_text(" ".join(f"{a}{b}" for a, b, _, _ in key), encoding="utf-8")
+(out_dir / f"RC_Mock{NUM}_key.txt").write_text(" ".join(f"{a}{b}" for a, b, _, _ in key), encoding="utf-8")
