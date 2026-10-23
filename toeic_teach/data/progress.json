@@ -257,5 +257,51 @@
     "status": "확인 대기",
     "streak": 0,
     "next_review": "2026-10-24"
+  },
+  "m1-131": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "wrong",
+        "note": "during 선택(뒤가 절인데 전치사). while 옆에 'will X' 메모 = 시간절 규칙을 주절의 will에 잘못 적용"
+      }
+    ],
+    "status": "미숙",
+    "streak": 0,
+    "next_review": "2026-10-23"
+  },
+  "m1-133": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "wrong",
+        "note": "will exit 선택. when 시간절 안은 현재형(exit)"
+      }
+    ],
+    "status": "미숙",
+    "streak": 0,
+    "next_review": "2026-10-23"
+  },
+  "m1-132": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "correct"
+      }
+    ],
+    "status": "부분 숙달",
+    "streak": 1,
+    "next_review": "2026-10-24"
+  },
+  "m1-134": {
+    "history": [
+      {
+        "date": "2026-10-23",
+        "result": "correct"
+      }
+    ],
+    "status": "부분 숙달",
+    "streak": 1,
+    "next_review": "2026-10-24"
   }
 }
