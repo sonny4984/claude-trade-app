@@ -1,3 +1,4 @@
 images/
 tools/fonts/
 data/official/
+__pycache__/
