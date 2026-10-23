@@ -24,7 +24,7 @@ LM, TM = 13 * mm, 12 * mm
 W = A4[0] - 2 * LM
 cols = [9 * mm, 36 * mm, 14 * mm, 38 * mm, W - 97 * mm]
 n = len(items)
-row_h = (A4[1] - 2 * TM - 8 * mm - 6 * mm) / n
+row_h = min(16 * mm, (A4[1] - 2 * TM - 8 * mm - 6 * mm) / n)
 cell = ParagraphStyle("c", fontName="Helvetica", fontSize=8, leading=10)
 big = ParagraphStyle("b", fontName="Helvetica-Bold", fontSize=10, leading=12)
 head = ParagraphStyle("h", fontName="Helvetica-Bold", fontSize=9, leading=11)
