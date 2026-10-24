@@ -422,3 +422,56 @@ TEST_F = [
  ("Please ------- to the manual if the machine displays an error message.",
   ["refer", "consult", "check", "review"], "뒤 to → refer to(자동사). consult/check/review는 타동사라 to 없이 목적어."),
 ]
+
+# Test G (10/24): TEST 14 오답 7개 × 3 변형 = 21문항. 같은 규칙, 다른 문장.
+TEST_G = [
+ # 111 Upon + V-ing / 전치사 vs 접속사
+ ("------- reading the instructions, Mr. Cho started to assemble the shelves.",
+  ["After", "Once", "As soon as", "When"], "빈칸 뒤 V-ing → 전치사 After. Once/As soon as/When은 접속사라 주어+동사 필요(분사구문으로 쓰이는 경우는 시험에서 거의 정답이 아님)."),
+ ("Please sign the visitor log ------- entering the laboratory.",
+  ["before", "unless", "whereas", "even if"], "빈칸 뒤 V-ing → 전치사 before. unless/whereas/even if는 접속사."),
+ ("------- completing the registration form, applicants will receive a confirmation number.",
+  ["Upon", "Once", "As soon as", "Whenever"], "빈칸 뒤 V-ing → 전치사 Upon(~하자마자). 나머지는 모두 절을 요구하는 접속사."),
+ # 112 familiarize oneself with
+ ("All volunteers should ------- themselves with the emergency exits before the event starts.",
+  ["familiarize", "remind", "notify", "inform"], "oneself 뒤 with → familiarize oneself with(~을 숙지하다). remind/notify/inform은 '사람 + of/about'."),
+ ("Ms. Reyes asked the new interns to ------- themselves with the filing system.",
+  ["acquaint", "introduce", "present", "accustom"], "acquaint oneself with(~에 익숙해지다). introduce는 '소개하다'(A to B)."),
+ ("Drivers must ------- themselves with local traffic rules before renting a car abroad.",
+  ["familiarize", "comply", "agree", "contribute"], "familiarize oneself with. comply with는 규칙 '자체를 따르다'(재귀대명사 없이)."),
+ # 114 Each of + 단수
+ ("Each of the conference rooms ------- a projector and a whiteboard.",
+  ["has", "have", "are having", "were"], "Each of + 복수명사 → 단수 동사 has. rooms에 끌려 have 고르면 함정."),
+ ("One of the keys to the storage room ------- missing from the box.",
+  ["is", "are", "were", "have been"], "One of + 복수명사 → 단수 동사 is. keys/room에 끌려 are를 고르면 함정."),
+ ("Neither of the two proposals ------- approved by the committee last week.",
+  ["was", "were", "have been", "are"], "Neither of + 복수명사 → 단수 동사. last week → 과거 수동 was."),
+ # 121 as soon as 의미
+ ("Passengers may board the ferry ------- the crew gives the signal.",
+  ["as soon as", "so that", "even though", "in case"], "신호가 주어지자마자 승선 → as soon as. so that(목적), even though(양보), in case(대비)는 의미 불가."),
+ ("We will send the updated schedule ------- the final dates are confirmed.",
+  ["as soon as", "unless", "although", "whereas"], "확정되자마자 → as soon as(시간 현재형). unless/although/whereas는 의미 불가."),
+ ("Please arrive early ------- you have time to complete the safety check.",
+  ["so that", "as soon as", "even if", "whether"], "목적(~하도록) → so that. 121과 반대로 so that이 정답인 문제. 의미로 가르는 연습."),
+ # 125 whose
+ ("The manager ------- team exceeded its target will receive a special bonus.",
+  ["whose", "who", "which", "whom"], "빈칸 뒤 명사(team) + 동사 → 소유격 whose."),
+ ("Customers ------- orders were delayed will receive a ten percent refund.",
+  ["whose", "who", "whom", "that"], "빈칸 뒤 명사(orders) + 동사 → 소유격 whose."),
+ ("Anyone ------- wants to join the tour should register at the front desk.",
+  ["who", "whose", "whom", "which"], "빈칸 뒤 바로 동사(wants) = 주어가 빠짐 → 주격 who. whose와 구별하는 문제."),
+ # 126 audit/findings 어휘
+ ("The accountants will submit the ------- of the annual audit to the board next week.",
+  ["findings", "features", "fittings", "foundations"], "audit(회계 감사)의 '결과' → findings. 126과 같은 어휘."),
+ ("The ------- of the customer survey showed that most clients prefer online support.",
+  ["results", "rules", "routes", "records"], "survey(설문)가 보여준 것 → results(결과). rules(규칙), routes(경로), records(기록)."),
+ ("An independent firm was hired to conduct an ------- of the company's financial records.",
+  ["audit", "advice", "approval", "outline"], "financial records를 조사하는 것 → audit(감사). 어휘: audit = 회계 감사."),
+ # 130 exclusively
+ ("The discount applies ------- to members who sign up before May 1.",
+  ["exclusively", "efficiently", "eventually", "extensively"], "'~에게만' 적용 → exclusively. efficiently(효율적으로), eventually(결국), extensively(광범위하게)."),
+ ("This parking area is reserved ------- for visitors of the east building.",
+  ["exclusively", "occasionally", "previously", "roughly"], "reserved(예약된) + 방문객 '전용' → exclusively. occasionally(가끔), previously(이전에), roughly(대략)."),
+ ("The report was written ------- for internal use and may not be shared outside the company.",
+  ["solely", "closely", "barely", "nearly"], "'오로지 ~용' → solely(= exclusively). closely(밀접하게), barely(거의 ~않는), nearly(거의)."),
+]
