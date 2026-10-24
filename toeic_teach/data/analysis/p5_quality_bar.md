@@ -53,3 +53,12 @@
 - 전치사/접속사 구분 3개 (before, as a result of, or)
 - 수동태 2개, 목적어 자리 2개 (everyone)
 - 연어 6개 (certified to, fill in for, forecast, beyond, memorable, in writing)
+
+## Test D 결과 (10/24): 21/30 (-9)
+오답: 103 aimed at, 105 promoted, 110 launch, 111 ample, 112 entirely, 115 by, 120 renowned, 123 permitted, 127 would have started
+진단: 품사 자리 문제는 거의 다 맞음(오답 1개). 새는 곳은 **"빈칸 단어 뒤에 뭐가 붙나"** 7개
+- 뒤에 목적어 → 타동사 (launch O / proceed X), has been ___ → 수동 가능한 타동사 (promoted O / resigned X)
+- 뒤 전치사 짝: renowned for / aware of, aimed at / as of + 날짜, plenty of
+- 뒤 to V: be permitted to V
+- 뒤 날짜 vs 기간: by + 날짜 / within + 기간
+다음 세트(E) 전에 "뒤 단서" 드릴 필요.

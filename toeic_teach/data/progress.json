@@ -675,5 +675,113 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-10-25"
+ },
+ "tD-103": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "aimed at + V-ing (as of는 날짜/시점)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "tD-105": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "has been promoted to (resign 자동사, 수동 불가)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "tD-110": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "launch + 목적어 (proceed 자동사 → proceed with)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "tD-111": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "ample time (plenty of)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "tD-112": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "is made entirely from (수동 뒤 부사)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "tD-115": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "by + 날짜 마감 (within + 기간)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "tD-120": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "renowned for (aware of)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "tD-123": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "be permitted to V (available = 시간이 되는)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "tD-127": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "Had p.p. 도치 → would have p.p."
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
  }
 }
