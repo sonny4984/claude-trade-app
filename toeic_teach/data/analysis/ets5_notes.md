@@ -115,3 +115,16 @@
 - ★ receipt(가운데 정렬 영수증), 경비 정산 form(밑줄 기입 + 필기체 서명), 검사 report(굵은 선 구획 표)
 - ★ MEMO 검은 라벨, job description(부서명 2줄 + 대문자 직책), schedule(밑줄 소제목)
 - ★ 세리프 굵은 기사 헤드라인 + 회색 띠 + By line
+
+## Test 6 (인쇄 170-197) ※ 업로드 PDF는 196-200 지문 직전(인쇄 195쪽)까지. Test 7-10은 미업로드
+- P5 유형 집계 (30):
+  - 의미 어휘 9: perform(a new work), goals(financial ~), available(online ordering), cover(front ~ of magazine), fewer(flight delays), determine(survey → satisfaction), roughly(+금액), exceptional(quality), expenses(associated with repairing), registration(class fills up), control(every aspect)
+  - 품사 9: polite(be especially + 형), reliable(a more ~ + 명), objectively(V + O + 부), elaborately(is ~ decorated), assignment(first ~ at), widest(the ~ selection), style(writing ~ 복합명사), collaboratively(work ~ with), verified(has been ~ by)
+  - 전치사/접속사 5: following(+the debate), as(serve as), despite(+being), Because of(+its use), rather than(+p.p.)
+  - 대명사 2: her(소유격), Anyone who
+  - 동사 형태 1: revealed(동사 자리, today)
+  - 수량 부사 2: nearly all, Almost 4,000
+- 관찰: **의미 어휘 비중이 Test 1-5보다 높음(9개)**. 단 정답 근거가 항상 문장 안에 있음 (fills up quickly → prompt registration, 비용 associated with repairing → expenses).
+- 숫자 앞 부사 2문항(nearly/Almost/roughly) — 숫자 보이면 almost/nearly/roughly/approximately 후보.
+- P6: notice(equipment, 삽입=무료 안내, permitted, can be) / article(implemented 시제-recently, each of which, 삽입=제한시간, as well) / e-mail(carry out, 삽입=폐쇄 기간, leads, inconvenience) / notice(As a result, should designate, that(recommended that), 삽입 "Doing so...").
+- P7: 147-148 ad(세리프 박스) / 149-151 news article(좁은 단, 동의어 driven→caused) / 152-153 letter(레터헤드, NOT) / 154-157 letter(누구=property manager, NOT, 삽입) / 158-159 gray e-mail(Attachment 클립) / 160-161 text(태블릿, "Consider it done") / 162-164 blog(스크롤, 삽입) / 165-168 notice(✓ 체크 불릿, 동의어 space→area) / 169-171 article 2단 / 172-175 chat(말풍선 아이콘) / 176-180 gray e-mail×2 / 181-185 E-Mail Message×2(동의어 note→be aware, 시각 연계 7:30) / 186-190 announcement+*E-mail*+web(연계: native plants only → 라벤더 탈락) / 191-195 ad(번호 조건 1-4)+e-mail+*E-mail*(조건 연계).
