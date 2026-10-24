@@ -22,7 +22,7 @@
 | IMG_1819 (p44) | IMG_1820 (p45) | 191-195 | 기사(Orange Bay Kitchen) + 후기(Tamika Peterkin) + 이메일(Vea Smith) 삼중지문 | **195** (Head Chef Adio Brown, 매니저↔셰프) |
 | IMG_1821 (p46) | IMG_1822 (p47) | 196-200 | 청구서 + 공지(Orbys Distributors) + 이메일(Tanvir Singh) 삼중지문 | 없음 |
 
-## C. 두 번째 책 Test 2 (실물 책 사진, 쪽수 60-69) [?] 책 이름 미확인 (RC1000 제4 Test 2 추정)
+## C. ETS 토익 정기시험 기출문제집 5 RC — Test 2 (실물 책 사진, 쪽수 60-69) ✔ 업로드 PDF로 확정 (10/24)
 | 사진 | 쪽 | 문항 | 내용 | 오답 |
 |---|---|---|---|---|
 | IMG_7185 | 5x | P6 131-134 | Muffin Lady Muffins 광고 | 131 Before long, 132 문장삽입(시제→지시어→의미) |
