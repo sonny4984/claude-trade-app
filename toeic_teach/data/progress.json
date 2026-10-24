@@ -423,5 +423,257 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-10-25"
+ },
+ "er251026-103": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "certified to V"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er251026-110": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "as a result of + 명사구"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260531-102": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "before + V-ing (by the time은 절)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260531-105": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "형용사 + enough"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260531-113": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "will be sent 수동"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260531-116": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "fill in for"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260531-121": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "is provided 수동"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260531-125": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "narrowed in scope"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260809-105": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "reducing operational costs"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260809-107": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "announcing + 목적어"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260809-109": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "by swiftly responding"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260809-111": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "ask everyone to V"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260809-122": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "sales forecast"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260809-126": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "extend beyond"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260809-129": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "memorable vs memorial"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260823-101": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "request everyone to V"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260823-104": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "[?] 본동사 have visited"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260823-105": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "highly responsive"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260823-110": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "A, B, or C"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260823-114": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "in writing"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "er260823-115": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "to carefully review"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
  }
 }
