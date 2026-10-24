@@ -122,11 +122,14 @@ QUIZ = [
  ("The ceremony was a ------- day for the whole team.", "memorial", "memorable", "B"),
 ]
 
+KO = {'New hires should familiarize themselves <b>with</b> the manual.': '신입은 매뉴얼을 숙지해야 한다.', 'Please <b>refer</b> to the attached schedule.': '첨부된 일정표를 참조하세요.', 'comply <b>with</b> the rules / compatible <b>with</b> our software': '규정을 준수하다 / 우리 소프트웨어와 호환되는', 'renowned <b>for</b> its design': '디자인으로 유명한', 'allows customers <b>to check</b> balances': '고객이 잔액을 확인할 수 있게 해 준다', 'Only staff are <b>authorized to enter</b>.': '직원만 출입 권한이 있다.', 'Ms. Lee will <b>fill in for</b> him.': '이 씨가 그를 대신할 것이다.', 'changes <b>aimed at</b> improving service': '서비스 개선을 목표로 한 변화', 'allow <b>ample</b> time': '시간을 충분히 두다', 'accustomed to <b>working</b> late': '늦게까지 일하는 데 익숙한', '<b>raise</b> fares / Sales <b>rose</b> 20%': '요금을 올리다 / 매출이 20% 올랐다', 'has been <b>promoted</b> to manager': '매니저로 승진했다', 'The report <b>will be sent</b> to you.': '보고서가 당신에게 발송될 것이다.', '<b>Despite</b> the rain / <b>Although</b> it rained': '비에도 불구하고 / 비가 왔지만', '<b>Upon</b> receiving your request': '요청을 받자마자', 'enter <b>as soon as</b> the doors open': '문이 열리자마자 입장하다', 'open <b>until</b> 9 / submit <b>by</b> Friday': '9시까지 (계속) 영업 / 금요일까지 (마감) 제출', 'worked <b>for</b> ten years / <b>since</b> 2019': '10년 동안 일했다 / 2019년부터', 'by mail, by e-mail, <b>or</b> in person': '우편, 이메일, 또는 직접 방문으로', 'when you <b>exit</b> (will exit ✗)': '나갈 때 (미래라도 현재형)', 'to <b>carefully</b> review / by <b>swiftly</b> responding': '꼼꼼히 검토하기 위해 / 신속히 응답함으로써', 'by <b>announcing</b> its acquisition': '인수를 발표함으로써', 'highly <b>responsive</b>': '매우 잘 응대하는', '<b>large</b> enough': '충분히 큰', 'an <b>individual</b> who can manage': '관리할 수 있는 사람', '<b>satisfied</b> customers': '만족한 고객들', 'Each of the proposals <b>was</b> reviewed.': '제안서 각각이 검토되었다.', 'By the time he arrived, we <b>had finished</b>.': '그가 도착했을 때 우리는 이미 끝냈었다.', 'Had it arrived, we <b>would have started</b>.': '그게 도착했더라면 우리는 시작했을 것이다.', 'asked <b>everyone</b> to leave': '모두에게 나가 달라고 요청했다', 'Employees <b>whose</b> permits have expired': '허가증이 만료된 직원들', 'the desk, <b>where</b> staff will help you': '데스크, 거기서 직원이 도와줄 것이다'}
+
 def card_table(rows):
     data = [[Paragraph("단서 (이것만 보고 말하기)", CB), Paragraph("규칙", CB), Paragraph("예문", CB), Paragraph("1 2 3", CB)]]
     for cue, rule, ex, src in rows:
         data.append([Paragraph(cue, C), Paragraph(rule, C),
-                     Paragraph(ex + (f"<br/><font size=7 color='#555555'>오답 {src}</font>" if src else ""), C),
+                     Paragraph(ex + (f"<br/><font color='#333333'>{KO[ex]}</font>" if ex in KO else "")
+                               + (f"<br/><font size=7 color='#555555'>오답 {src}</font>" if src else ""), C),
                      Paragraph("□ □ □", C)])
     t = Table(data, colWidths=[W * 0.26, W * 0.33, W * 0.31, W * 0.10], repeatRows=1)
     t.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), 0.9, colors.black), ("INNERGRID", (0, 0), (-1, -1), 0.3, colors.black),
