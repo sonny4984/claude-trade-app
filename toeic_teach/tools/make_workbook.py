@@ -13,7 +13,7 @@ from reportlab.platypus import (BaseDocTemplate, PageTemplate, Frame, Paragraph,
 
 root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root / "tools"))
-from p5_items import TEST_A, TEST_B, TEST_C
+from p5_items import TEST_A, TEST_B, TEST_C, TEST_D, TEST_E
 
 pdfmetrics.registerFont(TTFont("NG", str(root / "tools/fonts/NanumGothic-Regular.ttf")))
 pdfmetrics.registerFont(TTFont("NG-B", str(root / "tools/fonts/NanumGothic-Bold.ttf")))
@@ -197,11 +197,21 @@ def place_items(items, seed):
         key.append(("ABCD"[p], note, ch[0]))
     return out, key
 
-c_order = list(TEST_C)
-random.Random(2410).shuffle(c_order)  # mix types so neighbouring items don't give each other away
-c_items, c_key = place_items(c_order, 1024)
-build_test("C", "Practice Test C (Structure Around the Blank)", c_items, "P5_TestC_structure.pdf")
-if "--only-c" not in sys.argv:
+NEW_SETS = {  # name: (items, shuffle seed, answer seed, label, file stem)
+    "C": (TEST_C, 2410, 1024, "Practice Test C (Structure Around the Blank)", "P5_TestC_structure"),
+    "D": (TEST_D, 2510, 1031, "Practice Test D (Real-Test Mix 1)", "P5_TestD_real"),
+    "E": (TEST_E, 2610, 1026, "Practice Test E (Real-Test Mix 2)", "P5_TestE_real"),
+}
+only = sys.argv[sys.argv.index("--only") + 1].split(",") if "--only" in sys.argv else None
+built = {}
+for name, (items, s1, s2, label, stem_) in NEW_SETS.items():
+    if only and name not in only:
+        continue
+    order = list(items)
+    random.Random(s1).shuffle(order)  # mix types so neighbouring items don't give each other away
+    built[name] = place_items(order, s2)
+    build_test(name, label, built[name][0], stem_ + ".pdf")
+if not only:
     build_test("A", "Practice Test A (Weakness Focus)", a_items, "P5_TestA_weakness.pdf")
     build_test("B", "Practice Test B (Mixed Review)", b_items, "P5_TestB_mixed.pdf")
 
@@ -234,7 +244,8 @@ def key_pdf(fname="P5_Answers_and_Notes.pdf", sets=None):
         story.append(t)
         story.append(PageBreak())
     doc.build(story[:-1])
-if "--only-c" not in sys.argv:
+if not only:
     key_pdf()
-key_pdf("P5_TestC_Answers.pdf", (("Test C (빈칸 주변 구조)", c_key),))
+for name, (items_, key_) in built.items():
+    key_pdf(f"P5_Test{name}_Answers.pdf", ((f"Test {name}", key_),))
 print("done", [p.name for p in sorted(out_dir.glob('*.pdf'))])
