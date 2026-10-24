@@ -75,3 +75,21 @@
 - 노트용 '함정 설계' 문장 대신 ETS처럼 평범한 비즈니스 문장, 근거는 문장 안에.
 - 실전 비율: 품사 9 / 의미 어휘 8 / 전치사·접속사 7 / 대명사 2 / 동사형·시제 2 / 동사 구조 2.
 - 실전 순서(쉬운 것 먼저), 책과 같은 3쪽 8·12·10 배치 (make_t11.py, P5 전용 빌드 지원).
+
+## 10/24 심화: ETS 기출5 정답표(책 마지막) + 선지 설계 분석
+### 정답 분포 (P5 300문항)
+- 합계 A78 B80 C75 D67. 회차별 한 글자 4~11개로 **고르지 않음**. 최대 연속 2~4, 인접 동일 1~10쌍.
+- → 내 빌더처럼 7-8개씩 완벽 균등 + 연속 금지는 오히려 '인공적'. 다음 세트부터 자연 분포 허용.
+
+### 선지 세트 설계 (T8·T9·T10 90문항 전수 확인, 정답표로 검증)
+| 선지 세트 유형 | 회당 | 실제 예 |
+|---|---|---|
+| 같은 어근 4형태 | 10-11 | excite/excited/excites/excitement · caution/cautionary/cautious/cautiously · acquires/acquired/acquisition/acquisitional |
+| 같은 품사 4단어(의미) | 10-11 | replacement/addition/substitution/building · pending/resolved/outstanding/equivalent · opt/turn/rank/guide |
+| 전치사·접속사·부사 혼합 | 6 | when/into/so/from · by/because/ever/at · In order to/For instance/Due to/As a result of |
+| 대명사 4격 / 지시·관계 | 2-3 | she/her/hers/herself · whose/those/which/them · Many/Other/Something/Whoever |
+| 동사 형태(시제·태·준동사) | 1-3 | be reviewing/reviewed/reviewing/reviews · respects/have respected/to respect/will respect |
+- 어근 세트에는 드물지만 **실존** 단어가 들어감(acquisitional, cautionary) — 지어낸 형태(usualness 류)는 없음.
+- 의미 세트 4개는 같은 분야라 해석만으론 애매 → 빈칸 옆 명사/전치사가 결정 (Under the ___ of → direction).
+- 문장 길이 대부분 1~2줄(12~20단어). 정답 근거는 거의 항상 빈칸 ±3단어 안 또는 같은 문장의 숫자·시간 표현.
+- 101-110: 대명사·어근·쉬운 어휘 / 111-120: 어근+구조 / 121-130: 구전치사·접속사·고급 어휘(rigorous, undisclosed 류).
