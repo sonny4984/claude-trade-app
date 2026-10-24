@@ -783,5 +783,17 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-10-25"
+ },
+ "tF-101": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "have risen (자동사, 목적어 없음) ← raised 선택"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
  }
 }
