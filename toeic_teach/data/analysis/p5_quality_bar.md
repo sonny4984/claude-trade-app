@@ -62,3 +62,10 @@
 - 뒤 to V: be permitted to V
 - 뒤 날짜 vs 기간: by + 날짜 / within + 기간
 다음 세트(E) 전에 "뒤 단서" 드릴 필요.
+
+## Test F 결과 (10/24): 23/30 (-7)  ← D(-9)에서 개선
+오답: 101 risen, 113 with, 118 refer, 120 up to, 125 apology, 126 had finished, 130 individual
+- 뒤/앞 단서 4개: 목적어 없음→자동사(risen), compatible with, refer to, who→사람명사
+- 시제 1: By the time + 과거 → 과거완료
+- 의미 2: up to + 숫자, issue an apology
+맞힌 것: comply with, capable of, participate in, discuss(타동사), 관계사 who, since→현재완료, 품사 8/9

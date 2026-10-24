@@ -795,5 +795,77 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-10-25"
+ },
+ "tF-113": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "compatible with ← for"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "tF-118": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "refer to (자동사+to) ← check"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "tF-120": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "up to + 숫자 ← except"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "tF-125": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "issue an apology for ← agenda"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "tF-126": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "By the time + 과거 → had finished ← finish"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "tF-130": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "an ___ who → 사람명사 individual ← individuality"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
  }
 }
