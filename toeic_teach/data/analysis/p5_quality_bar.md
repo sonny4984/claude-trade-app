@@ -69,3 +69,9 @@
 - 시제 1: By the time + 과거 → 과거완료
 - 의미 2: up to + 숫자, issue an apology
 맞힌 것: comply with, capable of, participate in, discuss(타동사), 관계사 who, since→현재완료, 품사 8/9
+
+## 10/24 피드백: "Part 5가 실제 토익이랑 너무 달랐어" → TEST 13 반영 사항
+- 가짜 단어 선지 금지 (usualness, recentness, before of, more early 등 → ETS에는 없음). 선지는 전부 실제 쓰이는 단어.
+- 노트용 '함정 설계' 문장 대신 ETS처럼 평범한 비즈니스 문장, 근거는 문장 안에.
+- 실전 비율: 품사 9 / 의미 어휘 8 / 전치사·접속사 7 / 대명사 2 / 동사형·시제 2 / 동사 구조 2.
+- 실전 순서(쉬운 것 먼저), 책과 같은 3쪽 8·12·10 배치 (make_t11.py, P5 전용 빌드 지원).

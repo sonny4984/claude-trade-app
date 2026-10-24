@@ -697,7 +697,8 @@ for gi, (a, b) in enumerate(groups):
     elif gi == 3:
         story += [NextPageTemplate("p5b"), PageBreak()]
     elif gi == 5:
-        story += [NextPageTemplate("full"), PageBreak()]
+        if PART6 or PART7:
+            story += [NextPageTemplate("full"), PageBreak()]
     else:
         story.append(FrameBreak())
 
@@ -788,13 +789,18 @@ for si, s in enumerate(PART7):
         if si == len(PART7) - 1 and pi == len(plan) - 1:
             break
         story.append(PageBreak())
-assert n == 201
+assert n == 201 or not PART7
 
 class Stop(Flowable):
-    def wrap(self, aw, ah): return aw, 40
+    def wrap(self, aw, ah):
+        self.aw = aw; return aw, 40
     def draw(self):
         state["last"] = True
         c = self.canv; c.setFont("S-B", 11)
+        if self.aw < W * 0.8:  # Part 5-only mock: the note sits in the right column
+            c.drawCentredString(self.aw / 2, 22, "Stop! This is the end of Part 5.")
+            c.drawCentredString(self.aw / 2, 8, "Check your work if time remains.")
+            return
         c.drawCentredString(W / 2, 22, "Stop! This is the end of the test. If you finish before time is called, you may go")
         c.drawCentredString(W / 2, 8, "back to Parts 5, 6, and 7 and check your work.")
 story += [Spacer(1, 30), Stop()]
