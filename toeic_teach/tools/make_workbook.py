@@ -13,7 +13,7 @@ from reportlab.platypus import (BaseDocTemplate, PageTemplate, Frame, Paragraph,
 
 root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root / "tools"))
-from p5_items import TEST_A, TEST_B
+from p5_items import TEST_A, TEST_B, TEST_C
 
 pdfmetrics.registerFont(TTFont("NG", str(root / "tools/fonts/NanumGothic-Regular.ttf")))
 pdfmetrics.registerFont(TTFont("NG-B", str(root / "tools/fonts/NanumGothic-Bold.ttf")))
@@ -190,12 +190,25 @@ for (q, ch, note), p in zip(TEST_A, pos):
 b_items = [(q, ch, a) for q, ch, a, _ in TEST_B]
 b_key = [(a, note, ch["ABCD".index(a)]) for q, ch, a, note in TEST_B]
 
-build_test("A", "Practice Test A (Weakness Focus)", a_items, "P5_TestA_weakness.pdf")
-build_test("B", "Practice Test B (Mixed Review)", b_items, "P5_TestB_mixed.pdf")
+def place_items(items, seed):
+    out, key = [], []
+    for (q, ch, note), p in zip(items, balanced_positions(len(items), seed)):
+        out.append((q, ch[1:p + 1] + [ch[0]] + ch[p + 1:], "ABCD"[p]))
+        key.append(("ABCD"[p], note, ch[0]))
+    return out, key
+
+c_order = list(TEST_C)
+random.Random(2410).shuffle(c_order)  # mix types so neighbouring items don't give each other away
+c_items, c_key = place_items(c_order, 1024)
+build_test("C", "Practice Test C (Structure Around the Blank)", c_items, "P5_TestC_structure.pdf")
+if "--only-c" not in sys.argv:
+    build_test("A", "Practice Test A (Weakness Focus)", a_items, "P5_TestA_weakness.pdf")
+    build_test("B", "Practice Test B (Mixed Review)", b_items, "P5_TestB_mixed.pdf")
 
 # ---- answer key (Korean)
-def key_pdf():
-    doc = BaseDocTemplate(str(out_dir / "P5_Answers_and_Notes.pdf"), pagesize=A4, leftMargin=LM, rightMargin=RM,
+def key_pdf(fname="P5_Answers_and_Notes.pdf", sets=None):
+    sets = sets or (("Test A (약점 집중)", a_key), ("Test B (종합)", b_key))
+    doc = BaseDocTemplate(str(out_dir / fname), pagesize=A4, leftMargin=LM, rightMargin=RM,
                           topMargin=TM, bottomMargin=BM, title="TOEIC Part 5 Answer Key")
     doc.addPageTemplates([PageTemplate(id="k", frames=[Frame(LM, BM, PW - LM - RM, PH - TM - BM, id="k",
                           leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0)],
@@ -207,7 +220,7 @@ def key_pdf():
     story = [Paragraph("정답과 한 줄 규칙", h),
              Paragraph("채점 전에 보지 마. 틀린 문제는 번호만 골라서 나한테 보내줘. 왜 그 답을 골랐는지부터 같이 보자.", sm),
              Spacer(1, 6)]
-    for label, key in (("Test A (약점 집중)", a_key), ("Test B (종합)", b_key)):
+    for label, key in sets:
         story.append(Paragraph(label, ParagraphStyle("h2", fontName="NG-B", fontSize=11.5, leading=16, spaceBefore=8, spaceAfter=4)))
         line = "  ".join(f"{101 + i}{k[0]}" for i, k in enumerate(key))
         story.append(Paragraph(f"정답표: {line}", s))
@@ -221,5 +234,7 @@ def key_pdf():
         story.append(t)
         story.append(PageBreak())
     doc.build(story[:-1])
-key_pdf()
+if "--only-c" not in sys.argv:
+    key_pdf()
+key_pdf("P5_TestC_Answers.pdf", (("Test C (빈칸 주변 구조)", c_key),))
 print("done", [p.name for p in sorted(out_dir.glob('*.pdf'))])
