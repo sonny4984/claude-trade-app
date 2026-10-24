@@ -1,307 +1,427 @@
 {
-  "x2-107": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong"
-      }
-    ],
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "x2-108": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong"
-      }
-    ],
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "x2-114": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong"
-      }
-    ],
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "x2-115": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong"
-      }
-    ],
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "x2-124": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong"
-      }
-    ],
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "x2-126": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong"
-      }
-    ],
-    "streak": 0,
-    "next_review": "2026-10-24",
-    "variant_ok": "2026-10-23"
-  },
-  "t5-107": {
-    "history": [],
-    "streak": 0,
-    "next_review": "2026-10-23",
-    "note": "문제 출제됨, 답변 대기 중 (건너뜀)"
-  },
-  "prof-c1": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "While→Once"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "prof-c2": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "for instance→however"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "prof-c3": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "consequently→however"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "prof-c4": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "whenever→where"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "prof-p1": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "convertible→conversion"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "prof-v1": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "fee→gift"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "prof-v2": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "position→venue"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "prof-v3": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "without→through"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "prof-v4": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "execute→furnish"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "tA-110": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "while→where"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "tA-116": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "to work→to working"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "tA-117": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "Because of→In order to"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "tA-126": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "stable→tangible"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "tA-113": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "correct-unsure",
-        "note": "정답이나 clean 자/타동사 근거 불확실"
-      }
-    ],
-    "status": "부분 숙달",
-    "streak": 0,
-    "next_review": "2026-10-24"
-  },
-  "tA-119": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "correct-unsure",
-        "note": "정답이나 '?' 표시, go into effect 연어 불안"
-      }
-    ],
-    "status": "부분 숙달",
-    "streak": 0,
-    "next_review": "2026-10-24"
-  },
-  "tA-109": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "correct?",
-        "note": "원이 A·B에 걸쳐 있어 A로 읽음, 확인 대기"
-      }
-    ],
-    "status": "확인 대기",
-    "streak": 0,
-    "next_review": "2026-10-24"
-  },
-  "m1-131": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "during 선택(뒤가 절인데 전치사). while 옆에 'will X' 메모 = 시간절 규칙을 주절의 will에 잘못 적용"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "m1-133": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "wrong",
-        "note": "will exit 선택. when 시간절 안은 현재형(exit)"
-      }
-    ],
-    "status": "미숙",
-    "streak": 0,
-    "next_review": "2026-10-23"
-  },
-  "m1-132": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "correct"
-      }
-    ],
-    "status": "부분 숙달",
-    "streak": 1,
-    "next_review": "2026-10-24"
-  },
-  "m1-134": {
-    "history": [
-      {
-        "date": "2026-10-23",
-        "result": "correct"
-      }
-    ],
-    "status": "부분 숙달",
-    "streak": 1,
-    "next_review": "2026-10-24"
-  }
+ "x2-107": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong"
+   }
+  ],
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "x2-108": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong"
+   }
+  ],
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "x2-114": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong"
+   }
+  ],
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "x2-115": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong"
+   }
+  ],
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "x2-124": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong"
+   }
+  ],
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "x2-126": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong"
+   }
+  ],
+  "streak": 0,
+  "next_review": "2026-10-24",
+  "variant_ok": "2026-10-23"
+ },
+ "t5-107": {
+  "history": [],
+  "streak": 0,
+  "next_review": "2026-10-23",
+  "note": "문제 출제됨, 답변 대기 중 (건너뜀)"
+ },
+ "prof-c1": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "While→Once"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "prof-c2": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "for instance→however"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "prof-c3": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "consequently→however"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "prof-c4": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "whenever→where"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "prof-p1": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "convertible→conversion"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "prof-v1": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "fee→gift"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "prof-v2": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "position→venue"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "prof-v3": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "without→through"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "prof-v4": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "execute→furnish"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "tA-110": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "while→where"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "tA-116": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "to work→to working"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "tA-117": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "Because of→In order to"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "tA-126": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "stable→tangible"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "tA-113": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "correct-unsure",
+    "note": "정답이나 clean 자/타동사 근거 불확실"
+   }
+  ],
+  "status": "부분 숙달",
+  "streak": 0,
+  "next_review": "2026-10-24"
+ },
+ "tA-119": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "correct-unsure",
+    "note": "정답이나 '?' 표시, go into effect 연어 불안"
+   }
+  ],
+  "status": "부분 숙달",
+  "streak": 0,
+  "next_review": "2026-10-24"
+ },
+ "tA-109": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "correct?",
+    "note": "원이 A·B에 걸쳐 있어 A로 읽음, 확인 대기"
+   }
+  ],
+  "status": "확인 대기",
+  "streak": 0,
+  "next_review": "2026-10-24"
+ },
+ "m1-131": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "during 선택(뒤가 절인데 전치사). while 옆에 'will X' 메모 = 시간절 규칙을 주절의 will에 잘못 적용"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "m1-133": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "wrong",
+    "note": "will exit 선택. when 시간절 안은 현재형(exit)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-23"
+ },
+ "m1-132": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "correct"
+   }
+  ],
+  "status": "부분 숙달",
+  "streak": 1,
+  "next_review": "2026-10-24"
+ },
+ "m1-134": {
+  "history": [
+   {
+    "date": "2026-10-23",
+    "result": "correct"
+   }
+  ],
+  "status": "부분 숙달",
+  "streak": 1,
+  "next_review": "2026-10-24"
+ },
+ "t11-105": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "likelihood ← appearance 선택. reduce the likelihood of errors(오류 가능성)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t11-107": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "in case ← so that 선택. ~할 경우에 대비해"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t11-114": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "kindly reminded ← highly 선택. 연어"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t11-115": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "lower(타동사) ← decline 선택. 목적어 있으면 decline/fall/sink 탈락"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t11-117": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "in recognition of ← by 선택. 구전치사"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t11-119": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "adapt to ← adopt 선택. 철자 혼동"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t11-121": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "Despite + 명사구 ← Although 선택. 전치사 vs 접속사"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t11-126": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "for your convenience ← convenient 선택. 소유격 뒤 명사"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t11-137": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "by(마감) ← until 선택. 발송은 1회성"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t11-138": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "memorable ← memorizing 선택. 감정분사 규칙을 감정동사 아닌 memorize에 잘못 적용"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ }
 }

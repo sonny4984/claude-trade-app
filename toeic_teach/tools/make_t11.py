@@ -1,7 +1,8 @@
 """Render the original practice test in t11_items.py using the page layout of a Korean TOEIC past-test book
 (one RC test = printed pages 20-47, one passage set per page, side tab on odd pages).
-Usage: python3 tools/make_t11.py  -> data/workbook/RC_Test11.pdf, RC_Test11_Answers.pdf, RC_Test11_key.txt"""
-import random, re, sys
+Usage: python3 tools/make_t11.py [items_module] [test_no]  (default t11_items 11)
+  -> data/workbook/RC_Test{N}.pdf, RC_Test{N}_Answers.pdf, RC_Test{N}_key.txt"""
+import importlib, random, re, sys
 from pathlib import Path
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
@@ -15,7 +16,8 @@ from reportlab.platypus import (BaseDocTemplate, PageTemplate, Frame, Paragraph,
 
 root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root / "tools"))
-from t11_items import PART5, PART6, PART7
+_mod = importlib.import_module(sys.argv[1] if len(sys.argv) > 1 else "t11_items")
+PART5, PART6, PART7 = _mod.PART5, _mod.PART6, _mod.PART7
 
 LIB = "/usr/share/fonts/truetype/liberation/"
 for name, f in [("S", "LiberationSans-Regular"), ("S-B", "LiberationSans-Bold"), ("S-I", "LiberationSans-Italic"),
@@ -29,8 +31,8 @@ from reportlab.pdfbase.pdfmetrics import registerFontFamily
 registerFontFamily("S", normal="S", bold="S-B", italic="S-I", boldItalic="S-BI")
 registerFontFamily("R", normal="R", bold="R-B", italic="R-I", boldItalic="R-BI")
 
-TEST_NO = 11
-FIRST_PRINTED = 19  # divider page number; test pages are 20-47
+TEST_NO = int(sys.argv[2]) if len(sys.argv) > 2 else 11
+FIRST_PRINTED = 19 + 30 * (TEST_NO - 11)  # divider page number; TEST 11 = pages 20-47
 PW, PH = A4
 LM, RM = 54, 48
 TOP, BOT = 64, 70
@@ -221,7 +223,7 @@ class EmailTitle(Draw):
     def prepare(self):
         self.bodyw = self.width - 64
         self.paras = [Paragraph(clean(t), SER) for t in self.body_t]
-        register_lines(self.body_t[1:2], SER, self.bodyw)
+        register_lines(self.body_t, SER, self.bodyw)
         self.bh = stack_h(self.paras, self.bodyw) + 14
         self.hh = 20 * len(self.hdr) + 10
         return 26 + self.hh + self.bh + 18
@@ -253,7 +255,7 @@ class EmailGray(Draw):
     def prepare(self):
         self.bodyw = self.width - 66
         self.paras = [Paragraph(clean(t), SER) for t in self.body_t]
-        register_lines(self.body_t[1:2], SER, self.bodyw)
+        register_lines(self.body_t, SER, self.bodyw)
         self.bh = stack_h(self.paras, self.bodyw) + 16
         return 22 * len(self.hdr) + 18 + self.bh + 10
     def draw(self):
@@ -280,6 +282,7 @@ class ArticleNarrow(Draw):
     def prepare(self):
         self.tp = Paragraph(self.title, st(fontName="R-B", fontSize=17, leading=19.5, alignment=TA_CENTER)) if self.title else None
         self.paras = [Paragraph(clean(t), SER) for t in self.body_t]
+        register_lines(self.body_t, SER, self.colw)
         self.th = self.tp.wrap(self.colw, 1000)[1] + 6 if self.tp else 0
         return self.th + stack_h(self.paras, self.colw) + 10
     def draw(self):
@@ -412,6 +415,131 @@ class WebTable(Draw):
         th = self.tbl.wrap(self.tw, 1000)[1]; y -= 10 + th; self.tbl.drawOn(c, 20, y)
         stack(self.ap, c, 20, y - 10, self.tw)
 
+def _scrollbar(c, x, y0, y1):
+    c.setFillColor(LIGHT); c.rect(x, y0, 14, y1 - y0, fill=1)
+    c.setFillColor(colors.HexColor("#9a9a9a")); c.rect(x + 2, y1 - 12, 10, 10, fill=1); c.rect(x + 2, y0 + 2, 10, 10, fill=1)
+    c.setFillColor(colors.black)
+
+def _clip(c, x, y):
+    # small paper-clip glyph for "Attachment:" lines
+    c.saveState(); c.setLineWidth(0.8)
+    c.roundRect(x, y - 1, 5, 11, 2.5); c.roundRect(x + 1.4, y + 1, 2.2, 7, 1.1)
+    c.restoreState()
+
+class EmailClassic(Draw):
+    """'E-Mail Message' window: triple rules with centred label, unboxed header lines, framed body."""
+    def __init__(self, hdr, body, width=W - 8):
+        super().__init__(width); self.hdr, self.body_t = hdr, body
+    def prepare(self):
+        self.bodyw = self.width - 60
+        self.paras = [Paragraph(clean(t), SER) for t in self.body_t]
+        register_lines(self.body_t, SER, self.bodyw)
+        self.bh = stack_h(self.paras, self.bodyw) + 16
+        self.hh = 13 * len(self.hdr) + 14
+        return 20 + self.hh + 10 + self.bh + 10
+    def draw(self):
+        c = self.canv; w, h = self.width, self.height
+        c.setStrokeColor(colors.HexColor("#555555")); c.setLineWidth(1); c.setFillColor(LIGHT); c.rect(0, 0, w, h, fill=1)
+        ty = h - 9; c.setLineWidth(0.6)
+        for dy in (-3, 0, 3):
+            c.line(4, ty + dy, w - 4, ty + dy)
+        c.setFillColor(LIGHT); c.rect(w / 2 - 46, ty - 6, 92, 12, fill=1, stroke=0)
+        c.setFillColor(colors.black); c.setFont("S", 8.6); c.drawCentredString(w / 2, ty - 3, "E-Mail Message")
+        top = h - 20; hb = top - self.hh
+        c.setFillColor(colors.white); c.setLineWidth(0.8); c.rect(10, hb, w - 30, self.hh, fill=1)
+        c.setLineWidth(2); c.line(10, hb, 10, top); c.line(10, top, w - 20, top); c.setLineWidth(0.8)
+        y = top - 15
+        for k, v in self.hdr:
+            c.setFillColor(colors.black); c.setFont("R", 10.4); c.drawString(22, y, k)
+            vx = 100
+            if k.lower().startswith("attachment"):
+                _clip(c, vx, y); vx += 9
+            c.drawString(vx, y, v.replace("&lt;", "<").replace("&gt;", ">")); y -= 13
+        by = hb - 8
+        c.setFillColor(colors.white); c.rect(10, 8, w - 30, by - 8, fill=1)
+        c.setLineWidth(2); c.line(10, 8, 10, by); c.line(10, by, w - 20, by)
+        c.setFillColor(colors.black)
+        stack(self.paras, c, 24, by - 10, self.bodyw)
+
+class Memo(Draw):
+    """Boxed memo with a black 'MEMO' label and tab-aligned header."""
+    def __init__(self, hdr, body, width=W - 30):
+        super().__init__(width); self.hdr, self.body_t = hdr, body
+    def prepare(self):
+        self.bodyw = self.width - 70
+        self.paras = [Paragraph(clean(t), SER) for t in self.body_t]
+        register_lines(self.body_t, SER, self.bodyw)
+        return 40 + 14 * len(self.hdr) + 12 + stack_h(self.paras, self.bodyw) + 10
+    def draw(self):
+        c = self.canv; w, h = self.width, self.height
+        c.setLineWidth(1); c.rect(0, 0, w, h)
+        c.setFillColor(colors.black); c.rect(36, h - 38, 76, 26, fill=1, stroke=0)
+        c.setFillColor(colors.white); c.setFont("S-B", 15); c.drawCentredString(74, h - 31, "MEMO")
+        c.setFillColor(colors.black); y = h - 56
+        for k, v in self.hdr:
+            c.setFont("R", 10.6); c.drawString(36, y, k); c.drawString(100, y, v); y -= 14
+        stack(self.paras, c, 36, y - 4, self.bodyw)
+
+class WebTabs(Draw):
+    """Web page: URL bar, tab row with the active tab bold, white page with scrollbar."""
+    def __init__(self, url, tabs, active, body, title=None, width=W - 8):
+        super().__init__(width); self.url, self.tabs, self.active, self.body_t, self.title = url, tabs, active, body, title
+    def prepare(self):
+        self.tw = self.width - 70
+        ps = []
+        if self.title:
+            ps.append(Paragraph(f"<b>{self.title}</b>", st(fontName="S", fontSize=11.2, leading=14, spaceAfter=8)))
+        for t in self.body_t:
+            if t.startswith("• "):
+                ps.append(Paragraph("•&nbsp;&nbsp;" + clean(t[2:]), st(fontSize=10.4, leading=13, leftIndent=12, firstLineIndent=-10, spaceAfter=5)))
+            else:
+                ps.append(Paragraph(clean(t), SANS_P))
+        register_lines([t for t in self.body_t if not t.startswith("• ")], SANS_P, self.tw)
+        self.ps = ps
+        return 34 + 22 + 12 + stack_h(ps, self.tw) + 16
+    def draw(self):
+        c = self.canv; w, h = self.width, self.height
+        c.setLineWidth(2.2); c.setFillColor(LIGHT); c.rect(0, 0, w, h, fill=1)
+        c.setLineWidth(0.9); c.setFillColor(colors.white); c.roundRect(14, h - 26, w - 40, 17, 8, fill=1)
+        c.setFillColor(colors.black); c.setFont("S", 9.8); c.drawString(24, h - 21, self.url)
+        ty = h - 52; n = len(self.tabs); tabw = (w - 40) / n
+        c.setFillColor(colors.white); c.rect(8, 8, w - 16, ty - 8, fill=1)
+        for i, t in enumerate(self.tabs):
+            x = 8 + i * tabw
+            c.setFillColor(colors.white); c.rect(x, ty, tabw, 20, fill=1)
+            if i == self.active:
+                c.setStrokeColor(colors.white); c.line(x + 1, ty, x + tabw - 1, ty); c.setStrokeColor(colors.black)
+            c.setFillColor(colors.black); c.setFont("S-B" if i == self.active else "S", 10.2)
+            c.drawCentredString(x + tabw / 2, ty + 6, t)
+        _scrollbar(c, w - 26, 9, ty + 20)
+        stack(self.ps, c, 24, ty - 14, self.tw)
+
+class TableBox(Draw):
+    """Title + optional intro + ruled table + notes, in a box (schedules, price lists, reports, receipts)."""
+    def __init__(self, title, rows, widths, intro=None, after=None, serif=True, width=W - 20):
+        super().__init__(width)
+        self.title, self.rows, self.widths, self.intro, self.after, self.serif = title, rows, widths, intro or [], after or [], serif
+    def prepare(self):
+        f = "R" if self.serif else "S"
+        self.tw = self.width - 36
+        self.tp = Paragraph(f"<b>{self.title}</b>", st(fontName=f, fontSize=13.5, leading=16.5, alignment=TA_CENTER, spaceAfter=8))
+        self.ip = [Paragraph(t, st(fontName=f, fontSize=10.6, leading=13.2, spaceAfter=6)) for t in self.intro]
+        cs = st(fontName=f, fontSize=10.4, leading=12.6)
+        data = [[Paragraph(("<b>%s</b>" % x) if i == 0 else x, cs) for x in r] for i, r in enumerate(self.rows)]
+        self.tbl = Table(data, colWidths=[self.tw * x for x in self.widths])
+        self.tbl.setStyle(TableStyle([("LINEABOVE", (0, 0), (-1, 0), 1.4, colors.black), ("LINEBELOW", (0, 0), (-1, 0), 0.9, colors.black),
+                                      ("LINEBELOW", (0, 1), (-1, -1), 0.4, colors.black), ("LINEBELOW", (0, -1), (-1, -1), 1.4, colors.black),
+                                      ("VALIGN", (0, 0), (-1, -1), "TOP"), ("TOPPADDING", (0, 0), (-1, -1), 3), ("BOTTOMPADDING", (0, 0), (-1, -1), 4)]))
+        self.ap = [Paragraph(t, st(fontName=f, fontSize=10.4, leading=13, spaceAfter=5)) for t in self.after]
+        return (24 + stack_h([self.tp], self.tw) + stack_h(self.ip, self.tw) + self.tbl.wrap(self.tw, 2000)[1] + 8
+                + stack_h(self.ap, self.tw))
+    def draw(self):
+        c = self.canv; w, h = self.width, self.height
+        c.setLineWidth(1.2); c.rect(0, 0, w, h)
+        y = stack([self.tp] + self.ip, c, 18, h - 12, self.tw)
+        th = self.tbl.wrap(self.tw, 2000)[1]; self.tbl.drawOn(c, 18, y - th)
+        stack(self.ap, c, 18, y - th - 8, self.tw)
+
 def passage(p):
     k = p["kind"]
     if k == "letter_plain":
@@ -442,7 +570,9 @@ def passage(p):
         ps += [Paragraph(t, SER) for t in p["body"]]
         return PlainIndent(ps, indent=26)
     if k == "press":
-        ps = [Paragraph(t, st(fontName="R", fontSize=10.8, leading=13.2, alignment=TA_JUSTIFY, spaceAfter=7)) for t in p["body"]]
+        pst = st(fontName="R", fontSize=10.8, leading=13.2, alignment=TA_JUSTIFY, spaceAfter=7)
+        ps = [Paragraph(clean(t), pst) for t in p["body"]]
+        register_lines(p["body"], pst, W - 40 - 52)
         return Box(ps, width=W - 40, pad=26, top_pad=20)
     if k == "ad_plain":
         ps = [Paragraph(f"<b>{p['title']}</b>", st(fontName="R", fontSize=11, leading=14, alignment=TA_CENTER, spaceAfter=8))]
@@ -458,6 +588,14 @@ def passage(p):
         ps = [Paragraph(f"<b>{p['title']}</b>", st(fontName="R", fontSize=11.5, leading=14, alignment=TA_CENTER, spaceAfter=8))]
         ps += [Paragraph(t, st(fontName="R", fontSize=10.8, leading=13.2, alignment=TA_JUSTIFY, spaceAfter=7)) for t in p["body"]]
         return Box(ps, width=W - 30, pad=22, top_pad=12)
+    if k == "email_classic":
+        return EmailClassic(p["hdr"], p["body"])
+    if k == "memo":
+        return Memo(p["hdr"], p["body"])
+    if k == "web_tabs":
+        return WebTabs(p["url"], p["tabs"], p.get("active", 0), p["body"], p.get("title"))
+    if k == "table_box":
+        return TableBox(p["title"], p["rows"], p["widths"], p.get("intro"), p.get("after"), p.get("serif", True))
     raise ValueError(k)
 
 class Centered(Flowable):
@@ -509,10 +647,13 @@ def divider(c, doc):
     c.drawCentredString(PW / 2, 80, "개인 학습용으로 새로 작성한 연습 문제입니다. 실제 기출 문항이 아닙니다.")
     c.restoreState()
 
+def register_cb(c, doc):
+    c.setNamedCB("blanknum", _blank_number)
+
 def sheet(c, doc):
     deco(c, doc)
 
-doc = BaseDocTemplate(str(root / "data/workbook/RC_Test11.pdf"), pagesize=A4, leftMargin=LM, rightMargin=RM, topMargin=TOP,
+doc = BaseDocTemplate(str(root / f"data/workbook/RC_Test{TEST_NO}.pdf"), pagesize=A4, leftMargin=LM, rightMargin=RM, topMargin=TOP,
                       bottomMargin=BOT, title=f"RC Practice TEST {TEST_NO}", author="")
 full = Frame(LM, BOT, W, PH - TOP - BOT, leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0, id="full")
 HDR = 238
@@ -524,7 +665,7 @@ p5b = [Frame(LM, BOT, CW, PH - TOP - BOT, leftPadding=0, rightPadding=0, topPadd
 doc.addPageTemplates([PageTemplate(id="div", frames=[full], onPage=divider),
                       PageTemplate(id="p5a", frames=p5a, onPageEnd=deco),
                       PageTemplate(id="p5b", frames=p5b, onPageEnd=deco),
-                      PageTemplate(id="full", frames=[full], onPageEnd=deco)])
+                      PageTemplate(id="full", frames=[full], onPage=lambda c, d: register_cb(c, d), onPageEnd=deco)])
 
 key = []
 B12 = st(fontName="S-B", fontSize=12.5, leading=15, spaceAfter=10)
@@ -543,13 +684,14 @@ story.append(Box([Paragraph("READING TEST", B12),
                             "are given below each sentence. Select the best answer to complete the sentence. Then mark the letter "
                             "(A), (B), (C), or (D) on your answer sheet.", DIR)], pad=16, top_pad=16))
 story += [FrameBreak()]
-p5 = place(PART5, 1101)
+p5 = place(PART5, 1101 + 100 * (TEST_NO - 11))
+P5_GAPS = getattr(_mod, "P5_GAPS", (14, 14, 27, 27, 31, 31))
 groups = [(0, 4), (4, 8), (8, 14), (14, 20), (20, 25), (25, 30)]
 for gi, (a, b) in enumerate(groups):
     for i in range(a, b):
         stem, ch, ans, note = p5[i]
         key.append((101 + i, "ABCD"[ans], ch[ans], note))
-        story += [q_block(101 + i, stem, ch, CW), Spacer(1, (14, 14, 27, 27, 31, 31)[gi])]
+        story += [q_block(101 + i, stem, ch, CW), Spacer(1, P5_GAPS[gi])]
     if gi == 1:
         story += [NextPageTemplate("p5b"), PageBreak()]
     elif gi == 3:
@@ -560,13 +702,24 @@ for gi, (a, b) in enumerate(groups):
         story.append(FrameBreak())
 
 # Part 6
-P6_IN = st(fontSize=10.8, leading=25, spaceAfter=2)
+P6_IN = st(fontSize=10.8, leading=25, spaceAfter=7)
 P6_INS = st(fontSize=10.8, leading=16, spaceAfter=8)
 
-def blank(n):
-    return f"-------<sub rise=-10 size=9><b> {n}.</b></sub>"
+DASH = "-------"
 
-p6 = place([q for s in PART6 for q in s["qs"]], 1102)
+def _blank_number(canv, kind, label):
+    # called by <onDraw> right after the dashes: print the question number centred under them, as in the book
+    info = canv._curr_tx_info
+    dw = pdfmetrics.stringWidth(DASH, P6_IN.fontName, P6_IN.fontSize)
+    canv.saveState(); canv.setFont("S-B", 9.6)
+    canv.drawCentredString(info["cur_x"] - dw / 2, info["cur_y"] - 11.5, f"{label}.")
+    canv.restoreState()
+
+
+def blank(n):
+    return f'{DASH}<onDraw name="blanknum" label="{n}"/>'
+
+p6 = place([q for s in PART6 for q in s["qs"]], 1102 + 100 * (TEST_NO - 11))
 qi = 0
 for si, s in enumerate(PART6):
     lo = 131 + si * 4
@@ -587,7 +740,9 @@ for si, s in enumerate(PART6):
         txt = t
         for n in range(131, 147):
             txt = txt.replace("{%d}" % n, blank(n))
-        ps.append(Paragraph(txt, P6_IN if "-------" in txt else P6_INS))
+        # prose is set with the book's double spacing whether or not it holds a blank; address/sign-off lines stay single
+        prose = "<br/>" not in txt and len(clean(txt)) > 45
+        ps.append(Paragraph(txt, P6_IN if prose else P6_INS))
     story += [Centered(Box(ps, width=W - 6, pad=16, top_pad=14)), Spacer(1, 20)]
     qs = []
     for j in range(4):
@@ -597,7 +752,7 @@ for si, s in enumerate(PART6):
     story += [q_two_col(qs), PageBreak()]
 
 # Part 7
-p7 = place([q for s in PART7 for q in s["qs"]], 1103)
+p7 = place([q for s in PART7 for q in s["qs"]], 1103 + 100 * (TEST_NO - 11))
 qi, n = 0, 147
 PAGES = {  # set index -> how passages/questions are split over pages
     9: [["p0"], ["q"]], 10: [["p0", "p1"], ["q"]], 11: [["p0", "p1"], ["q"]],
@@ -670,7 +825,7 @@ class Unlast(Flowable):
 doc.build(story)
 
 # ---------------- answer key (Korean)
-kd = BaseDocTemplate(str(root / "data/workbook/RC_Test11_Answers.pdf"), pagesize=A4, leftMargin=40, rightMargin=40,
+kd = BaseDocTemplate(str(root / f"data/workbook/RC_Test{TEST_NO}_Answers.pdf"), pagesize=A4, leftMargin=40, rightMargin=40,
                      topMargin=40, bottomMargin=46, title=f"RC TEST {TEST_NO} Answer Key")
 kd.addPageTemplates([PageTemplate(id="k", frames=[Frame(40, 46, PW - 80, PH - 86, leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0)],
                                   onPage=lambda c, d: (c.setFont("NG", 8), c.drawCentredString(PW / 2, 26, str(d.page))))])
@@ -691,6 +846,6 @@ for label, lo, hi in (("Part 5", 101, 130), ("Part 6", 131, 146), ("Part 7", 147
                            ("BACKGROUND", (0, 0), (-1, 0), LIGHT), ("VALIGN", (0, 0), (-1, -1), "TOP")]))
     ks.append(t)
 kd.build(ks)
-(root / "data/workbook/RC_Test11_key.txt").write_text(" ".join(f"{a}{b}" for a, b, _, _ in key), encoding="utf-8")
+(root / f"data/workbook/RC_Test{TEST_NO}_key.txt").write_text(" ".join(f"{a}{b}" for a, b, _, _ in key), encoding="utf-8")
 from collections import Counter
 print("answers", Counter(k[1] for k in key), "lines", LINES)
