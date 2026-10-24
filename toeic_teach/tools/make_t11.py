@@ -81,6 +81,33 @@ def register_lines(paras, style, width):
             LINES[w] = line_of(t, style, width, w)
 
 def place(items, seed):
+    if TEST_NO < 14:  # keep the keys of TEST 11-13 exactly as already handed out
+        return place_v1(items, seed)
+    # balance answer letters across the set, counting items whose answer position is fixed (4-tuples)
+    fixed = [it[3] for it in items if len(it) == 4]
+    need = [0] * 4
+    for i in range(len(items)):
+        need[i % 4] += 1
+    for f in fixed:
+        need[f] -= 1
+    pool = []
+    for k in range(4):
+        pool += [k] * max(need[k], 0)
+    pool += [k for k in range(4)] * len(items)  # spare in case fixed answers over-fill a letter
+    pool = pool[:len(items) - len(fixed)]
+    random.Random(seed).shuffle(pool)
+    it_pool = iter(pool)
+    seq = [None if len(it) == 4 else next(it_pool) for it in items]
+    out = []
+    for it, p in zip(items, seq):
+        if len(it) == 4:
+            out.append((it[0], it[1], it[3], it[2]))
+        else:
+            ch = it[1]
+            out.append((it[0], ch[1:p + 1] + [ch[0]] + ch[p + 1:], p, it[2]))
+    return out
+
+def place_v1(items, seed):
     seq = [i % 4 for i in range(len(items))]
     random.Random(seed).shuffle(seq)
     out = []
