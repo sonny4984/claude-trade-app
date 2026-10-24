@@ -80,3 +80,11 @@
 5. **시제 단서는 반드시 문장 안**: earlier this week → 과거, tomorrow → will, long before → had p.p., for almost twenty years → has been p.p., Once + has arrived.
 6. **반복 출제 확정 표현(두 책 공통)**: allow/enable O to V, familiarize oneself with, refer to, be responsible for, under the direction of, in recognition of, according to, effective + 날짜, advanced/prior/extensive/substantial/considerable + 명사, greatly/significantly + 현재완료, Anyone who + 단수.
 7. 선지는 실존 단어만, 어근 4형태 세트 ≈ 12개, 같은 품사 4단어 세트 ≈ 14개, 기능어 세트 ≈ 4개.
+
+## 해설지(정답 및 해설) 확인 — 공식 유형 라벨 (10/24)
+- 해설지는 문항마다 "명사 자리_복합명사", "부사 어휘", "전치사 자리/어휘" 같은 유형 라벨 + 오답 탈락 이유를 붙임.
+- T1 P5 공식 라벨 집계: 자리(품사) 10 / 어휘 16 (동3 명2 형3 부3 전치사·구전치사 5) / 문법 4 (대명사 격, 부정대명사 some, 수일치+시제, 태+시제)
+- T2 P5: 자리 9 (부사 2, 명사 2, 형용사 2, 접속사 자리 2, 명령문 동사원형 1) / 어휘 13 / 문법 8 (대명사 2, to부정사 1, 과거분사 associated 1, 비교급 1 등)
+- → 내 추정(어휘 15-16 / 품사 7-10 / 문법 4-8)과 일치. 공식 라벨상 "접속사 자리_부사절 접속사"(Wherever, after, when+V-ing)는 품사가 아니라 '자리' 문제로 분류됨 — 회당 1-2개.
+- 오답 설명 방식: 품사 문제는 "명사라서 / 형용사라서 빈칸에 들어갈 수 없다", 어휘 문제는 "문맥상 어울리지 않는다" + 각 선지 뜻. 내 정답지 해설도 이 형식으로 통일할 것.
+- 정답 대조 샘플: T1 101 his(B), 109 until(A), 128 has been approved(C), 129 In light of(C) — 내 문법 판단과 일치.
