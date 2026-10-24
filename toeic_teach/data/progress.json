@@ -867,5 +867,89 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-10-25"
+ },
+ "t14-111": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "Upon + V-ing (As soon as는 절) ← As soon as"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t14-112": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "familiarize oneself with ← remind (with 단서 적고도 놓침)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t14-114": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "Each of + 복수 → 단수 was reviewed ← were reviewed"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t14-121": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "as soon as(시간) ← so that(목적)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t14-125": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "whose + 명사 + 동사 ← who"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t14-126": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "findings of the audit(감사 결과) ← features (audit 모름)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
+ },
+ "t14-130": {
+  "history": [
+   {
+    "date": "2026-10-24",
+    "result": "wrong",
+    "note": "apply exclusively to(~에게만) ← efficiently"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-25"
  }
 }
