@@ -14,15 +14,15 @@ import { downloadReportDocx } from "./reportDoc.js";
 const KR = "'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif";
 
 // Vision 지원 모델 (앞에서부터 시도, 없으면 다음 모델로 자동 대체)
-// 앞의 모델이 붐비거나(429/503) 폐기되면(404) 순서대로 다음 모델로 넘어간다.
-// 2026-08 기준 실제 호출로 확인한 사용 가능 모델만 남긴다.
-// (구버전 2.5/2.0-flash는 폐기되어 404가 나므로 제외)
+// 2026-10 실측: 아래 네 모델은 평균 6~7초로 안정적이다.
+// gemini-flash-latest(별칭)는 평균 150초가 넘고 성공률도 낮아 맨 뒤에 둔다.
+// (별칭은 특정 버전이 폐기돼도 살아남으므로 최후 보루로만 남긴다)
 const MODELS = [
-  "gemini-3.6-flash",
   "gemini-3.5-flash",
   "gemini-3-flash-preview",
-  "gemini-flash-latest",
+  "gemini-3.6-flash",
   "gemini-3.1-flash-lite",
+  "gemini-flash-latest",
 ];
 
 // 밝고 따뜻한 팔레트
@@ -210,6 +210,20 @@ const BUSY_TEXT = /overload|unavailable|rate.?limit|quota|too many|try again|hig
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // 재시도해도 소용없는 오류(키·권한 등)는 즉시 사용자에게 알린다
 const fatalError = (m) => Object.assign(new Error(m), { fatal: true });
+// 한 모델이 응답하지 않을 때 앱이 묶이지 않도록 하는 제한값
+const REQUEST_TIMEOUT = 30000; // 한 번의 호출을 기다리는 최대 시간
+const TOTAL_BUDGET = 75000; // 전체를 포기하고 안내문을 띄우기까지의 시간
+
+// 정해진 시간 안에 응답이 없으면 호출을 끊는다
+async function fetchWithTimeout(url, options, ms) {
+  const ac = new AbortController();
+  const timer = setTimeout(() => ac.abort(), ms);
+  try {
+    return await fetch(url, { ...options, signal: ac.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 async function callGeminiVision(prompt, images, apiKey, onStatus) {
   if (!apiKey) throw fatalError("먼저 Gemini API 키를 입력해 주세요. (하단 ⚙️ 설정)");
@@ -226,25 +240,31 @@ async function callGeminiVision(prompt, images, apiKey, onStatus) {
   // 한 바퀴 돌아 여유 있는 모델을 찾고, 전부 붐빌 때만 잠시 쉬었다 재시도한다.
   const ROUND_WAIT = [0, 1500, 4000];
   const dead = new Set(); // 폐기(404)된 모델은 다시 부르지 않는다
+  const deadline = Date.now() + TOTAL_BUDGET; // 이 시각을 넘기면 포기하고 안내
   let lastErr = null;
   let busy = false; // 혼잡 때문에 실패했는지
 
   for (let round = 0; round < ROUND_WAIT.length; round++) {
+    if (Date.now() > deadline) break;
     if (ROUND_WAIT[round]) {
       onStatus?.("AI 서버가 붐벼서 자동으로 다시 시도하는 중이에요…");
       await sleep(ROUND_WAIT[round]);
     }
     for (const model of MODELS) {
       if (dead.has(model)) continue;
+      if (Date.now() > deadline) break;
       try {
         // 키는 URL이 아닌 헤더로 전달 (신형 AQ. 키·구형 AIza 키 모두 지원)
-        const res = await fetch(
+        // 남은 예산과 호출 제한 중 짧은 쪽만 기다린다 (한 모델이 앱을 묶지 못하게)
+        const wait = Math.max(5000, Math.min(REQUEST_TIMEOUT, deadline - Date.now()));
+        const res = await fetchWithTimeout(
           `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json", "X-goog-api-key": apiKey },
             body,
-          }
+          },
+          wait
         );
         let data = null;
         try {
@@ -269,6 +289,7 @@ async function callGeminiVision(prompt, images, apiKey, onStatus) {
           if (RETRYABLE_STATUS.has(res.status) || BUSY_TEXT.test(msg)) {
             busy = true;
             lastErr = new Error(msg);
+            onStatus?.("지금 쓰던 AI가 붐벼서 다른 AI로 바꿔 시도하는 중이에요…");
             continue;
           }
           throw fatalError(msg);
@@ -283,9 +304,10 @@ async function callGeminiVision(prompt, images, apiKey, onStatus) {
         return text;
       } catch (e) {
         if (e?.fatal) throw e;
-        // 네트워크 끊김 등은 혼잡과 같이 취급해 자동 재시도
-        lastErr = e;
+        // 응답 지연(제한 시간 초과)·네트워크 끊김 → 다음 모델로 넘어간다
+        lastErr = e?.name === "AbortError" ? new Error("응답이 너무 늦어 중단했습니다.") : e;
         busy = true;
+        onStatus?.("응답이 늦어 다른 AI로 바꿔 시도하는 중이에요…");
       }
     }
   }
