@@ -174,7 +174,10 @@ function readImage(file) {
     const img = new Image();
     const url = URL.createObjectURL(file);
     img.onload = () => {
-      const maxDim = 1600;
+      // 휴대폰 데이터로 올리는 시간이 성패를 가른다. 1600px/0.85는 장당 730KB라
+      // 느린 모바일에서 올리다 실패했다. 1200px/0.68은 장당 약 150KB로 5배 가볍고,
+      // 손글씨 인식 정확도는 실측에서 동일했다(10/10).
+      const maxDim = 1200;
       const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
       const w = Math.round(img.width * scale);
       const h = Math.round(img.height * scale);
@@ -184,8 +187,11 @@ function readImage(file) {
       const ctx = canvas.getContext("2d");
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, w, h);
+      // 축소 화질을 높여야 작게 줄여도 손글씨가 뭉개지지 않는다
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
       ctx.drawImage(img, 0, 0, w, h);
-      const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.68);
       URL.revokeObjectURL(url);
       resolve({
         preview: dataUrl,
@@ -211,8 +217,8 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // 재시도해도 소용없는 오류(키·권한 등)는 즉시 사용자에게 알린다
 const fatalError = (m) => Object.assign(new Error(m), { fatal: true });
 // 한 모델이 응답하지 않을 때 앱이 묶이지 않도록 하는 제한값
-const REQUEST_TIMEOUT = 30000; // 한 번의 호출을 기다리는 최대 시간
-const TOTAL_BUDGET = 75000; // 전체를 포기하고 안내문을 띄우기까지의 시간
+const REQUEST_TIMEOUT = 40000; // 한 번의 호출을 기다리는 최대 시간(느린 모바일 업로드 감안)
+const TOTAL_BUDGET = 110000; // 전체를 포기하고 안내문을 띄우기까지의 시간
 
 // 정해진 시간 안에 응답이 없으면 호출을 끊는다
 async function fetchWithTimeout(url, options, ms) {
