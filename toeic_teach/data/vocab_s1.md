@@ -7,3 +7,6 @@
 - in order to V = ~하기 위해 (목적). because of + 명사 = ~때문에 (원인)
 # vocab_s2 (10/23 동하가 단어장에 넣자고 한 것)
 - tangible results (통으로), go into effect (go + into + effect 통으로), in order to V, be accustomed to V-ing, where(장소 명사 뒤), by vs until
+
+# vocab_s3 (10/26 동하가 단어장에 넣자고 한 것)
+- remote(재택의), position(일자리·직책), part-time job(시간제 일). TEST 15-16 P7에 나온 표현 (remote position / full-time vs part-time)
