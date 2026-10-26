@@ -28,3 +28,15 @@ settled/settling, who/whose, well/worst, experience/feedback, expiring/to expire
 4 문맥 어휘 (capacity, venue, complimentary 등)
 5 품사·수식
 6 Part 7 (NOT/EXCEPT, 주체·대상, nationwide, 근거 vs 추론)
+
+## 10/26 Test G 동하 직접 메모 (기억할 것)
+- 101 exclusively = "~에게만" (뜻 몰랐음)
+- 102 audit = 회계 감사 (뜻 몰랐음)
+- 104 One of the 복수N + 단수V / 106 Each of도 복수N + 단수V / 108 Neither of + 복수N + 단수V — "이거 맞아?" 질문
+- 105 who vs whose 차이 다시 정리 요청 (소유격 whose)
+- 107 Upon V-ing = ~하자마자
+- 113 in case(D)도 정답 같다고 느낌 → 의미 구별 필요 (as soon as vs in case)
+- 114 familiarize + with: 단서 적고도 notify 선택 (2회째)
+- 116 solely = 오로지
+- 112 findings = 결과, features = 특징
+- 120 accustom = 익숙하게 하다, acquaint = 숙지하다

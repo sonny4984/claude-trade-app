@@ -698,36 +698,40 @@ key = []
 B12 = st(fontName="S-B", fontSize=12.5, leading=15, spaceAfter=10)
 DIR = st(fontSize=10.6, leading=13.6, spaceAfter=10)
 
-story = [Spacer(1, 1), NextPageTemplate("p5a"), PageBreak()]
-story.append(Box([Paragraph("READING TEST", B12),
-                  Paragraph("In the Reading test, you will read a variety of texts and answer several different types of reading "
-                            "comprehension questions. The entire Reading test will last 75 minutes. There are three parts, and "
-                            "directions are given for each part. You are encouraged to answer as many questions as possible "
-                            "within the time allowed.", DIR),
-                  Paragraph("You must mark your answers on the separate answer sheet. Do not write your answers in your test "
-                            "book.", DIR),
-                  Paragraph("PART 5", B12),
-                  Paragraph("<b>Directions:</b> A word or phrase is missing in each of the sentences below. Four answer choices "
-                            "are given below each sentence. Select the best answer to complete the sentence. Then mark the letter "
-                            "(A), (B), (C), or (D) on your answer sheet.", DIR)], pad=16, top_pad=16))
-story += [FrameBreak()]
-p5 = place(PART5, 1101 + 100 * (TEST_NO - 11))
-P5_GAPS = getattr(_mod, "P5_GAPS", (14, 14, 27, 27, 31, 31))
-groups = [(0, 4), (4, 8), (8, 14), (14, 20), (20, 25), (25, 30)]
-for gi, (a, b) in enumerate(groups):
-    for i in range(a, b):
-        stem, ch, ans, note = p5[i]
-        key.append((101 + i, "ABCD"[ans], ch[ans], note))
-        story += [q_block(101 + i, stem, ch, CW), Spacer(1, P5_GAPS[gi])]
-    if gi == 1:
-        story += [NextPageTemplate("p5b"), PageBreak()]
-    elif gi == 3:
-        story += [NextPageTemplate("p5b"), PageBreak()]
-    elif gi == 5:
-        if PART6 or PART7:
-            story += [NextPageTemplate("full"), PageBreak()]
-    else:
-        story.append(FrameBreak())
+if PART5:
+    story = [Spacer(1, 1), NextPageTemplate("p5a"), PageBreak()]
+    story.append(Box([Paragraph("READING TEST", B12),
+                      Paragraph("In the Reading test, you will read a variety of texts and answer several different types of reading "
+                                "comprehension questions. The entire Reading test will last 75 minutes. There are three parts, and "
+                                "directions are given for each part. You are encouraged to answer as many questions as possible "
+                                "within the time allowed.", DIR),
+                      Paragraph("You must mark your answers on the separate answer sheet. Do not write your answers in your test "
+                                "book.", DIR),
+                      Paragraph("PART 5", B12),
+                      Paragraph("<b>Directions:</b> A word or phrase is missing in each of the sentences below. Four answer choices "
+                                "are given below each sentence. Select the best answer to complete the sentence. Then mark the letter "
+                                "(A), (B), (C), or (D) on your answer sheet.", DIR)], pad=16, top_pad=16))
+    story += [FrameBreak()]
+    p5 = place(PART5, 1101 + 100 * (TEST_NO - 11))
+    P5_GAPS = getattr(_mod, "P5_GAPS", (14, 14, 27, 27, 31, 31))
+    groups = [(0, 4), (4, 8), (8, 14), (14, 20), (20, 25), (25, 30)]
+    for gi, (a, b) in enumerate(groups):
+        for i in range(a, b):
+            stem, ch, ans, note = p5[i]
+            key.append((101 + i, "ABCD"[ans], ch[ans], note))
+            story += [q_block(101 + i, stem, ch, CW), Spacer(1, P5_GAPS[gi])]
+        if gi == 1:
+            story += [NextPageTemplate("p5b"), PageBreak()]
+        elif gi == 3:
+            story += [NextPageTemplate("p5b"), PageBreak()]
+        elif gi == 5:
+            if PART6 or PART7:
+                story += [NextPageTemplate("full"), PageBreak()]
+        else:
+            story.append(FrameBreak())
+
+else:  # Part 6·7-only practice set
+    story = [Spacer(1, 1), NextPageTemplate("full"), PageBreak()]
 
 # Part 6
 P6_IN = st(fontSize=10.8, leading=25, spaceAfter=7)
