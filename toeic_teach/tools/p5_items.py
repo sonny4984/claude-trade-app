@@ -475,3 +475,57 @@ TEST_G = [
  ("The report was written ------- for internal use and may not be shared outside the company.",
   ["solely", "closely", "barely", "nearly"], "'오로지 ~용' → solely(= exclusively). closely(밀접하게), barely(거의 ~않는), nearly(거의)."),
 ]
+
+# Test H (10/29): 서아 PT P5 오답 10개 × 2 = 20문항. 같은 규칙, 새 문장. 일부는 반대 상황(정답이 바뀌는 경우)으로.
+TEST_H = [
+ # 4 cease
+ ("Because of low ticket sales, the airline will ------- service between Denver and Tulsa next month.",
+  ["cease", "initiate", "commence", "resume"], "어휘: 판매 부진 → 운항을 '중단하다' cease. initiate/commence는 '시작하다', resume은 '재개하다'(반대 방향)."),
+ ("After two years of planning, Harlow Bakery will ------- deliveries to nearby towns in May.",
+  ["begin", "cease", "retire", "withdraw"], "반대 상황: 2년 준비 끝에 배달을 '시작' → begin. cease를 습관적으로 고르면 함정."),
+ # 7 anyone who / those who
+ ("------- who wishes to attend the training must register by Friday.",
+  ["Anyone", "Those", "They", "Whoever"], "who 뒤 단수 동사 wishes → Anyone. Those who 뒤는 복수 동사(wish). Whoever는 who가 이미 들어 있어 who와 같이 못 씀."),
+ ("------- who complete the online survey will receive a ten percent coupon.",
+  ["Those", "Anyone", "Each", "Whoever"], "who 뒤 복수 동사 complete → Those. Anyone/Each who는 단수 동사(completes)가 와야 함."),
+ # 13 관계사 생략 + 동사
+ ("The software the accounting team ------- every day was updated last night.",
+  ["uses", "use", "using", "to use"], "관계사 생략: the software (that) the accounting team ___ → 주어 team(단수) + 현재 습관 → uses."),
+ ("The documents our clients ------- by e-mail last week have all been processed.",
+  ["sent", "send", "sending", "to send"], "관계사 생략: (that) our clients ___ → 동사 자리 + last week → 과거 sent."),
+ # 14 necessary
+ ("Please bring all ------- forms to the first day of orientation.",
+  ["required", "impressive", "outstanding", "frequent"], "어휘: 오리엔테이션에 가져올 '필요한' 서류 → required forms. outstanding은 '뛰어난/미지불의'."),
+ ("Visitors must show a valid ID, as it is ------- to enter the research facility.",
+  ["necessary", "eventual", "optional", "impressive"], "어휘: 신분증을 반드시 보여야 함 → 출입에 '필수' necessary. optional은 반대."),
+ # 18 either / too
+ ("Ms. Rivera did not attend the morning session, and she did not attend the afternoon session -------.",
+  ["either", "too", "also", "neither"], "부정문 끝의 '~도' → either. too는 긍정문, neither는 그 자체가 부정어라 did not과 중복."),
+ ("Mr. Okafor will present at the conference, and his manager will present -------.",
+  ["too", "either", "neither", "else"], "반대 상황: 긍정문 끝의 '~도' → too."),
+ # 21 분사구문 resulting in
+ ("Heavy rain flooded the main road, ------- delays for thousands of commuters.",
+  ["causing", "caused", "causes", "to be caused"], "콤마 앞 완전한 문장 + 결과 → 분사구문 causing. 동사 caused/causes는 동사 중복."),
+ ("The company upgraded its servers last month, ------- in much faster loading times.",
+  ["resulting", "resulted", "results", "result"], "콤마 뒤 결과 분사구문 → resulting in."),
+ # 24 retract
+ ("After customers complained, the store decided to ------- its new return policy.",
+  ["withdraw", "exploit", "incur", "attain"], "어휘: 불만 때문에 정책을 '철회하다' → withdraw(= retract). incur(비용을 발생시키다), attain(달성하다)."),
+ ("The newspaper had to ------- a statement after the information was found to be incorrect.",
+  ["retract", "resolve", "reserve", "remind"], "어휘: 잘못된 내용 → 진술을 '철회/취소하다' retract."),
+ # 26 adaptable
+ ("Our software is highly ------- and can be customized to meet the needs of any business.",
+  ["adaptable", "impractical", "overdue", "defective"], "어휘: 어떤 사업에도 맞춤 가능 → 적응력 있는/융통성 있는 adaptable."),
+ ("Applicants must be ------- and able to work different shifts on short notice.",
+  ["flexible", "rigid", "obsolete", "reluctant"], "어휘: 갑자기 다른 근무조도 가능 → flexible(유연한). rigid는 반대."),
+ # 28 whom / whose
+ ("The consultant ------- the board hired last year has already reduced costs by 15 percent.",
+  ["whom", "whose", "who", "which"], "관계사: hired의 목적어가 빠짐(the board hired ___) → 목적격 whom. 사람 선행사라 which 불가."),
+ ("The consultant ------- report impressed the board will lead the new project.",
+  ["whose", "whom", "who", "which"], "반대 상황: 빈칸 바로 뒤 명사 report + 동사 impressed → 소유격 whose."),
+ # 30 periodically
+ ("The security system automatically backs up all files ------- throughout the day.",
+  ["periodically", "inadvertently", "reluctantly", "temporarily"], "어휘: 하루 동안 '주기적으로' 백업 → periodically. inadvertently(무심코)."),
+ ("Lab equipment is inspected ------- to make sure it continues to meet safety standards.",
+  ["regularly", "barely", "hardly", "formerly"], "어휘: 안전 기준 유지를 위해 '정기적으로' 점검 → regularly(= periodically). barely/hardly는 부정 의미."),
+]

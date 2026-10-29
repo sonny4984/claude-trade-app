@@ -13,7 +13,7 @@ from reportlab.platypus import (BaseDocTemplate, PageTemplate, Frame, Paragraph,
 
 root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root / "tools"))
-from p5_items import TEST_A, TEST_B, TEST_C, TEST_D, TEST_E, TEST_F, TEST_G
+from p5_items import TEST_A, TEST_B, TEST_C, TEST_D, TEST_E, TEST_F, TEST_G, TEST_H
 
 pdfmetrics.registerFont(TTFont("NG", str(root / "tools/fonts/NanumGothic-Regular.ttf")))
 pdfmetrics.registerFont(TTFont("NG-B", str(root / "tools/fonts/NanumGothic-Bold.ttf")))
@@ -200,6 +200,7 @@ def place_items(items, seed):
 NEW_SETS = {  # name: (items, shuffle seed, answer seed, label, file stem)
     "C": (TEST_C, 2410, 1024, "Practice Test C (Structure Around the Blank)", "P5_TestC_structure"),
     "D": (TEST_D, 2510, 1031, "Practice Test D (Real-Test Mix 1)", "P5_TestD_real"),
+    "H": (TEST_H, 2910, 1031, "Practice Test H (Seoa P5 Variants)", "P5_TestH_variants"),
     "G": (TEST_G, 2810, 1051, "Practice Test G (TEST 14 Variants)", "P5_TestG_variants"),
     "F": (TEST_F, 2710, 1044, "Practice Test F (ETS-Style Mix)", "P5_TestF_ets"),
     "E": (TEST_E, 2610, 1026, "Practice Test E (Real-Test Mix 2)", "P5_TestE_real"),
