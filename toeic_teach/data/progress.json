@@ -991,5 +991,137 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-10-26"
+ },
+ "t16-136": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "P6 문장고르기: largely(대부분) → The rest(나머지) 연결 못 봄, 주제만 맞는 오답(storm) 선택"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-29"
+ },
+ "t16-141": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "although(양보) ← in case 선택. Test G 113에 이어 in case 의미 혼동 2회째"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-29"
+ },
+ "t16-142": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "spend time V-ing ← to answer 선택"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-29"
+ },
+ "t16-148": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "no staff on duty → 받아줄 사람 없음 ← signed for by staff(반대) 선택"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-29"
+ },
+ "t16-157": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "hear back from them → 질문한 대상(Hollis) 바로 뒤 [3] ← [4]"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-29"
+ },
+ "t16-161": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "대상 = 행사 계획하는 사람 ← employees"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-29"
+ },
+ "t16-172": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "주제: 고객의 할인 요청 ← contract 단어 재사용 오답"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-29"
+ },
+ "t16-174": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "의도: 바로 앞 'Can you copy me?' → 참조 포함 ← 10% 동의"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-29"
+ },
+ "t16-177": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "연계: Terrace는 5~9월만 + 10월 행사 → Ballroom ← Terrace"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-29"
+ },
+ "t16-180": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "연계: 투숙객 → 무료 생수 ← 지문에 없는 room upgrade"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-29"
+ },
+ "t16-188": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "연계: 4명 → 단체 20% ← 'cannot be combined'를 할인 없음으로 오해"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-29"
  }
 }
