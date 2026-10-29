@@ -1123,5 +1123,29 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-10-29"
+ },
+ "t16-196": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "all cabins → kitchen = cooking facilities ← fishing equipment(렌탈은 front office)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
+ },
+ "t16-197": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "연계: 리뷰 'our own dock' + 웹 'Lakeside (private dock)' ← Family cabin"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
  }
 }
