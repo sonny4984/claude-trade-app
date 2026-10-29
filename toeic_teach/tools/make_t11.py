@@ -31,6 +31,7 @@ from reportlab.pdfbase.pdfmetrics import registerFontFamily
 registerFontFamily("S", normal="S", bold="S-B", italic="S-I", boldItalic="S-BI")
 registerFontFamily("R", normal="R", bold="R-B", italic="R-I", boldItalic="R-BI")
 
+OUT = Path(getattr(_mod, "OUT_DIR", root / "data/workbook"))
 TEST_NO = int(sys.argv[2]) if len(sys.argv) > 2 else 11
 FIRST_PRINTED = 19 + 30 * (TEST_NO - 11)  # divider page number; TEST 11 = pages 20-47
 PW, PH = A4
@@ -671,7 +672,7 @@ def divider(c, doc):
     c.setFont("S-B", 84); c.drawString(PW / 2 + 40, PH / 2 - 80, f"{TEST_NO}")
     c.setLineWidth(0.8); c.line(PW / 2 - 150, PH / 2 - 20, PW / 2 + 30, PH / 2 - 20); c.line(PW / 2 - 150, PH / 2 - 75, PW / 2 + 30, PH / 2 - 75)
     c.setFont("NG", 9); c.setFillColor(colors.HexColor("#666666"))
-    c.drawCentredString(PW / 2, 80, "개인 학습용으로 새로 작성한 연습 문제입니다. 실제 기출 문항이 아닙니다.")
+    c.drawCentredString(PW / 2, 80, getattr(_mod, "DIVIDER_NOTE", "개인 학습용으로 새로 작성한 연습 문제입니다. 실제 기출 문항이 아닙니다."))
     c.restoreState()
 
 def register_cb(c, doc):
@@ -680,7 +681,7 @@ def register_cb(c, doc):
 def sheet(c, doc):
     deco(c, doc)
 
-doc = BaseDocTemplate(str(root / f"data/workbook/RC_Test{TEST_NO}.pdf"), pagesize=A4, leftMargin=LM, rightMargin=RM, topMargin=TOP,
+doc = BaseDocTemplate(str(OUT / f"RC_Test{TEST_NO}.pdf"), pagesize=A4, leftMargin=LM, rightMargin=RM, topMargin=TOP,
                       bottomMargin=BOT, title=f"RC Practice TEST {TEST_NO}", author="")
 full = Frame(LM, BOT, W, PH - TOP - BOT, leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0, id="full")
 HDR = 238
@@ -797,6 +798,7 @@ for si, s in enumerate(PART7):
                                  "newspaper articles, e-mails, and instant messages. Each text or set of texts is followed by "
                                  "several questions. Select the best answer for each question and mark the letter (A), (B), (C), "
                                  "or (D) on your answer sheet.", DIR)], pad=16, top_pad=16), Spacer(1, 22)]
+    n = s.get("start", n)  # partial sets may start at their real-test number
     lo, hi = n, n + len(s["qs"]) - 1
     flows = [passage(p) for p in s["passages"]]
     for f in flows:
@@ -808,7 +810,7 @@ for si, s in enumerate(PART7):
         key.append((n, "ABCD"[ans], ch[ans], note))
         qs.append((n, stem, ch)); n += 1
     qtab = q_two_col(qs, s.get("left"))
-    plan = PAGES.get(si, [["p0", "q"]])
+    plan = s.get("pages") or PAGES.get(si, [["p0", "q"]])
     for pi, page in enumerate(plan):
         if pi == 0:
             story += [intro_line(lo, hi, s["intro"]), Spacer(1, 12)]
@@ -820,7 +822,7 @@ for si, s in enumerate(PART7):
         if si == len(PART7) - 1 and pi == len(plan) - 1:
             break
         story.append(PageBreak())
-assert n == 201 or not PART7
+assert n == 201 or not PART7 or getattr(_mod, "PARTIAL", False)
 
 class Stop(Flowable):
     def wrap(self, aw, ah):
@@ -862,7 +864,7 @@ class Unlast(Flowable):
 doc.build(story)
 
 # ---------------- answer key (Korean)
-kd = BaseDocTemplate(str(root / f"data/workbook/RC_Test{TEST_NO}_Answers.pdf"), pagesize=A4, leftMargin=40, rightMargin=40,
+kd = BaseDocTemplate(str(OUT / f"RC_Test{TEST_NO}_Answers.pdf"), pagesize=A4, leftMargin=40, rightMargin=40,
                      topMargin=40, bottomMargin=46, title=f"RC TEST {TEST_NO} Answer Key")
 kd.addPageTemplates([PageTemplate(id="k", frames=[Frame(40, 46, PW - 80, PH - 86, leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0)],
                                   onPage=lambda c, d: (c.setFont("NG", 8), c.drawCentredString(PW / 2, 26, str(d.page))))])
@@ -883,6 +885,6 @@ for label, lo, hi in (("Part 5", 101, 130), ("Part 6", 131, 146), ("Part 7", 147
                            ("BACKGROUND", (0, 0), (-1, 0), LIGHT), ("VALIGN", (0, 0), (-1, -1), "TOP")]))
     ks.append(t)
 kd.build(ks)
-(root / f"data/workbook/RC_Test{TEST_NO}_key.txt").write_text(" ".join(f"{a}{b}" for a, b, _, _ in key), encoding="utf-8")
+(OUT / f"RC_Test{TEST_NO}_key.txt").write_text(" ".join(f"{a}{b}" for a, b, _, _ in key), encoding="utf-8")
 from collections import Counter
 print("answers", Counter(k[1] for k in key), "lines", LINES)
