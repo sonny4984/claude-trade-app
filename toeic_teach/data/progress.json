@@ -1147,5 +1147,125 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-10-30"
+ },
+ "sa-4": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "cease(중단하다) making ← initiate"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
+ },
+ "sa-7": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "anyone who handles(단수) ← those(복수 동사 필요)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
+ },
+ "sa-13": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "관계사 생략: machine (that) my customers use ← has used(수일치 X)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
+ },
+ "sa-14": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "necessary documents ← outstanding"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
+ },
+ "sa-18": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "부정문 + either(~도) ← else"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
+ },
+ "sa-21": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "콤마 뒤 분사구문 resulting in ← result in(동사 중복)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
+ },
+ "sa-24": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "retract(철회하다) the policy ← exploit"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
+ },
+ "sa-26": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "adaptable decisions ← impractical"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
+ },
+ "sa-28": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "whom(목적격, recommended의 목적어 빠짐) ← whose"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
+ },
+ "sa-30": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "flashes periodically ← consistently(애매)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
  }
 }
