@@ -1267,5 +1267,41 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-10-30"
+ },
+ "sa6-8": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "문장고르기: 빈칸 뒤 This way → 빈칸 = 그 방법(To do so, consult guide)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
+ },
+ "sa6-10": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "is employed: 다음 문장 Her role here is(현재) + 고용'되는' 쪽 수동 — 동하: 무조건 맞혔어야 한 문제"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
+ },
+ "sa6-11": {
+  "history": [
+   {
+    "date": "2026-10-29",
+    "result": "wrong",
+    "note": "a great asset to + 회사 (훌륭한 인재) ← decision"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-30"
  }
 }
