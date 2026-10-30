@@ -264,11 +264,16 @@
     "date": "2026-10-23",
     "result": "wrong",
     "note": "during 선택(뒤가 절인데 전치사). while 옆에 'will X' 메모 = 시간절 규칙을 주절의 will에 잘못 적용"
+   },
+   {
+    "date": "2026-10-30",
+    "result": "right",
+    "note": "Mock1 P6 재풀이 정답"
    }
   ],
-  "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-23"
+  "status": "부분 숙달",
+  "streak": 1,
+  "next_review": "2026-10-31"
  },
  "m1-133": {
   "history": [
@@ -276,33 +281,48 @@
     "date": "2026-10-23",
     "result": "wrong",
     "note": "will exit 선택. when 시간절 안은 현재형(exit)"
+   },
+   {
+    "date": "2026-10-30",
+    "result": "right",
+    "note": "Mock1 P6 재풀이 정답"
    }
   ],
-  "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-23"
+  "status": "부분 숙달",
+  "streak": 1,
+  "next_review": "2026-10-31"
  },
  "m1-132": {
   "history": [
    {
     "date": "2026-10-23",
     "result": "correct"
+   },
+   {
+    "date": "2026-10-30",
+    "result": "right",
+    "note": "Mock1 P6 재풀이 정답"
    }
   ],
   "status": "부분 숙달",
-  "streak": 1,
-  "next_review": "2026-10-24"
+  "streak": 2,
+  "next_review": "2026-10-31"
  },
  "m1-134": {
   "history": [
    {
     "date": "2026-10-23",
     "result": "correct"
+   },
+   {
+    "date": "2026-10-30",
+    "result": "wrong",
+    "note": "문장삽입: 앞 south lot 주차 안내 → 붐비니 일찍(C) ← 지문에 없는 new lot 200 spaces(A)"
    }
   ],
-  "status": "부분 숙달",
-  "streak": 1,
-  "next_review": "2026-10-24"
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-31"
  },
  "t11-105": {
   "history": [
@@ -1327,5 +1347,29 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-10-31"
+ },
+ "m1-135": {
+  "history": [
+   {
+    "date": "2026-10-30",
+    "result": "wrong",
+    "note": "has been helping + for + 기간(more than 20 years) ← since(시점 필요)"
+   }
+  ],
+  "streak": 0,
+  "next_review": "2026-10-31",
+  "status": "미숙"
+ },
+ "m1-138": {
+  "history": [
+   {
+    "date": "2026-10-30",
+    "result": "wrong",
+    "note": "help + 목적어 + (to) 동사원형 → choose ← choosing"
+   }
+  ],
+  "streak": 0,
+  "next_review": "2026-10-31",
+  "status": "미숙"
  }
 }
