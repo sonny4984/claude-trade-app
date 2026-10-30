@@ -34,10 +34,15 @@
    {
     "date": "2026-10-23",
     "result": "wrong"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
-  "streak": 0,
-  "next_review": "2026-10-23"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "x2-124": {
   "history": [
@@ -216,11 +221,16 @@
     "date": "2026-10-23",
     "result": "wrong",
     "note": "stable→tangible"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-23"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "tA-113": {
   "history": [
@@ -366,11 +376,16 @@
     "date": "2026-10-24",
     "result": "wrong",
     "note": "lower(타동사) ← decline 선택. 목적어 있으면 decline/fall/sink 탈락"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "wrong",
+    "note": "오답모음 재풀이: lower(타동사)+목적어 ← decline (2회째)"
    }
   ],
   "status": "미숙",
   "streak": 0,
-  "next_review": "2026-10-25"
+  "next_review": "2026-10-31"
  },
  "t11-117": {
   "history": [
@@ -402,11 +417,16 @@
     "date": "2026-10-24",
     "result": "wrong",
     "note": "Despite + 명사구 ← Although 선택. 전치사 vs 접속사"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-25"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "t11-126": {
   "history": [
@@ -414,11 +434,16 @@
     "date": "2026-10-24",
     "result": "wrong",
     "note": "for your convenience ← convenient 선택. 소유격 뒤 명사"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-25"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "t11-137": {
   "history": [
@@ -570,11 +595,16 @@
     "date": "2026-10-24",
     "result": "wrong",
     "note": "by swiftly responding"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "wrong",
+    "note": "오답모음 재풀이: by + 부사 + V-ing → swiftly ← swift (2회째)"
    }
   ],
   "status": "미숙",
   "streak": 0,
-  "next_review": "2026-10-25"
+  "next_review": "2026-10-31"
  },
  "er260809-111": {
   "history": [
@@ -582,11 +612,16 @@
     "date": "2026-10-24",
     "result": "wrong",
     "note": "ask everyone to V"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "wrong",
+    "note": "오답모음 재풀이: ask + 사람 + to V → everyone ← something (2회째)"
    }
   ],
   "status": "미숙",
   "streak": 0,
-  "next_review": "2026-10-25"
+  "next_review": "2026-10-31"
  },
  "er260809-122": {
   "history": [
@@ -606,11 +641,16 @@
     "date": "2026-10-24",
     "result": "wrong",
     "note": "extend beyond"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "wrong",
+    "note": "오답모음 재풀이: extend beyond ← through (2회째)"
    }
   ],
   "status": "미숙",
   "streak": 0,
-  "next_review": "2026-10-25"
+  "next_review": "2026-10-31"
  },
  "er260809-129": {
   "history": [
@@ -810,11 +850,16 @@
     "date": "2026-10-24",
     "result": "wrong",
     "note": "have risen (자동사, 목적어 없음) ← raised 선택"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-25"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "tF-113": {
   "history": [
@@ -822,11 +867,16 @@
     "date": "2026-10-24",
     "result": "wrong",
     "note": "compatible with ← for"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-25"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "tF-118": {
   "history": [
@@ -846,11 +896,16 @@
     "date": "2026-10-24",
     "result": "wrong",
     "note": "up to + 숫자 ← except"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "wrong",
+    "note": "오답모음 재풀이: up to + 숫자 ← beside (2회째)"
    }
   ],
   "status": "미숙",
   "streak": 0,
-  "next_review": "2026-10-25"
+  "next_review": "2026-10-31"
  },
  "tF-125": {
   "history": [
@@ -870,11 +925,16 @@
     "date": "2026-10-24",
     "result": "wrong",
     "note": "By the time + 과거 → had finished ← finish"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-25"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "tF-130": {
   "history": [
@@ -938,11 +998,16 @@
     "date": "2026-10-26",
     "result": "wrong",
     "note": "TestG 104/106/108 셋 다 복수 선택: One/Each/Neither of + 단수 개념 미정착"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-26"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "t14-121": {
   "history": [
@@ -955,11 +1020,16 @@
     "date": "2026-10-26",
     "result": "wrong",
     "note": "TestG 113 in case 선택 (103·115 정답)"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-26"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "t14-125": {
   "history": [
@@ -972,11 +1042,16 @@
     "date": "2026-10-26",
     "result": "wrong",
     "note": "TestG 105 who 선택 (121·117은 정답)"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-26"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "t14-126": {
   "history": [
@@ -1018,11 +1093,16 @@
     "date": "2026-10-29",
     "result": "wrong",
     "note": "P6 문장고르기: largely(대부분) → The rest(나머지) 연결 못 봄, 주제만 맞는 오답(storm) 선택"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-29"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "t16-141": {
   "history": [
@@ -1030,11 +1110,16 @@
     "date": "2026-10-29",
     "result": "wrong",
     "note": "although(양보) ← in case 선택. Test G 113에 이어 in case 의미 혼동 2회째"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "wrong",
+    "note": "오답모음 재풀이: although ← in case (3회째!)"
    }
   ],
   "status": "미숙",
   "streak": 0,
-  "next_review": "2026-10-29"
+  "next_review": "2026-10-31"
  },
  "t16-142": {
   "history": [
@@ -1042,11 +1127,16 @@
     "date": "2026-10-29",
     "result": "wrong",
     "note": "spend time V-ing ← to answer 선택"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-29"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "t16-148": {
   "history": [
@@ -1054,11 +1144,16 @@
     "date": "2026-10-29",
     "result": "wrong",
     "note": "no staff on duty → 받아줄 사람 없음 ← signed for by staff(반대) 선택"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-29"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "t16-157": {
   "history": [
@@ -1066,11 +1161,16 @@
     "date": "2026-10-29",
     "result": "wrong",
     "note": "hear back from them → 질문한 대상(Hollis) 바로 뒤 [3] ← [4]"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-29"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "t16-161": {
   "history": [
@@ -1078,11 +1178,16 @@
     "date": "2026-10-29",
     "result": "wrong",
     "note": "대상 = 행사 계획하는 사람 ← employees"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-29"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "t16-172": {
   "history": [
@@ -1222,11 +1327,16 @@
     "date": "2026-10-29",
     "result": "wrong",
     "note": "부정문 + either(~도) ← else"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-30"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "sa-21": {
   "history": [
@@ -1234,11 +1344,16 @@
     "date": "2026-10-29",
     "result": "wrong",
     "note": "콤마 뒤 분사구문 resulting in ← result in(동사 중복)"
+   },
+   {
+    "date": "2026-10-31",
+    "result": "right",
+    "note": "오답모음 재풀이 정답"
    }
   ],
   "status": "미숙",
-  "streak": 0,
-  "next_review": "2026-10-30"
+  "streak": 1,
+  "next_review": "2026-11-03"
  },
  "sa-24": {
   "history": [
@@ -1366,6 +1481,18 @@
     "date": "2026-10-30",
     "result": "wrong",
     "note": "help + 목적어 + (to) 동사원형 → choose ← choosing"
+   }
+  ],
+  "streak": 0,
+  "next_review": "2026-10-31",
+  "status": "미숙"
+ },
+ "t16-140": {
+  "history": [
+   {
+    "date": "2026-10-31",
+    "result": "wrong",
+    "note": "오답모음 재풀이: 7일 보관 뒤 → 재고로 반환(C) ← 배송(A)"
    }
   ],
   "streak": 0,
