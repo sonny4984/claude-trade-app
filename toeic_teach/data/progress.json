@@ -1304,20 +1304,28 @@
   "streak": 0,
   "next_review": "2026-10-30"
  },
- "items": [
-  {
-   "id": "oct-er-118",
-   "date": "2026-10-30",
-   "result": "wrong",
-   "next": "2026-10-31",
-   "note": "whichever: 두 개 중 '어느 것이든' + 불완전절(주어 빠짐)"
-  },
-  {
-   "id": "oct-er-126",
-   "date": "2026-10-30",
-   "result": "wrong",
-   "next": "2026-10-31",
-   "note": "목적격 관계사 사물 → that (whom은 사람)"
-  }
- ]
+ "oct-er-118": {
+  "history": [
+   {
+    "date": "2026-10-30",
+    "result": "wrong",
+    "note": "whichever: 두 개 중 '어느 것이든' + 불완전절(주어 빠짐)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-31"
+ },
+ "oct-er-126": {
+  "history": [
+   {
+    "date": "2026-10-30",
+    "result": "wrong",
+    "note": "목적격 관계사 사물 → that (whom은 사람)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-10-31"
+ }
 }
