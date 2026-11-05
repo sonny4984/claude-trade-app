@@ -1537,11 +1537,16 @@
     "date": "2026-11-02",
     "result": "right",
     "note": "변형 문제 정답"
+   },
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "TEST 26 119 같은 구조 재오답"
    }
   ],
   "status": "부분 숙달",
-  "streak": 1,
-  "next_review": "2026-11-04"
+  "streak": 0,
+  "next_review": "2026-11-06"
  },
  "t21-112": {
   "history": [
@@ -1896,6 +1901,54 @@
     "date": "2026-11-05",
     "result": "wrong",
     "note": "사실확인: 5일 전은 주문 마감(결제 아님) → 메뉴 조정 가능 ← requires payment"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t26-117": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "than → 비교급 more efficient ← most efficient"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t26-118": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "Anyone (who is) interested ← Whoever(뒤에 동사 필요)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t26-119": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "the + 명사 + caused by → inconvenience ← inconvenient (TEST 21 104와 같은 유형 2회째)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t26-127": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "decision on + 주제 ← to"
    }
   ],
   "status": "미숙",
