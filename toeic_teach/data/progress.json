@@ -1793,5 +1793,113 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-11-06"
+ },
+ "t23-133": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "P6 동사 구조: encourage + O + to V ← insist"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t23-158": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "NOT + every: 점심은 Island만 → A meal ← the use of a kayak"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t23-160": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "세부 패러프레이즈: another tour date → different date ← another location"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t23-163": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "문장삽입: 개인 물품 예시 → [3] ← [2]"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t23-165": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "사실확인: supplies cafés/works directly with farms ← owns farms(단어 재사용 함정)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t23-167": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "문장삽입: This = 농장 직거래 결정 → [1] ← [3]"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t23-178": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "연계: 55명 + 4월(Willow는 5~9월) → Birch ← Willow Terrace"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t23-180": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "동의어: accommodate guests with dietary restrictions → provide for ← seat"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t23-186": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "사실확인: 5일 전은 주문 마감(결제 아님) → 메뉴 조정 가능 ← requires payment"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
  }
 }
