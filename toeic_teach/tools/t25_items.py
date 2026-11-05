@@ -4,10 +4,83 @@
 # Rules used here: doubles 300-380 words, triples 380-430 words; at least 3 of 5 questions per triple need two texts;
 # the deciding clue is indirect (a rule + a date, a cap + a cost, a schedule + a request), and wrong options reuse
 # names, numbers and dates that really appear in the texts.
-DIVIDER_NOTE = "Part 7 다중지문 실전 세트 (176-200). 새로 작성한 연습 문제입니다. 실제 기출 문항이 아닙니다."
+DIVIDER_NOTE = "Part 6 (131-146) + Part 7 다중지문 (176-200) 실전 세트. 새로 작성한 연습 문제입니다. 실제 기출 문항이 아닙니다."
 PARTIAL = True
 PART5 = []
-PART6 = []
+PART6 = [
+ {"intro": "e-mail",
+  "hdr": [("To", "All Customer Service Staff"), ("From", "Nadia Petrov, Customer Service Director"), ("Date", "September 8"), ("Subject", "New request-tracking system")],
+  "body": ["Our current system for tracking customer requests has become difficult to use as our client base has grown. Starting on September 21, all requests will be logged in HelpPoint, a new platform that {131} assigns each request to the appropriate department. {132}",
+           "To help everyone prepare, the IT department will hold two training sessions next week. Each two-hour session will cover the platform's basic features. We strongly {133} all staff to attend one of them, even if you have used similar software before.",
+           "During the first month, IT staff will visit each department to answer questions. {134}, technical problems with the platform should be reported directly to the IT help desk at extension 4420."],
+  "qs": [
+   ("", ["automatically", "automatic", "automate", "automation"],
+    "부사 자리: 관계사 that + ___ + 동사(assigns) → 동사를 꾸미는 부사 automatically."),
+   ("", ["This should significantly reduce the time customers spend waiting for a response.",
+         "Many customers have already praised the new system.",
+         "The training sessions were well attended last week.",
+         "Our client base has decreased over the past year."],
+    "문장 고르기: 앞 '요청을 담당 부서로 자동 배정' → 그 효과(대기 시간 감소). (B)는 아직 도입 전(9월 21일)이라 시제 모순, (C)는 교육이 '다음 주', (D)는 앞의 has grown과 모순."),
+   ("", ["advise", "suggest", "insist", "propose"],
+    "동사 구조: ___ + 목적어(all staff) + to V → advise. suggest/propose는 that절이나 V-ing, insist는 on. (TEST 23 133 encourage와 같은 구조)"),
+   ("", ["However", "Therefore", "Similarly", "For instance"],
+    "접속부사: IT 직원이 부서를 돌며 '사용법 질문'에 답함 ↔ '기술 문제'는 헬프데스크로 따로 → 대조 However."),
+  ]},
+ {"intro": "article", "title": "Dalton Rail Adds Express Service",
+  "body": ["OAKVILLE (February 12)—Dalton Rail announced yesterday that it will add an express train between Oakville and Brenton beginning on April 6. The new trains will {135} only at the two cities' main stations, cutting the travel time from 95 minutes to just over an hour.",
+           "The decision follows a sharp rise in the number of passengers who commute between the two cities for work. According to Dalton Rail, ridership on the line {136} by nearly 30 percent over the past three years. {137}",
+           "Tickets for the express service will cost $4 more than those for regular trains. However, passengers who hold a monthly pass will be able to ride the express trains {138} paying extra."],
+  "qs": [
+   ("", ["stop", "park", "rest", "land"],
+    "동사 어휘: 열차가 주요 역에서만 '정차하다' → stop. park는 차량을 세워두는 것, land는 비행기."),
+   ("", ["has increased", "will increase", "is increasing", "had increased"],
+    "시제: over the past three years(과거부터 지금까지) → 현재완료 has increased. had increased는 기준이 되는 과거 시점이 없음."),
+   ("", ["Many of these riders had complained that the existing trains were too slow and crowded.",
+         "The express trains will stop at every station along the route.",
+         "Dalton Rail was founded in Brenton more than 70 years ago.",
+         "As a result, fares for regular trains will be lowered."],
+    "문장 고르기: 앞 '통근 승객 급증' → these riders(그 승객들)가 느리고 붐빈다고 불만 → 급행 도입 이유. (B)는 '주요 역만 정차'와 모순, (C)는 무관, (D)는 근거 없음 + 다음 문단은 급행 요금 이야기."),
+   ("", ["without", "instead", "unless", "despite"],
+    "전치사 자리 + 의미: 뒤가 동명사(paying) → 전치사. 정기권 소지자는 '추가 요금 없이' → without. instead는 instead of, unless는 절, despite는 의미 불가."),
+  ]},
+ {"intro": "notice", "title": "Maple Grove Community Garden — Plots Available",
+  "body": ["The Maple Grove Community Garden has a limited number of plots available for the upcoming growing season. Each plot measures 3 by 6 meters and comes with access to shared tools, a water supply, and a compost area. The annual fee is $40, which covers the cost of water and the general {139} of the garden.",
+           "Plots will be assigned in the order in which applications are received. {140} demand has been high in recent years, we encourage interested residents to apply as early as possible. Gardeners are expected to keep their plots free of weeds and to attend at least two of the four volunteer workdays held during the season. Those who fail to meet these {141} may not be offered a plot the following year.",
+           "{142}"],
+  "qs": [
+   ("", ["maintenance", "maintain", "maintained", "maintainable"],
+    "명사 자리: the general + ___ + of → 명사 maintenance."),
+   ("", ["Because", "Despite", "Therefore", "Moreover"],
+    "접속사 자리: 뒤에 절 두 개가 콤마로 연결 → 종속접속사 Because. Therefore/Moreover는 부사, Despite는 전치사."),
+   ("", ["requirements", "opportunities", "deadlines", "preferences"],
+    "명사 어휘: 앞 문장의 '잡초 관리 + 봉사일 2회 참석'(지켜야 할 조건) → requirements. fail to meet + requirements 연어."),
+   ("", ["Application forms can be picked up at the Maple Grove Library or downloaded from our Web site.",
+         "Volunteer workdays are optional for all gardeners.",
+         "Plots are assigned by a lottery held in March.",
+         "Gardeners must bring their own tools, as none are provided."],
+    "문장 고르기(마지막): 공지 마무리 = 신청서 받는 곳 안내. (B)는 '최소 2회 참석'과 모순, (C)는 '접수 순서대로 배정'과 모순, (D)는 '공용 도구 제공'과 모순."),
+  ]},
+ {"intro": "e-mail",
+  "hdr": [("To", "Rebecca Tan"), ("From", "Halden Dental Clinic"), ("Date", "November 2"), ("Subject", "Your upcoming appointment")],
+  "body": ["Dear Ms. Tan,",
+           "{143} Your next cleaning and checkup {144} for Monday, November 16, at 9:30 A.M. with Dr. Alvarez.",
+           "Please note that our clinic {145} to a new location last month. We are now at 285 Fenwick Avenue, Suite 200, directly across from the Fenwick Public Library. Free parking is available behind the building.",
+           "If you need to change your appointment, please call us at least 24 hours in advance. Patients who cancel with less notice may be charged a $25 fee. We also {146} patients to bring an updated list of any medications they are taking.",
+           "We look forward to seeing you.<br/>Halden Dental Clinic"],
+  "qs": [
+   ("", ["This is a reminder about your upcoming visit to Halden Dental Clinic.",
+         "We are sorry that we had to cancel your appointment.",
+         "As requested, we have sent your records to another clinic.",
+         "Your treatment was completed successfully last week."],
+    "문장 고르기(첫 문장): 바로 뒤 '다음 검진은 11월 16일' → 예약 알림 메일의 도입. (B)는 예약이 잡혀 있다는 내용과 모순, (C)는 계속 이 병원에 오라는 메일과 모순, (D)는 앞으로의 검진과 연결 안 됨."),
+   ("", ["is scheduled", "schedules", "has scheduled", "scheduling"],
+    "태: 주어 cleaning and checkup(사물)은 '예정되는' 것 + 뒤에 목적어 없음 → 수동 is scheduled."),
+   ("", ["moved", "will move", "is moving", "moves"],
+    "시제: last month(과거 시점) → moved. 다음 문장 We are now at ~ (이미 이전 완료)도 단서."),
+   ("", ["remind", "mention", "explain", "say"],
+    "동사 구조: ___ + 목적어(patients) + to V → remind. mention/explain/say는 사람 목적어 + to V를 못 받음."),
+  ]},
+]
 DOUBLE = [["p0", "p1"], ["q"]]
 TRIPLE = [["p0", "p1"], ["p2", "q"]]
 
