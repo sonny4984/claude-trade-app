@@ -1733,5 +1733,65 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-11-04"
+ },
+ "t23-103": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "명사 어휘: accommodate 300 guests → center ← stage"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t23-110": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "명사 앞 형용사 protective ← protection(명사)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t23-115": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "사물 주어 + 목적어 없음 + yesterday → were presented ← presented"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t23-121": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "명사구 앞 전치사 throughout ← while(접속사)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
+ },
+ "t23-122": {
+  "history": [
+   {
+    "date": "2026-11-05",
+    "result": "wrong",
+    "note": "명사 앞 -able 형용사 remarkable ← remarked"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-06"
  }
 }
