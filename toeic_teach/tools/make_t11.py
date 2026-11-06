@@ -97,6 +97,15 @@ def place(items, seed):
     pool += [k for k in range(4)] * len(items)  # spare in case fixed answers over-fill a letter
     pool = pool[:len(items) - len(fixed)]
     random.Random(seed).shuffle(pool)
+    if getattr(_mod, "NATURAL_KEY", False):
+        # real ETS keys are uneven (4-11 of a letter per part, runs of 2-4): draw each position freely,
+        # only refusing a fourth identical letter in a row
+        rng, pool = random.Random(seed), []
+        for _ in range(len(items) - len(fixed)):
+            k = rng.randrange(4)
+            while len(pool) >= 3 and pool[-1] == pool[-2] == pool[-3] == k:
+                k = rng.randrange(4)
+            pool.append(k)
     it_pool = iter(pool)
     seq = [None if len(it) == 4 else next(it_pool) for it in items]
     out = []
