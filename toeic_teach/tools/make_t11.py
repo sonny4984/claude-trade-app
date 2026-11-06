@@ -100,12 +100,15 @@ def place(items, seed):
     if getattr(_mod, "NATURAL_KEY", False):
         # real ETS keys are uneven (4-11 of a letter per part, runs of 2-4): draw each position freely,
         # only refusing a fourth identical letter in a row
+        # cap any one letter at the real-test maximum (P5 11/30, P6 5/16, P7 16/54)
         rng, pool = random.Random(seed), []
+        cap = round(0.3 * len(items)) + (2 if len(items) <= 30 else 0)
+        cnt = [fixed.count(k) for k in range(4)]
         for _ in range(len(items) - len(fixed)):
             k = rng.randrange(4)
-            while len(pool) >= 3 and pool[-1] == pool[-2] == pool[-3] == k:
+            while cnt[k] >= cap or (len(pool) >= 3 and pool[-1] == pool[-2] == pool[-3] == k):
                 k = rng.randrange(4)
-            pool.append(k)
+            pool.append(k); cnt[k] += 1
     it_pool = iter(pool)
     seq = [None if len(it) == 4 else next(it_pool) for it in items]
     out = []
