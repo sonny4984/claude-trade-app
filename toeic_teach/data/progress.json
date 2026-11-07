@@ -1978,5 +1978,89 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-11-06"
+ },
+ "t33-102": {
+  "history": [
+   {
+    "date": "2026-11-07",
+    "result": "wrong",
+    "note": "help + (to) 동사원형. -ing 불가 (managing 고름)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-08"
+ },
+ "t33-106": {
+  "history": [
+   {
+    "date": "2026-11-07",
+    "result": "wrong",
+    "note": "unless = if not. so that은 시간 순서 역전 (so that 고름)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-08"
+ },
+ "t33-111": {
+  "history": [
+   {
+    "date": "2026-11-07",
+    "result": "wrong",
+    "note": "that 생략: 명사+주어+동사 괄호 → 괄호 밖 진짜 동사 contained (to contain 고름). 변형 V1도 오답, V2·V4 정답"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-08"
+ },
+ "t33-116": {
+  "history": [
+   {
+    "date": "2026-11-07",
+    "result": "wrong",
+    "note": "share the cost(분담). spend는 돈/시간 목적어 (spend 고름)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-08"
+ },
+ "t33-130": {
+  "history": [
+   {
+    "date": "2026-11-07",
+    "result": "wrong",
+    "note": "prudent(신중한) 공란. 모르면 30초 내 찍기"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-08"
+ },
+ "t33-143": {
+  "history": [
+   {
+    "date": "2026-11-07",
+    "result": "wrong",
+    "note": "Even so = 그렇긴 해도(역접), 심지어 아님. ➕➕ → In addition (Even so 고름)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-08"
+ },
+ "t33-145": {
+  "history": [
+   {
+    "date": "2026-11-07",
+    "result": "wrong",
+    "note": "still + until(계속) vs by(완료 마감). \"~까지 계속\" 넣어보기 (by 고름). 변형 V5·V6 정답"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-08"
  }
 }
