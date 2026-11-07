@@ -117,8 +117,15 @@ def place(items, seed):
             out.append((it[0], it[1], it[3], it[2]))
         else:
             ch = it[1]
-            out.append((it[0], ch[1:p + 1] + [ch[0]] + ch[p + 1:], p, it[2]))
+            out.append((it[0], ch[1:p + 1] + [ch[0]] + ch[p + 1:], p, remap_note(it[2], p)))
     return out
+
+def remap_note(note, p):
+    """Notes name options in item order (A = correct, B-D = distractors as written); convert to printed letters."""
+    def mp(mm):
+        j = "ABCD".index(mm.group(1))
+        return "(" + "ABCD"[p if j == 0 else (j - 1 if j - 1 < p else j)]
+    return re.sub(r"\(([ABCD])(?=[ )])", mp, note)
 
 def place_v1(items, seed):
     seq = [i % 4 for i in range(len(items))]
