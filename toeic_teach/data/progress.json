@@ -2062,5 +2062,29 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-11-08"
+ },
+ "t33-157": {
+  "history": [
+   {
+    "date": "2026-11-07",
+    "result": "wrong",
+    "note": "동의어 limited(인원 한정)=restricted. 문장에 넣어 확인. narrow(폭 좁은) 고름"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-08"
+ },
+ "t33-166": {
+  "history": [
+   {
+    "date": "2026-11-07",
+    "result": "wrong",
+    "note": "역할 바꿔치기: 9개 식당 납품은 본점, 지점은 자체 주방 없이 배달받아 판매 (D 고름)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-08"
  }
 }
