@@ -2086,5 +2086,53 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-11-08"
+ },
+ "t34-149": {
+  "history": [
+   {
+    "date": "2026-11-07",
+    "result": "wrong",
+    "note": "의도: 주소 변경 요청 ↔ \"이미 박스에 담겨 차에 있다\" = 이미 인쇄됨(늦음). 근거 없는 선지(not yet checked) 고름"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-08"
+ },
+ "t34-156": {
+  "history": [
+   {
+    "date": "2026-11-07",
+    "result": "wrong",
+    "note": "동의어 recognize(상이 ~를) = honors. admits(잘못을 시인하다)는 한국어 \"인정하다\" 함정"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-08"
+ },
+ "t34-157": {
+  "history": [
+   {
+    "date": "2026-11-07",
+    "result": "wrong",
+    "note": "over the past three years ↔ less than a year X. 나머지 비용을 요금 인상으로 → 승객 일부 부담. ? 표시하고 소거 안 함"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-08"
+ },
+ "t34-164": {
+  "history": [
+   {
+    "date": "2026-11-07",
+    "result": "wrong",
+    "note": "주제 문제: 제목 + 첫 문단. commercial kitchen 임대는 세부(부분을 전체로)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-08"
  }
 }
