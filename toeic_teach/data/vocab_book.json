@@ -2030,6 +2030,83 @@
     "note": "10회 179"
    },
    {
+    "en": "credit A to B",
+    "ko": "A를 B 덕분으로 돌리다",
+    "ex": "credits the success to lifelong learning",
+    "mine": 1,
+    "note": "편집 X"
+   },
+   {
+    "en": "trade",
+    "ko": "(가업) 기술, 업 / 무역",
+    "ex": "learn the trade from my family",
+    "mine": 1,
+    "note": "다의어"
+   },
+   {
+    "en": "take a course",
+    "ko": "강좌를 수강하다",
+    "ex": "",
+    "mine": 1,
+    "note": "열다 X"
+   },
+   {
+    "en": "manage to V",
+    "ko": "(어렵게) ~해내다",
+    "ex": "managed to persuade hotels",
+    "mine": 1,
+    "note": "관리하다 X"
+   },
+   {
+    "en": "nestled (behind)",
+    "ko": "(~뒤에) 자리 잡은",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "in person",
+    "ko": "직접 (방문해서)",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "last-minute",
+    "ko": "막판의, 급하게 잡힌",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "toiletries",
+    "ko": "세면용품",
+    "ex": "",
+    "mine": 1,
+    "note": "변기 X"
+   },
+   {
+    "en": "tastefully",
+    "ko": "세련되게, 고상하게",
+    "ex": "",
+    "mine": 1,
+    "note": "향기롭게 X"
+   },
+   {
+    "en": "gourmet treats",
+    "ko": "고급 간식",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "while (양보)",
+    "ko": "~이긴 하지만",
+    "ex": "While it is small, ~",
+    "mine": 1,
+    "note": ""
+   },
+   {
     "en": "take one's place",
     "ko": "~의 자리를 대신하다",
     "ex": "",
