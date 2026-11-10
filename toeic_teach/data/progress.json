@@ -2158,5 +2158,65 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-11-08"
+ },
+ "t37-104": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "refrain from V-ing(자동사+from). prohibit/prevent는 목적어 필요 (prohibit 고름)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "t37-119": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "suggest that + S + 동사원형(가정법 현재). is postponed 고름 → be postponed"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "t37-125": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "except(전치사) + 명사구. otherwise는 부사라 명사 앞 연결 불가 (otherwise 고름)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "t37-126": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "overtime → extra vacation days = compensation(보상). qualification(자격) 고름"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "t37-128": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "비교급 강조: substantially/considerably/far/much. exclusively(오직)는 불가"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
  }
 }
