@@ -2278,5 +2278,65 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-11-11"
+ },
+ "rc10-107": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "동사(values) 수식 → 부사 highly. high(형용사) 고름"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "rc10-108": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "fill a prescription(처방전대로 조제). earn 고름"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "rc10-118": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "be considered to V(후보로 고려되다). decided 고름"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "rc10-127": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "improving employee productivity: 동사 improving의 목적어 자리 = 명사(복합명사). productively 고름"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "rc10-128": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "뒤가 절(the sales team has ...) → 접속사 whenever. besides(전치사/부사) 고름. 125·132와 같은 전치사/접속사 오답"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
  }
 }
