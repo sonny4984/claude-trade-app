@@ -2338,5 +2338,41 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-11-11"
+ },
+ "rc10-135": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "명사(company Web site) 앞 빈칸 → 형용사 internal(내부의). internalize(동사) 고름"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "rc10-142": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "전치사 by 뒤 → V-ing(by sending). hope to에 끌려 to send 고름"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "rc10-133": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "연결어: 앞 문장(정원 복원) → 같은 목적/추가 설명. In the meantime(시간 병행) 고름. 정답은 To this end/Additionally 중 책 정답표 확인"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
  }
 }
