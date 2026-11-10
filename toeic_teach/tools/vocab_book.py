@@ -1,0 +1,379 @@
+"""동하 전용 토익 단어장 (오답 특징 9유형). PDF + JSON 생성.
+Usage: python3 tools/vocab_book.py  -> data/vocab_book.pdf, data/vocab_book.json
+entry = (영어, 뜻, 짝·예문, 동하 실제 오답 여부 1/0, 함정 메모)
+예문은 전부 새로 만든 문장 (교재 원문 복제 없음)."""
+import json
+from pathlib import Path
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.units import mm
+from reportlab.lib import colors
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, PageBreak, Spacer
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+ROOT = Path(__file__).resolve().parent.parent
+F = ROOT / "tools" / "fonts"
+pdfmetrics.registerFont(TTFont("N", str(F / "NanumGothic-Regular.ttf")))
+pdfmetrics.registerFont(TTFont("NB", str(F / "NanumGothic-Bold.ttf")))
+
+S = []  # sections
+
+
+def sec(title, feature, why, how, rows):
+    S.append(dict(title=title, feature=feature, why=why, how=how,
+                  rows=[dict(en=a, ko=b, ex=c, mine=d, note=e) for a, b, c, d, e in rows]))
+
+
+sec("1. 철자 쌍둥이", "앞 3~4글자가 같은 단어를 아는 단어로 바꿔 읽음",
+    "flowing→flower, premier→previous, date→data, spare→spray, adapt→adopt. 부주의가 아니라 둘 중 하나를 모르는 것.",
+    "쌍으로만 외운다. 한쪽만 외우면 시험장에서 또 바꿔 읽는다. 끝 철자에 형광펜.",
+    [
+        ("adopt / adapt (to)", "채택하다 / 적응하다, 조정하다", "adopt the proposal / adapt to the new system", 1, "adapted budget = 조정된 예산"),
+        ("assure / insure / ensure", "장담하다(+사람) / 보험 들다 / 확실히 하다", "assure customers that ~ / insured against damage / ensure safety", 1, "assure 뒤엔 사람"),
+        ("premier / premiere / previous", "최고의 / 개봉, 초연 / 이전의", "a premier venue / the film's premiere", 1, "11번에서 previous로 읽음"),
+        ("confirm / conform (to)", "확인하다 / ~에 부합하다", "conform to safety standards", 1, "conform은 to와 짝"),
+        ("date / data", "날짜 / 자료", "by the specified date / sales data", 1, "19번 데이터로 읽음"),
+        ("spare / spray", "아끼다 / 뿌리다", "spare no effort in V-ing", 1, "24번 '뿌린다'"),
+        ("flowing / flower", "흐르는 / 꽃", "rainwater flowing from roofs", 1, "-ing 꼬리를 꽃으로 읽음"),
+        ("reference / recommend / referral", "참고 / 추천하다 / (다른 곳으로) 소개", "a quick reference tool", 1, "35번 추천으로 읽음"),
+        ("attached / attacked", "첨부된 / 공격받은", "the attached contract", 1, "드릴 6번"),
+        ("memorable / memorial", "기억에 남는 / 기념의", "a memorable event / a memorial park", 1, "2회 오답"),
+        ("cover / coverage", "표지, 덮다 / 보도·보장 범위", "the front cover / insurance coverage", 1, "2회 오답"),
+        ("identical (to) / identify", "동일한 / 확인하다, 알아보다", "identical to the original", 1, "be + 형용사 + to"),
+        ("internal / internalize", "내부의 / 내면화하다", "the internal Web site", 1, "명사 앞이면 형용사"),
+        ("convertible / conversion", "전환 가능한 / 전환", "a currency conversion fee", 1, ""),
+        ("considerable / considerate", "상당한 / 배려하는", "a considerable impact", 0, ""),
+        ("personal / personnel", "개인의 / 직원, 인사부", "personnel department", 0, ""),
+        ("access / assess / excess", "접근 / 평가하다 / 초과", "assess the damage / excess baggage", 0, ""),
+        ("affect / effect", "영향을 주다(동) / 효과, 시행(명)", "go into effect", 1, "go into effect 연어 불안"),
+        ("proceed (with) / precede", "진행하다 / 앞서다", "proceed with the plan", 1, "proceed는 자동사"),
+        ("prospective / perspective", "장래의, 예비의 / 관점", "prospective clients", 0, ""),
+        ("respectively / respectfully", "각각 / 정중히", "3 and 5 hours, respectively", 0, ""),
+        ("economic / economical", "경제의 / 절약하는", "an economical car", 0, ""),
+        ("successful / successive", "성공적인 / 연속적인", "three successive years", 0, ""),
+        ("reliable / reliant (on)", "믿을 수 있는 / 의존하는", "a reliable supplier", 0, ""),
+        ("comprehensive / comprehensible", "포괄적인 / 이해할 수 있는", "a comprehensive review", 0, ""),
+        ("expand / expend / extend", "확장하다 / 소비하다 / 연장하다", "extend beyond the deadline", 1, "extend beyond 3회 오답"),
+        ("stationary / stationery", "정지된 / 문구류", "office stationery", 0, ""),
+        ("device / devise", "장치(명) / 고안하다(동)", "devise a plan", 0, ""),
+        ("substantial / sustained", "상당한(크기) / 지속적인(기간)", "substantial improvement", 1, ""),
+        ("tangible / intangible", "실체가 있는 / 무형의", "tangible results", 1, "반대로 알고 있었음"),
+        ("cease / seize", "중단하다 / 붙잡다", "cease making the product", 1, ""),
+        ("lose / loose", "잃다 / 느슨한", "a loose screw", 0, ""),
+    ])
+
+sec("2. 다의어: 토익 뜻", "아는 단어인데 한국어 뜻 하나만 알아서 문장이 이상해짐",
+    "work=일(→작품), property=재산(→매물), place=장소(→두다), keep=지키다(→보관). 뜻이 안 맞으면 형 탓이 아니라 두 번째 뜻.",
+    "해석이 어색하면 '이 단어 다른 뜻?'부터 의심. 두 번째 뜻은 짝 표현째로 외운다.",
+    [
+        ("property", "부동산, 매물 (재산)", "make a property look its best", 1, "토지 X"),
+        ("work", "작품 (일)", "view our work / follow your work", 1, "28번 '너의 일'"),
+        ("follow", "(소식·작품을) 챙겨 보다", "follow your work closely", 1, ""),
+        ("place", "두다 / place an order 주문하다", "place them in a safe area", 1, "30번 '위치해 있는지'"),
+        ("keep", "보관하다, 두다", "keep a copy at your desk", 1, "35번 '지키다'"),
+        ("position", "일자리, 직책", "apply for a position", 1, ""),
+        ("remote", "재택의, 원격의", "a fully remote position", 1, ""),
+        ("moderate", "(토론) 사회를 보다 / 적당한", "moderate a panel", 1, ""),
+        ("fill", "(처방전대로) 조제하다 / (자리를) 충원하다", "fill a prescription / fill a position", 1, ""),
+        ("measure", "조치 (= procedure)", "safety measures", 1, "2회 오답"),
+        ("privilege", "이용 권한, 혜택", "library privileges", 1, "특허 X"),
+        ("attention", "관심, 주목", "receive a lot of attention", 1, ""),
+        ("recognize", "표창하다 (= honor)", "be recognized for excellence", 1, "인정하다(admit) 함정"),
+        ("limited", "한정된 (= restricted)", "limited seating", 1, ""),
+        ("accommodate", "수용하다 / (요구를) 들어주다", "accommodate 200 guests / dietary needs", 1, ""),
+        ("issue", "발행하다 / (사과를) 하다 / (잡지) 호", "issue an apology / the May issue", 1, ""),
+        ("pool", "(자원을) 모으다", "pool resources", 1, ""),
+        ("observe", "준수하다 / 관찰하다", "observe the rules", 1, ""),
+        ("outstanding", "미지불된 / 뛰어난", "an outstanding balance", 1, ""),
+        ("sign in", "방문 등록하다", "sign in at the front desk", 1, ""),
+        ("address", "(문제를) 다루다 / 연설하다", "address customer concerns", 0, ""),
+        ("figure", "수치", "sales figures", 0, ""),
+        ("appreciate", "감사하다 / (가치가) 오르다", "We appreciate your patience.", 0, ""),
+        ("deliver", "(연설을) 하다 / 배달하다", "deliver a speech", 0, ""),
+        ("credit", "공로 / 적립금", "give credit to the team / store credit", 0, ""),
+        ("terms", "조건", "the terms of the contract", 0, ""),
+        ("assume", "(직책을) 맡다 / 추정하다", "assume the role of manager", 0, ""),
+        ("run", "운영하다 / (광고를) 싣다", "run a business / run an ad", 0, ""),
+        ("carry", "(상품을) 취급하다", "We no longer carry that item.", 0, ""),
+        ("cover", "(비용을) 부담하다 / (근무를) 대신하다", "cover travel costs / cover a shift", 0, ""),
+        ("due", "~할 예정인 / 마감인", "The report is due Friday.", 0, ""),
+        ("honor", "(쿠폰·계약을) 이행하다", "honor the coupon", 0, ""),
+        ("direct", "(문의를) ~로 보내다", "direct questions to HR", 0, ""),
+        ("balance", "잔액", "the remaining balance", 0, ""),
+        ("party", "당사자", "both parties signed", 0, ""),
+    ])
+
+sec("3. 연어 덩어리", "단어는 아는데 붙어 다니는 짝을 몰라 직역이 엉킴",
+    "be honored to → '영광을 돌리다', spare no effort → '노력 없이'. 덩어리를 쪼개서 직역하면 반대 뜻이 됨.",
+    "덩어리째 한 뜻으로 외운다. 카드 앞면에 덩어리 전체, 뒷면에 한 줄 뜻.",
+    [
+        ("be honored to V", "~하게 되어 영광이다", "I was honored to work with you.", 1, ""),
+        ("spare no effort in V-ing", "~에 노력을 아끼지 않다", "", 1, ""),
+        ("come standard", "기본으로 포함되다", "All services come standard.", 1, ""),
+        ("result in / result from", "~을 초래하다 / ~에서 비롯되다", "Failure to renew will result in ~", 1, "방향 반대"),
+        ("take pride in V-ing", "~에 자부심을 갖다", "", 1, ""),
+        ("keep A on the map", "A를 계속 주목받게 하다", "", 1, ""),
+        ("Please be advised that", "~임을 알려드립니다", "", 1, ""),
+        ("among other things", "여러 가지 중 특히", "", 1, ""),
+        ("a full range of", "모든 종류의", "a full range of services", 1, ""),
+        ("in recognition of", "~을 인정하여", "", 1, ""),
+        ("go into effect / take effect", "시행되다", "The policy goes into effect May 1.", 1, ""),
+        ("tangible results", "눈에 보이는 성과", "", 1, ""),
+        ("on a seasonal basis", "계절 단위로", "on a weekly/regular basis", 1, ""),
+        ("fill in for", "~를 대신하다", "fill in for a sick colleague", 1, ""),
+        ("issue an apology for", "~에 대해 사과하다", "", 1, ""),
+        ("reduce the likelihood of", "~할 가능성을 줄이다", "", 1, ""),
+        ("for your convenience", "편의를 위해", "", 1, ""),
+        ("kindly reminded to V", "~하도록 정중히 안내되다", "", 1, "highly 아님"),
+        ("ample time", "충분한 시간", "", 1, ""),
+        ("narrowed in scope", "범위가 좁혀진", "", 1, ""),
+        ("a great asset to", "~에 큰 자산(인재)", "", 1, ""),
+        ("share the cost", "비용을 분담하다", "", 1, "spend X"),
+        ("warranty coverage", "보증 적용", "under warranty", 0, ""),
+        ("far in advance", "훨씬 미리", "plan far in advance", 0, ""),
+        ("be eligible for / to V", "~할 자격이 있다", "eligible for a discount", 0, ""),
+        ("meet the needs / deadline", "요구를 충족하다 / 마감을 맞추다", "meets all dietary needs", 0, ""),
+        ("at no extra cost", "추가 비용 없이", "= free of charge", 0, ""),
+        ("on short notice", "촉박하게 통보받고", "", 0, ""),
+        ("in a timely manner", "제때에", "", 0, ""),
+        ("until further notice", "추후 공지가 있을 때까지", "", 0, ""),
+        ("on behalf of", "~를 대표하여", "", 0, ""),
+        ("at your earliest convenience", "편하신 대로 빨리", "", 0, ""),
+        ("be subject to change", "변경될 수 있다", "Prices are subject to change.", 0, ""),
+        ("stand out", "눈에 띄다", "make your property stand out", 0, ""),
+    ])
+
+sec("4. 동사·형용사 + 전치사 짝", "뒤 전치사를 보고도 그 전치사와 짝인 단어를 못 고름",
+    "with 단서 적고도 remind/notify 선택, proceed·refrain을 타동사처럼 씀.",
+    "빈칸 뒤 전치사에 동그라미 → 그 전치사와 짝인 선지만 남긴다.",
+    [
+        ("refrain from V-ing", "~을 삼가다", "refrain from using phones", 1, "prohibit은 목적어 필요"),
+        ("refer to", "~을 참고하다, 언급하다", "refer to the manual", 1, ""),
+        ("proceed with", "~을 진행하다", "", 1, "launch는 타동사"),
+        ("deliberate about", "~을 숙고하다", "", 1, ""),
+        ("familiarize oneself with", "~에 익숙해지다", "", 1, "2회 오답"),
+        ("compatible with", "~와 호환되는", "", 1, ""),
+        ("adapt to", "~에 적응하다", "", 1, ""),
+        ("extend beyond", "~을 넘어 연장되다", "", 1, "3회 오답"),
+        ("renowned for", "~로 유명한", "", 1, ""),
+        ("aimed at V-ing", "~을 목표로 한", "", 1, "2회 오답"),
+        ("identical to", "~와 동일한", "", 1, ""),
+        ("decision on", "~에 대한 결정", "", 1, ""),
+        ("presentation on", "~에 대한 발표", "", 1, ""),
+        ("apply exclusively to", "~에게만 적용되다", "", 1, ""),
+        ("be promoted to", "~로 승진하다", "", 1, ""),
+        ("capable of", "~할 수 있는", "", 1, "able to와 구분"),
+        ("available on (website)", "~에서 이용 가능한", "", 1, ""),
+        ("be accustomed to V-ing", "~에 익숙하다", "", 1, "to = 전치사"),
+        ("comply with", "~을 준수하다", "", 0, ""),
+        ("consist of", "~로 구성되다", "", 0, "수동 불가"),
+        ("rely on / depend on", "~에 의존하다", "", 0, ""),
+        ("respond to", "~에 응답하다", "", 0, ""),
+        ("contribute to", "~에 기여하다", "", 0, ""),
+        ("be entitled to", "~할 자격이 있다", "", 0, ""),
+        ("specialize in", "~을 전문으로 하다", "", 0, ""),
+        ("participate in / enroll in", "참가하다 / 등록하다", "", 0, ""),
+        ("account for", "~을 차지하다, 설명하다", "", 0, ""),
+        ("be responsible for", "~을 책임지다", "", 0, ""),
+        ("be committed to V-ing", "~에 전념하다", "", 0, "to = 전치사"),
+        ("look forward to V-ing", "~을 고대하다", "", 0, "to = 전치사"),
+    ])
+
+sec("5. 동사 뒤 모양 (to V / V-ing / 원형)", "동사+사람+to V를 '~하기 위해'로 읽음, 동명사 동사에 to V를 넣음",
+    "ask staff to keep → '지키기 위해', ask everyone to V 3회 오답, spend time V-ing 3회 이상 오답.",
+    "동사 뒤 '사람 + to V'면 → '사람이 ~하도록'. 아래 동사는 뒤 모양째로 외운다.",
+    [
+        ("ask / request / require + O + to V", "O에게 ~하도록 요청하다", "ask staff to keep a copy", 1, "3회 이상 오답"),
+        ("encourage / allow / permit + O + to V", "O가 ~하도록 장려/허락하다", "allow us to highlight", 1, ""),
+        ("enable / invite / remind / urge + O + to V", "O가 ~하게 하다 / 하도록 권하다", "", 0, ""),
+        ("be expected / permitted to V", "~할 예정이다 / ~해도 된다", "", 1, ""),
+        ("be considered to V", "(후보로) 고려되다", "", 1, ""),
+        ("consider / suggest / avoid + V-ing", "~하는 것을 고려/제안/피하다", "consider shortening", 1, "consider to V 아님"),
+        ("spend 시간 V-ing", "~하는 데 시간을 쓰다", "", 1, "3회 이상 오답"),
+        ("have difficulty V-ing", "~하는 데 어려움을 겪다", "", 0, ""),
+        ("help (O) (to) V", "~하는 것을 돕다", "help choose", 1, "-ing 불가"),
+        ("decide whether to V", "~할지 결정하다", "", 1, ""),
+        ("intend / plan / hope / fail to V", "~할 의도/계획/희망/실패", "", 0, ""),
+        ("suggest / request that S 원형", "~하자고 제안/요청하다", "suggest that it be postponed", 1, ""),
+        ("make / have / let + O + 원형", "O가 ~하게 하다", "make a property look its best", 1, "23번 목적어 빠뜨림"),
+        ("by V-ing", "~함으로써", "by placing the part on its side", 1, "to V 아님"),
+        ("upon V-ing", "~하자마자", "", 1, ""),
+        ("before V-ing", "~하기 전에", "", 1, ""),
+    ])
+
+sec("6. 전치사 vs 접속사", "뒤가 명사구인지 절인지 안 보고 뜻으로만 고름",
+    "although/despite, during/while, except/otherwise, whenever/besides, by/until 반복 오답.",
+    "빈칸 뒤에 동사가 있나? 있으면 접속사, 없으면 전치사. 그다음에 뜻.",
+    [
+        ("despite (전) / although (접)", "~에도 불구하고", "despite the delay / although it was late", 1, "2회 이상"),
+        ("during (전) / while (접)", "~동안", "", 1, ""),
+        ("because of (전) / because (접)", "~때문에", "", 1, ""),
+        ("except (전) / otherwise (부) / unless (접)", "~을 제외하고 / 그렇지 않으면 / ~하지 않으면", "", 1, ""),
+        ("by (완료 마감) / until (계속)", "~까지 (끝내라) / ~까지 (쭉)", "submit by Friday / open until 9", 1, "3회 이상"),
+        ("within + 기간", "~이내에", "within 3 days", 1, ""),
+        ("upon V-ing / as soon as + 절", "~하자마자", "", 1, ""),
+        ("in case / so that / in order to V", "~에 대비해 / ~하도록 / ~하기 위해", "", 1, "in case 3회 오답"),
+        ("whenever (접) / besides (전·부)", "~할 때마다 / ~외에도", "", 1, ""),
+        ("throughout (전) / while (접)", "~내내", "", 1, ""),
+        ("up to + 숫자", "최대 ~까지", "up to 200 guests", 1, "2회 오답"),
+        ("as of + 날짜", "~부로", "", 1, ""),
+        ("prior to / following", "~전에 / ~후에 (전치사)", "", 0, ""),
+        ("in addition to (전) / in addition (부)", "~에 더하여 / 게다가", "", 0, ""),
+        ("regardless of", "~와 상관없이", "", 0, ""),
+    ])
+
+sec("7. 연결어 (접속부사) 의미 그룹", "연결어 뜻을 대충 알아서 앞뒤 관계와 안 맞는 걸 고름",
+    "Even so를 '심지어'로, In the meantime·Afterward를 아무 데나, 명령문 + or를 '또는'으로 읽음.",
+    "앞 문장과 뒤 문장 관계(➕ / ↔ / → / 예 / 시간)를 먼저 적고 그룹에서 고른다.",
+    [
+        ("In addition / Additionally / Furthermore / Moreover", "➕ 게다가", "", 0, ""),
+        ("However / Nevertheless", "↔ 그러나 / 그럼에도", "", 1, ""),
+        ("Even so", "↔ 그렇긴 해도", "", 1, "'심지어' X"),
+        ("On the other hand / In contrast / By comparison", "↔ 반면에 / 비교해 보면", "", 0, ""),
+        ("Instead", "↔ 대신에", "", 0, ""),
+        ("Therefore / Consequently / As a result / Accordingly", "→ 그래서", "", 1, ""),
+        ("To this end", "→ 이 목적을 위해", "", 1, ""),
+        ("For example / For instance / In particular", "예) 예를 들어 / 특히", "", 1, ""),
+        ("Indeed / In fact / As a matter of fact", "강조) 실제로", "", 1, "25번 Indeed"),
+        ("Best of all", "가장 좋은 점은", "", 1, "5번"),
+        ("Afterward / Since then / Previously", "시간) 그 후 / 그 이후로 / 이전에", "", 1, ""),
+        ("In the meantime / Meanwhile", "시간) 그동안에", "", 1, ""),
+        ("Before long", "시간) 머지않아", "", 1, ""),
+        ("Otherwise / If not / If so", "조건) 그렇지 않으면 / 아니면 / 그렇다면", "", 1, ""),
+        ("명령문, or ~", "~해라, 안 그러면", "Store it cool, or it may spoil.", 1, "33번"),
+        ("Should S 원형 = If S V", "만약 ~라면 (도치)", "Should you decide to ~", 1, ""),
+        ("Had S p.p. = If S had p.p.", "만약 ~했다면 (도치)", "", 1, ""),
+        ("that is", "즉", "", 0, ""),
+        ("There", "거기서 (앞 장소 받기)", "", 1, ""),
+        ("In any event", "어쨌든", "", 0, ""),
+    ])
+
+sec("8. 덩어리 명사·이름", "두 단어가 한 뜻인 명사를 쪼개서 직역",
+    "Center for Horticulture → '~를 위해', fashion week → '이번 주', real estate → '실제 토지'.",
+    "대문자 덩어리 = 이름 하나. 명사+명사는 붙여서 한 뜻부터 떠올린다.",
+    [
+        ("real estate", "부동산", "real estate agent", 1, ""),
+        ("fashion week", "패션위크 (행사)", "", 1, ""),
+        ("Center for Horticulture", "원예 센터 (기관 이름)", "", 1, ""),
+        ("rain garden", "빗물 정원", "", 1, ""),
+        ("opening gala", "개막 축하 행사", "", 1, ""),
+        ("photo shoot", "사진 촬영", "", 1, ""),
+        ("staging techniques", "(매물) 연출 기법", "", 1, ""),
+        ("branch location", "지점", "", 1, ""),
+        ("sales forecast", "매출 예측", "", 1, ""),
+        ("front cover", "앞표지", "", 1, ""),
+        ("operational costs", "운영비", "", 1, ""),
+        ("information desk", "안내 데스크", "", 1, ""),
+        ("job opening", "채용 공고, 빈자리", "", 0, ""),
+        ("expiration date", "만료일", "", 0, ""),
+        ("return policy", "반품 규정", "", 0, ""),
+        ("office supplies", "사무용품", "", 0, ""),
+        ("product launch", "제품 출시", "", 0, ""),
+        ("performance review", "인사 고과", "", 0, ""),
+        ("quarterly earnings", "분기 실적", "", 0, ""),
+        ("keynote speaker", "기조연설자", "", 0, ""),
+        ("farm-to-table", "산지 직송 (식당)", "", 0, ""),
+        ("interoffice", "사무소 간", "interoffice meetings", 1, ""),
+    ])
+
+sec("9. 비즈니스 핵심 어휘", "그냥 처음 본 단어 (뜻 자체를 모름)",
+    "audit, findings, prudent, retract, cease, compensation, horticulture, pollutant, drainage.",
+    "예문 1개와 같이. 모르면 시험장에서 ??로 두고 구조로 푼다.",
+    [
+        ("likelihood", "가능성", "", 1, ""),
+        ("compensation", "보상", "", 1, "qualification과 구분"),
+        ("prudent", "신중한", "", 1, ""),
+        ("retract", "철회하다", "", 1, ""),
+        ("audit / findings", "감사 / (조사) 결과", "findings of the audit", 1, ""),
+        ("substantial", "상당한", "", 1, ""),
+        ("competent", "유능한", "", 1, ""),
+        ("undertake", "(일을) 맡다", "", 1, ""),
+        ("anonymous", "익명의", "", 1, ""),
+        ("lively", "활기찬", "", 1, ""),
+        ("diligently", "부지런히", "", 1, ""),
+        ("exclusively", "오로지", "", 1, ""),
+        ("periodically", "주기적으로", "", 1, ""),
+        ("adaptable", "융통성 있는", "", 1, ""),
+        ("swiftly", "신속하게", "", 1, ""),
+        ("highly", "매우 (highly value)", "", 1, "high 아님"),
+        ("expire / renew", "만료되다 / 갱신하다", "", 1, ""),
+        ("verify", "확인하다", "", 1, ""),
+        ("component", "부품", "", 1, ""),
+        ("assemble", "조립하다", "", 1, ""),
+        ("horticulture", "원예", "", 1, ""),
+        ("pollutant", "오염물질", "", 1, ""),
+        ("drainage", "배수", "", 1, ""),
+        ("native (plants)", "토종의, 자생의", "", 1, ""),
+        ("beneficial (to)", "이로운", "", 1, ""),
+        ("multiple", "여러 번의, 다수의", "", 1, ""),
+        ("specified", "지정된", "", 1, ""),
+        ("highlight", "강조하다", "", 1, ""),
+        ("overtighten", "과하게 조이다", "", 1, ""),
+        ("adjacent (to)", "인접한", "", 0, ""),
+        ("expansive", "넓은", "", 0, ""),
+        ("cater", "음식을 공급하다", "", 0, ""),
+        ("dietary needs", "식단상 요구", "", 0, ""),
+        ("revolutionize", "혁신하다", "", 0, ""),
+        ("implement", "시행하다", "", 0, ""),
+        ("initiate", "시작하다", "", 0, ""),
+        ("renovation", "보수 공사", "", 0, ""),
+        ("reimburse", "환급하다", "", 0, ""),
+        ("inventory", "재고", "", 0, ""),
+        ("itinerary", "여행 일정표", "", 0, ""),
+        ("tenant", "세입자", "", 0, ""),
+        ("vendor", "판매업체", "", 0, ""),
+        ("patron", "고객, 후원자", "", 0, ""),
+        ("venue", "장소", "", 1, ""),
+        ("furnish", "제공하다, 가구를 비치하다", "", 1, ""),
+    ])
+
+# ---------- build ----------
+out_pdf = ROOT / "data" / "vocab_book.pdf"
+out_json = ROOT / "data" / "vocab_book.json"
+json.dump(S, open(out_json, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+
+LM, TM = 12 * mm, 12 * mm
+W = A4[0] - 2 * LM
+st = lambda n, f="N", s=8.5, l=11, c=colors.black: ParagraphStyle(n, fontName=f, fontSize=s, leading=l, textColor=c)
+P_T, P_H, P_B, P_C, P_CB, P_S = st("t", "NB", 17, 22), st("h", "NB", 12.5, 16), st("b", "N", 9, 13), st("c"), st("cb", "NB", 9, 11), st("s", "N", 7.5, 9.5, colors.HexColor("#555555"))
+
+doc = SimpleDocTemplate(str(out_pdf), pagesize=A4, leftMargin=LM, rightMargin=LM, topMargin=TM, bottomMargin=TM,
+                        title="동하 전용 토익 단어장")
+story = [Paragraph("동하 전용 토익 단어장", P_T), Spacer(1, 3 * mm),
+         Paragraph("10월~11월 오답·해석 연습에서 형이 실제로 막힌 단어를 <b>틀리는 이유</b>별로 9개로 나눴어. "
+                   "<b>★ = 형이 실제로 틀린 것</b>, 나머지는 같은 유형의 토익 빈출이야.", P_B), Spacer(1, 4 * mm)]
+tot = sum(len(s["rows"]) for s in S)
+mine = sum(r["mine"] for s in S for r in s["rows"])
+summ = [[Paragraph(h, P_CB) for h in ("유형", "형의 실수 모습", "★", "전체")]]
+for s in S:
+    summ.append([Paragraph(s["title"], P_CB), Paragraph(s["feature"], P_C),
+                 Paragraph(str(sum(r["mine"] for r in s["rows"])), P_C), Paragraph(str(len(s["rows"])), P_C)])
+summ.append([Paragraph("합계", P_CB), "", Paragraph(str(mine), P_CB), Paragraph(str(tot), P_CB)])
+t = Table(summ, colWidths=[46 * mm, W - 46 * mm - 30 * mm, 15 * mm, 15 * mm])
+t.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#d9d9d9")),
+                       ("GRID", (0, 0), (-1, -1), 0.4, colors.grey), ("VALIGN", (0, 0), (-1, -1), "MIDDLE")]))
+story += [t, Spacer(1, 5 * mm), Paragraph("쓰는 법", P_H), Spacer(1, 1.5 * mm)]
+for line in ["1) 하루 한 유형. 뜻 칸을 손으로 가리고 영어만 보고 말하기. 막히면 □에 체크.",
+             "2) 다음날 체크된 것만 다시. 1일 → 3일 → 7일 뒤 복습.",
+             "3) 1·2번 유형(철자 쌍둥이, 다의어)부터. 해석 실수의 대부분이 여기서 나왔어.",
+             "4) 해석하다 새로 막힌 단어는 나한테 보내. 다음 버전에 ★로 추가할게."]:
+    story.append(Paragraph(line, P_B))
+
+cols = [6 * mm, 52 * mm, 50 * mm, W - 6 * mm - 52 * mm - 50 * mm - 34 * mm, 34 * mm]
+for s in S:
+    story += [PageBreak(), Paragraph(s["title"], P_H), Spacer(1, 1.5 * mm),
+              Paragraph(f"<b>특징</b> {s['feature']}", P_B), Paragraph(f"<b>형 사례</b> {s['why']}", P_B),
+              Paragraph(f"<b>외우는 법</b> {s['how']}", P_B), Spacer(1, 3 * mm)]
+    rows = [[Paragraph(h, P_CB) for h in ("□", "영어", "뜻", "짝·예문", "함정 메모")]]
+    for r in s["rows"]:
+        rows.append(["□", Paragraph(("★ " if r["mine"] else "") + r["en"], P_CB), Paragraph(r["ko"], P_C),
+                     Paragraph(r["ex"], P_C), Paragraph(r["note"], P_S)])
+    t = Table(rows, colWidths=cols, repeatRows=1)
+    t.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#d9d9d9")),
+                           ("GRID", (0, 0), (-1, -1), 0.4, colors.grey), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                           ("FONTNAME", (0, 1), (0, -1), "N"),
+                           ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#f4f4f4")])]))
+    story.append(t)
+doc.build(story)
+print(out_pdf, tot, "entries,", mine, "starred")
