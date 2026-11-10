@@ -356,6 +356,9 @@ sec("9. 비즈니스 핵심 어휘", "그냥 처음 본 단어 (뜻 자체를 �
         ("qualified", "자격을 갖춘", "", 1, ""),
         ("anticipated", "예상되는", "", 1, ""),
         ("modern", "현대식의", "", 1, "최근 X"),
+        ("novice", "초보자, 초보의 (= beginner, inexperienced)", "a novice supervisor", 1, "10회 179"),
+        ("take one's place", "~의 자리를 대신하다", "", 0, ""),
+        ("schedule conflict", "일정 충돌", "", 0, ""),
     ])
 
 # ---------- build ----------

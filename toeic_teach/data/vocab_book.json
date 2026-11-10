@@ -2021,6 +2021,27 @@
     "ex": "",
     "mine": 1,
     "note": "최근 X"
+   },
+   {
+    "en": "novice",
+    "ko": "초보자, 초보의 (= beginner, inexperienced)",
+    "ex": "a novice supervisor",
+    "mine": 1,
+    "note": "10회 179"
+   },
+   {
+    "en": "take one's place",
+    "ko": "~의 자리를 대신하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "schedule conflict",
+    "ko": "일정 충돌",
+    "ex": "",
+    "mine": 0,
+    "note": ""
    }
   ]
  }
