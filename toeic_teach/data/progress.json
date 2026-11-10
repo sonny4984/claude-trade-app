@@ -2218,5 +2218,65 @@
   "status": "미숙",
   "streak": 0,
   "next_review": "2026-11-11"
+ },
+ "t37-132": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "although(접속사)는 명사구 앞 불가 → despite + 명사구 (although 고름)"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "t37-133": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "문장 삽입: 앞 문장의 This rate가 받는 것 = 요금 보장. 주제만 같은 선지(재택근무 고객) 고름"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "t37-136": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "문장 삽입: all three of our locations → Each(각 지점) 운영 시간. Northgate 설립 이야기 고름"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "t37-139": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "문장 삽입: 90일마다 변경 → This measure(이 조치)가 도입 이유 설명. help desk 위치 고름"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
+ },
+ "t37-140": {
+  "history": [
+   {
+    "date": "2026-11-10",
+    "result": "wrong",
+    "note": "be + 형용사 + to → identical to. identify(동사) 고름"
+   }
+  ],
+  "status": "미숙",
+  "streak": 0,
+  "next_review": "2026-11-11"
  }
 }
