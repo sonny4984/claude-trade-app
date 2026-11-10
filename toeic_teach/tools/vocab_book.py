@@ -61,6 +61,7 @@ sec("1. 철자 쌍둥이", "앞 3~4글자가 같은 단어를 아는 단어로 �
         ("tangible / intangible", "실체가 있는 / 무형의", "tangible results", 1, "반대로 알고 있었음"),
         ("cease / seize", "중단하다 / 붙잡다", "cease making the product", 1, ""),
         ("lose / loose", "잃다 / 느슨한", "a loose screw", 0, ""),
+        ("ballroom / bathroom", "연회장 / 화장실", "in the ballroom of the hotel", 1, "10회 161 지문"),
     ])
 
 sec("2. 다의어: 토익 뜻", "아는 단어인데 한국어 뜻 하나만 알아서 문장이 이상해짐",
@@ -102,6 +103,9 @@ sec("2. 다의어: 토익 뜻", "아는 단어인데 한국어 뜻 하나만 알
         ("direct", "(문의를) ~로 보내다", "direct questions to HR", 0, ""),
         ("balance", "잔액", "the remaining balance", 0, ""),
         ("party", "당사자", "both parties signed", 0, ""),
+        ("position (2)", "(업계) 입지", "expand its position in retail", 1, "같은 지문에 일자리·입지 둘 다"),
+        ("structure", "구조물, 건물", "take down that structure", 1, ""),
+        ("given that", "~을 고려하면", "given that business has been slow", 1, ""),
     ])
 
 sec("3. 연어 덩어리", "단어는 아는데 붙어 다니는 짝을 몰라 직역이 엉킴",
@@ -142,6 +146,17 @@ sec("3. 연어 덩어리", "단어는 아는데 붙어 다니는 짝을 몰라 �
         ("at your earliest convenience", "편하신 대로 빨리", "", 0, ""),
         ("be subject to change", "변경될 수 있다", "Prices are subject to change.", 0, ""),
         ("stand out", "눈에 띄다", "make your property stand out", 0, ""),
+        ("look to V", "~하려고 하다", "is looking to fill 300 positions", 1, "'위해' X"),
+        ("set to V / slated to V", "~할 예정인", "a center set to open next month", 1, ""),
+        ("later this month", "이번 달 중에", "", 1, ""),
+        ("a need for", "~에 대한 수요", "a big need for qualified staff", 1, ""),
+        ("meet the demand", "수요를 충족하다", "", 1, ""),
+        ("take down", "철거하다", "", 1, ""),
+        ("mixed feelings", "복잡한 심경", "", 1, ""),
+        ("can't afford to V", "~할 여유가 없다", "", 1, ""),
+        ("pass up", "(기회를) 놓치다", "pass up this opportunity", 1, ""),
+        ("a thing of the past", "한물간 것", "make lighthouses a thing of the past", 1, ""),
+        ("carry out", "수행하다", "carry out this job", 1, ""),
     ])
 
 sec("4. 동사·형용사 + 전치사 짝", "뒤 전치사를 보고도 그 전치사와 짝인 단어를 못 고름",
@@ -247,6 +262,9 @@ sec("7. 연결어 (접속부사) 의미 그룹", "연결어 뜻을 대충 알아
         ("that is", "즉", "", 0, ""),
         ("There", "거기서 (앞 장소 받기)", "", 1, ""),
         ("In any event", "어쨌든", "", 0, ""),
+        ("Then again", "↔ 한편으로는, 그렇긴 한데", "", 1, ""),
+        ("Besides (문장 앞)", "➕ 게다가", "", 1, ""),
+        ("How so?", "어째서? 무슨 뜻이야?", "", 1, ""),
     ])
 
 sec("8. 덩어리 명사·이름", "두 단어가 한 뜻인 명사를 쪼개서 직역",
@@ -275,6 +293,10 @@ sec("8. 덩어리 명사·이름", "두 단어가 한 뜻인 명사를 쪼개서
         ("keynote speaker", "기조연설자", "", 0, ""),
         ("farm-to-table", "산지 직송 (식당)", "", 0, ""),
         ("interoffice", "사무소 간", "interoffice meetings", 1, ""),
+        ("distribution center", "물류센터", "", 1, ""),
+        ("press release", "보도자료", "", 1, ""),
+        ("stock inspection", "재고 검사", "", 1, ""),
+        ("competitive wages", "경쟁력 있는 임금", "", 0, ""),
     ])
 
 sec("9. 비즈니스 핵심 어휘", "그냥 처음 본 단어 (뜻 자체를 모름)",
@@ -326,6 +348,14 @@ sec("9. 비즈니스 핵심 어휘", "그냥 처음 본 단어 (뜻 자체를 �
         ("patron", "고객, 후원자", "", 0, ""),
         ("venue", "장소", "", 1, ""),
         ("furnish", "제공하다, 가구를 비치하다", "", 1, ""),
+        ("demolish", "철거하다", "demolish the lighthouse", 1, "'꾸미다'로 읽음"),
+        ("lighthouse", "등대", "", 1, "등불 X"),
+        ("outdated", "구식인", "", 1, ""),
+        ("navigation", "항해, 길 찾기", "", 1, ""),
+        ("simplify", "단순화하다", "", 1, ""),
+        ("qualified", "자격을 갖춘", "", 1, ""),
+        ("anticipated", "예상되는", "", 1, ""),
+        ("modern", "현대식의", "", 1, "최근 X"),
     ])
 
 # ---------- build ----------

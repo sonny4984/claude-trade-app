@@ -228,6 +228,13 @@
     "ex": "a loose screw",
     "mine": 0,
     "note": ""
+   },
+   {
+    "en": "ballroom / bathroom",
+    "ko": "연회장 / 화장실",
+    "ex": "in the ballroom of the hotel",
+    "mine": 1,
+    "note": "10회 161 지문"
    }
   ]
  },
@@ -481,6 +488,27 @@
     "ex": "both parties signed",
     "mine": 0,
     "note": ""
+   },
+   {
+    "en": "position (2)",
+    "ko": "(업계) 입지",
+    "ex": "expand its position in retail",
+    "mine": 1,
+    "note": "같은 지문에 일자리·입지 둘 다"
+   },
+   {
+    "en": "structure",
+    "ko": "구조물, 건물",
+    "ex": "take down that structure",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "given that",
+    "ko": "~을 고려하면",
+    "ex": "given that business has been slow",
+    "mine": 1,
+    "note": ""
    }
   ]
  },
@@ -726,6 +754,83 @@
     "ko": "눈에 띄다",
     "ex": "make your property stand out",
     "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "look to V",
+    "ko": "~하려고 하다",
+    "ex": "is looking to fill 300 positions",
+    "mine": 1,
+    "note": "'위해' X"
+   },
+   {
+    "en": "set to V / slated to V",
+    "ko": "~할 예정인",
+    "ex": "a center set to open next month",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "later this month",
+    "ko": "이번 달 중에",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "a need for",
+    "ko": "~에 대한 수요",
+    "ex": "a big need for qualified staff",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "meet the demand",
+    "ko": "수요를 충족하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "take down",
+    "ko": "철거하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "mixed feelings",
+    "ko": "복잡한 심경",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "can't afford to V",
+    "ko": "~할 여유가 없다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "pass up",
+    "ko": "(기회를) 놓치다",
+    "ex": "pass up this opportunity",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "a thing of the past",
+    "ko": "한물간 것",
+    "ex": "make lighthouses a thing of the past",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "carry out",
+    "ko": "수행하다",
+    "ex": "carry out this job",
+    "mine": 1,
     "note": ""
    }
   ]
@@ -1326,6 +1431,27 @@
     "ex": "",
     "mine": 0,
     "note": ""
+   },
+   {
+    "en": "Then again",
+    "ko": "↔ 한편으로는, 그렇긴 한데",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "Besides (문장 앞)",
+    "ko": "➕ 게다가",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "How so?",
+    "ko": "어째서? 무슨 뜻이야?",
+    "ex": "",
+    "mine": 1,
+    "note": ""
    }
   ]
  },
@@ -1487,6 +1613,34 @@
     "ko": "사무소 간",
     "ex": "interoffice meetings",
     "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "distribution center",
+    "ko": "물류센터",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "press release",
+    "ko": "보도자료",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "stock inspection",
+    "ko": "재고 검사",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "competitive wages",
+    "ko": "경쟁력 있는 임금",
+    "ex": "",
+    "mine": 0,
     "note": ""
    }
   ]
@@ -1811,6 +1965,62 @@
     "ex": "",
     "mine": 1,
     "note": ""
+   },
+   {
+    "en": "demolish",
+    "ko": "철거하다",
+    "ex": "demolish the lighthouse",
+    "mine": 1,
+    "note": "'꾸미다'로 읽음"
+   },
+   {
+    "en": "lighthouse",
+    "ko": "등대",
+    "ex": "",
+    "mine": 1,
+    "note": "등불 X"
+   },
+   {
+    "en": "outdated",
+    "ko": "구식인",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "navigation",
+    "ko": "항해, 길 찾기",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "simplify",
+    "ko": "단순화하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "qualified",
+    "ko": "자격을 갖춘",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "anticipated",
+    "ko": "예상되는",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "modern",
+    "ko": "현대식의",
+    "ex": "",
+    "mine": 1,
+    "note": "최근 X"
    }
   ]
  }
