@@ -2107,6 +2107,69 @@
     "note": ""
    },
    {
+    "en": "a series of",
+    "ko": "일련의 (= 여러 가지 X)",
+    "ex": "a series of tasks",
+    "mine": 1,
+    "note": "ETS Vol3 151"
+   },
+   {
+    "en": "designated",
+    "ko": "지정된",
+    "ex": "a designated area",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "post (reviews)",
+    "ko": "게시하다, 올리다",
+    "ex": "post photos and videos",
+    "mine": 1,
+    "note": "개시 X"
+   },
+   {
+    "en": "prove + 형용사",
+    "ko": "~로 판명되다",
+    "ex": "proved the most challenging",
+    "mine": 1,
+    "note": "보여주다 X"
+   },
+   {
+    "en": "challenging",
+    "ko": "어려운, 힘든",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "potential cause",
+    "ko": "잠재적 원인 (cause = 명사)",
+    "ex": "a potential cause of the delay",
+    "mine": 1,
+    "note": "a 뒤엔 명사. 동사 X"
+   },
+   {
+    "en": "intuitive",
+    "ko": "직관적인",
+    "ex": "intuitive icons",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "clearer (비교급)",
+    "ko": "더 명확한 (clearly 아님)",
+    "ex": "clearer, more intuitive icons",
+    "mine": 1,
+    "note": "clearly로 읽음"
+   },
+   {
+    "en": "more + 형용사",
+    "ko": "더 ~한 (더 많은 X)",
+    "ex": "more intuitive = 더 직관적인",
+    "mine": 1,
+    "note": ""
+   },
+   {
     "en": "take one's place",
     "ko": "~의 자리를 대신하다",
     "ex": "",
