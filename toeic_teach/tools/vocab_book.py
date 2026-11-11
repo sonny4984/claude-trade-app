@@ -387,6 +387,12 @@ sec("9. 비즈니스 핵심 어휘", "그냥 처음 본 단어 (뜻 자체를 �
         ("discouraged / encouraged", "낙담한 / 격려받은 (dis- = 반대)", "", 1, "독려로 읽음"),
         ("accept / receive", "선정하다 / 접수하다", "", 1, ""),
         ("protect A from B", "B로부터 A를 보호하다", "", 0, ""),
+        ("ask / propose", "요청하다 / 제안하다 (문의하다, 약속하다 X)", "we ask that you submit", 1, "Vol3 161"),
+        ("since (이유)", "~이므로 (~이후로 X)", "Since you propose to share a space", 1, ""),
+        ("potter / poet", "도예가 / 시인", "local potter", 1, "시인으로 읽음"),
+        ("jointly", "공동으로, 함께", "use the space jointly", 1, ""),
+        ("vendor", "판매자, 출점자", "be considered as a vendor", 1, ""),
+        ("annual", "매년 열리는, 연례의", "the annual fair", 1, ""),
         ("take one's place", "~의 자리를 대신하다", "", 0, ""),
         ("schedule conflict", "일정 충돌", "", 0, ""),
     ])

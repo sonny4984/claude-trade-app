@@ -2240,6 +2240,48 @@
     "note": ""
    },
    {
+    "en": "ask / propose",
+    "ko": "요청하다 / 제안하다 (문의하다, 약속하다 X)",
+    "ex": "we ask that you submit",
+    "mine": 1,
+    "note": "Vol3 161"
+   },
+   {
+    "en": "since (이유)",
+    "ko": "~이므로 (~이후로 X)",
+    "ex": "Since you propose to share a space",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "potter / poet",
+    "ko": "도예가 / 시인",
+    "ex": "local potter",
+    "mine": 1,
+    "note": "시인으로 읽음"
+   },
+   {
+    "en": "jointly",
+    "ko": "공동으로, 함께",
+    "ex": "use the space jointly",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "vendor",
+    "ko": "판매자, 출점자",
+    "ex": "be considered as a vendor",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "annual",
+    "ko": "매년 열리는, 연례의",
+    "ex": "the annual fair",
+    "mine": 1,
+    "note": ""
+   },
+   {
     "en": "take one's place",
     "ko": "~의 자리를 대신하다",
     "ex": "",
