@@ -2170,6 +2170,76 @@
     "note": ""
    },
    {
+    "en": "fair",
+    "ko": "박람회, 장터 (공정한 X)",
+    "ex": "a craft fair / job fair",
+    "mine": 1,
+    "note": "Vol3 161"
+   },
+   {
+    "en": "hold (행사)",
+    "ko": "개최하다",
+    "ex": "hold the fair rain or shine",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "rain or shine",
+    "ko": "날씨와 상관없이",
+    "ex": "",
+    "mine": 1,
+    "note": "밑줄만 치고 못 읽음"
+   },
+   {
+    "en": "wares",
+    "ko": "상품, 물품 (창고 X)",
+    "ex": "protect their wares",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "application / applicant",
+    "ko": "지원서 / 지원자",
+    "ex": "",
+    "mine": 1,
+    "note": "applications를 지원자로 읽음"
+   },
+   {
+    "en": "jewelry",
+    "ko": "보석, 장신구 (귀중품 X = valuables)",
+    "ex": "jewelry makers",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "far + 비교급",
+    "ko": "훨씬 (far more)",
+    "ex": "far more applications than we can accept",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "discouraged / encouraged",
+    "ko": "낙담한 / 격려받은 (dis- = 반대)",
+    "ex": "",
+    "mine": 1,
+    "note": "독려로 읽음"
+   },
+   {
+    "en": "accept / receive",
+    "ko": "선정하다 / 접수하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "protect A from B",
+    "ko": "B로부터 A를 보호하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
     "en": "take one's place",
     "ko": "~의 자리를 대신하다",
     "ex": "",
