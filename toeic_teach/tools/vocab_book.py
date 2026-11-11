@@ -393,6 +393,9 @@ sec("9. 비즈니스 핵심 어휘", "그냥 처음 본 단어 (뜻 자체를 �
         ("jointly", "공동으로, 함께", "use the space jointly", 1, ""),
         ("vendor", "판매자, 출점자", "be considered as a vendor", 1, ""),
         ("annual", "매년 열리는, 연례의", "the annual fair", 1, ""),
+        ("assurance(s)", "확답, 보장 (that절이 내용)", "want assurances that he will stay", 1, "ETS Vol3 175"),
+        ("committed", "헌신하는, 전념하는", "he is committed to the company", 1, ""),
+        ("stick around", "계속 머물다, 남아 있다", "stick around for several years", 1, "= stay"),
         ("take one's place", "~의 자리를 대신하다", "", 0, ""),
         ("schedule conflict", "일정 충돌", "", 0, ""),
     ])
