@@ -33,7 +33,7 @@ registerFontFamily("R", normal="R", bold="R-B", italic="R-I", boldItalic="R-BI")
 
 OUT = Path(getattr(_mod, "OUT_DIR", root / "data/workbook"))
 TEST_NO = int(sys.argv[2]) if len(sys.argv) > 2 else 11
-FIRST_PRINTED = 19 + 30 * (TEST_NO - 11)  # divider page number; TEST 11 = pages 20-47
+FIRST_PRINTED = getattr(_mod, "FIRST_PRINTED", 19 + 30 * (TEST_NO - 11))  # divider page number; TEST 11 = pages 20-47
 PW, PH = A4
 LM, RM = 54, 48
 TOP, BOT = 64, 70
@@ -734,19 +734,17 @@ if PART5:
     story += [FrameBreak()]
     p5 = place(PART5, 1101 + 100 * (TEST_NO - 11))
     P5_GAPS = getattr(_mod, "P5_GAPS", (14, 14, 27, 27, 31, 31))
-    groups = [(0, 4), (4, 8), (8, 14), (14, 20), (20, 25), (25, 30)]
+    groups = getattr(_mod, "P5_GROUPS", [(0, 4), (4, 8), (8, 14), (14, 20), (20, 25), (25, 30)])
     for gi, (a, b) in enumerate(groups):
         for i in range(a, b):
             stem, ch, ans, note = p5[i]
             key.append((101 + i, "ABCD"[ans], ch[ans], note))
             story += [q_block(101 + i, stem, ch, CW), Spacer(1, P5_GAPS[gi])]
-        if gi == 1:
-            story += [NextPageTemplate("p5b"), PageBreak()]
-        elif gi == 3:
-            story += [NextPageTemplate("p5b"), PageBreak()]
-        elif gi == 5:
+        if gi == len(groups) - 1:
             if PART6 or PART7:
                 story += [NextPageTemplate("full"), PageBreak()]
+        elif gi in (1, 3):
+            story += [NextPageTemplate("p5b"), PageBreak()]
         else:
             story.append(FrameBreak())
 
