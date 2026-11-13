@@ -52,7 +52,13 @@ const app=document.getElementById('app');
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 // decks: each = {key,title,desc,items:[{q,set}]}
 function decks(){
-  const d=[{key:'p5m',title:'Part 5 · 내 오답',desc:'형이 틀린 문제 + 변형',items:D.p5_mine.map(q=>({q}))}];
+  const sets0=(arr)=>arr.flatMap(s=>s.qs.map(q=>({q,set:s})));
+  const d=[];
+  if(D.o_p5){d.push({key:'o5',title:'책 원문 오답 · Part 5',desc:'형 책에서 틀린 문제 그대로',items:D.o_p5.map(q=>({q}))});
+    d.push({key:'o6',title:'책 원문 오답 · Part 6',desc:'틀린 문제가 있던 세트',items:sets0(D.o_p6)});
+    d.push({key:'o7s',title:'책 원문 오답 · Part 7 단일지문',desc:'★가 형이 틀린 문제',items:sets0(D.o_p7s)});
+    d.push({key:'o7m',title:'책 원문 오답 · Part 7 이중·삼중지문',desc:'★가 형이 틀린 문제',items:sets0(D.o_p7m)})}
+  d.push({key:'p5m',title:'Part 5 · 내 오답',desc:'형이 틀린 문제 + 변형',items:D.p5_mine.map(q=>({q}))});
   D.p5_type.forEach((t,i)=>d.push({key:'p5t'+i,title:'Part 5 · '+t.name,desc:t.algo,items:t.qs.map(q=>({q}))}));
   const sets=(arr)=>arr.flatMap(s=>s.qs.map(q=>({q,set:s})));
   d.push({key:'p6',title:'Part 6 · 내 오답 세트',desc:'시제 · 접속부사 · 문장삽입',items:sets(D.p6)});
@@ -95,7 +101,7 @@ function run(deck,items){
       if(s.tabs.length>1){const tb=$('<div class="tabs" role="tablist"></div>');s.tabs.forEach((t,k)=>{const b=$(`<button role="tab" aria-selected="${k===tab}">${k+1}. ${t.l}</button>`);b.onclick=()=>{tab=k;ps.innerHTML=s.tabs[k].h;ps.scrollTop=0;tb.querySelectorAll('button').forEach((x,m)=>x.setAttribute('aria-selected',m===k))};tb.append(b)});app.append(tb)}
       var ps=$('<div class="pass"></div>');ps.innerHTML=s.tabs[tab].h;app.append(ps);
     }
-    const card=$(`<div class="q"><div class="m">${q.hit||(!s&&q.w!==undefined&&q.w!=='')?'<span class="star">★ 틀렸던 문제</span>':''}<span>${q.id}${q.t?' · '+q.t:''}</span></div><p class="s"></p><div class="opts"></div></div>`);
+    const card=$(`<div class="q"><div class="m">${q.hit||(!s&&q.w)?'<span class="star">★ 틀렸던 문제</span>':''}<span>${q.id}${q.t?' · '+q.t:''}</span></div><p class="s"></p><div class="opts"></div></div>`);
     card.querySelector('.s').innerHTML=q.s;
     const box=card.querySelector('.opts');
     q.o.forEach((o,k)=>{const b=$(`<button><span class="l">${'ABCD'[k]}</span><span></span></button>`);b.lastElementChild.innerHTML=o;
