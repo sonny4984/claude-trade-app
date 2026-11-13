@@ -1,0 +1,2321 @@
+[
+ {
+  "title": "1. 철자 쌍둥이",
+  "feature": "앞 3~4글자가 같은 단어를 아는 단어로 바꿔 읽음",
+  "why": "flowing→flower, premier→previous, date→data, spare→spray, adapt→adopt. 부주의가 아니라 둘 중 하나를 모르는 것.",
+  "how": "쌍으로만 외운다. 한쪽만 외우면 시험장에서 또 바꿔 읽는다. 끝 철자에 형광펜.",
+  "rows": [
+   {
+    "en": "adopt / adapt (to)",
+    "ko": "채택하다 / 적응하다, 조정하다",
+    "ex": "adopt the proposal / adapt to the new system",
+    "mine": 1,
+    "note": "adapted budget = 조정된 예산"
+   },
+   {
+    "en": "assure / insure / ensure",
+    "ko": "장담하다(+사람) / 보험 들다 / 확실히 하다",
+    "ex": "assure customers that ~ / insured against damage / ensure safety",
+    "mine": 1,
+    "note": "assure 뒤엔 사람"
+   },
+   {
+    "en": "premier / premiere / previous",
+    "ko": "최고의 / 개봉, 초연 / 이전의",
+    "ex": "a premier venue / the film's premiere",
+    "mine": 1,
+    "note": "11번에서 previous로 읽음"
+   },
+   {
+    "en": "confirm / conform (to)",
+    "ko": "확인하다 / ~에 부합하다",
+    "ex": "conform to safety standards",
+    "mine": 1,
+    "note": "conform은 to와 짝"
+   },
+   {
+    "en": "date / data",
+    "ko": "날짜 / 자료",
+    "ex": "by the specified date / sales data",
+    "mine": 1,
+    "note": "19번 데이터로 읽음"
+   },
+   {
+    "en": "spare / spray",
+    "ko": "아끼다 / 뿌리다",
+    "ex": "spare no effort in V-ing",
+    "mine": 1,
+    "note": "24번 '뿌린다'"
+   },
+   {
+    "en": "flowing / flower",
+    "ko": "흐르는 / 꽃",
+    "ex": "rainwater flowing from roofs",
+    "mine": 1,
+    "note": "-ing 꼬리를 꽃으로 읽음"
+   },
+   {
+    "en": "reference / recommend / referral",
+    "ko": "참고 / 추천하다 / (다른 곳으로) 소개",
+    "ex": "a quick reference tool",
+    "mine": 1,
+    "note": "35번 추천으로 읽음"
+   },
+   {
+    "en": "attached / attacked",
+    "ko": "첨부된 / 공격받은",
+    "ex": "the attached contract",
+    "mine": 1,
+    "note": "드릴 6번"
+   },
+   {
+    "en": "memorable / memorial",
+    "ko": "기억에 남는 / 기념의",
+    "ex": "a memorable event / a memorial park",
+    "mine": 1,
+    "note": "2회 오답"
+   },
+   {
+    "en": "cover / coverage",
+    "ko": "표지, 덮다 / 보도·보장 범위",
+    "ex": "the front cover / insurance coverage",
+    "mine": 1,
+    "note": "2회 오답"
+   },
+   {
+    "en": "identical (to) / identify",
+    "ko": "동일한 / 확인하다, 알아보다",
+    "ex": "identical to the original",
+    "mine": 1,
+    "note": "be + 형용사 + to"
+   },
+   {
+    "en": "internal / internalize",
+    "ko": "내부의 / 내면화하다",
+    "ex": "the internal Web site",
+    "mine": 1,
+    "note": "명사 앞이면 형용사"
+   },
+   {
+    "en": "convertible / conversion",
+    "ko": "전환 가능한 / 전환",
+    "ex": "a currency conversion fee",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "considerable / considerate",
+    "ko": "상당한 / 배려하는",
+    "ex": "a considerable impact",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "personal / personnel",
+    "ko": "개인의 / 직원, 인사부",
+    "ex": "personnel department",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "access / assess / excess",
+    "ko": "접근 / 평가하다 / 초과",
+    "ex": "assess the damage / excess baggage",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "affect / effect",
+    "ko": "영향을 주다(동) / 효과, 시행(명)",
+    "ex": "go into effect",
+    "mine": 1,
+    "note": "go into effect 연어 불안"
+   },
+   {
+    "en": "proceed (with) / precede",
+    "ko": "진행하다 / 앞서다",
+    "ex": "proceed with the plan",
+    "mine": 1,
+    "note": "proceed는 자동사"
+   },
+   {
+    "en": "prospective / perspective",
+    "ko": "장래의, 예비의 / 관점",
+    "ex": "prospective clients",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "respectively / respectfully",
+    "ko": "각각 / 정중히",
+    "ex": "3 and 5 hours, respectively",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "economic / economical",
+    "ko": "경제의 / 절약하는",
+    "ex": "an economical car",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "successful / successive",
+    "ko": "성공적인 / 연속적인",
+    "ex": "three successive years",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "reliable / reliant (on)",
+    "ko": "믿을 수 있는 / 의존하는",
+    "ex": "a reliable supplier",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "comprehensive / comprehensible",
+    "ko": "포괄적인 / 이해할 수 있는",
+    "ex": "a comprehensive review",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "expand / expend / extend",
+    "ko": "확장하다 / 소비하다 / 연장하다",
+    "ex": "extend beyond the deadline",
+    "mine": 1,
+    "note": "extend beyond 3회 오답"
+   },
+   {
+    "en": "stationary / stationery",
+    "ko": "정지된 / 문구류",
+    "ex": "office stationery",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "device / devise",
+    "ko": "장치(명) / 고안하다(동)",
+    "ex": "devise a plan",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "substantial / sustained",
+    "ko": "상당한(크기) / 지속적인(기간)",
+    "ex": "substantial improvement",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "tangible / intangible",
+    "ko": "실체가 있는 / 무형의",
+    "ex": "tangible results",
+    "mine": 1,
+    "note": "반대로 알고 있었음"
+   },
+   {
+    "en": "cease / seize",
+    "ko": "중단하다 / 붙잡다",
+    "ex": "cease making the product",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "lose / loose",
+    "ko": "잃다 / 느슨한",
+    "ex": "a loose screw",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "ballroom / bathroom",
+    "ko": "연회장 / 화장실",
+    "ex": "in the ballroom of the hotel",
+    "mine": 1,
+    "note": "10회 161 지문"
+   }
+  ]
+ },
+ {
+  "title": "2. 다의어: 토익 뜻",
+  "feature": "아는 단어인데 한국어 뜻 하나만 알아서 문장이 이상해짐",
+  "why": "work=일(→작품), property=재산(→매물), place=장소(→두다), keep=지키다(→보관). 뜻이 안 맞으면 형 탓이 아니라 두 번째 뜻.",
+  "how": "해석이 어색하면 '이 단어 다른 뜻?'부터 의심. 두 번째 뜻은 짝 표현째로 외운다.",
+  "rows": [
+   {
+    "en": "property",
+    "ko": "부동산, 매물 (재산)",
+    "ex": "make a property look its best",
+    "mine": 1,
+    "note": "토지 X"
+   },
+   {
+    "en": "work",
+    "ko": "작품 (일)",
+    "ex": "view our work / follow your work",
+    "mine": 1,
+    "note": "28번 '너의 일'"
+   },
+   {
+    "en": "follow",
+    "ko": "(소식·작품을) 챙겨 보다",
+    "ex": "follow your work closely",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "place",
+    "ko": "두다 / place an order 주문하다",
+    "ex": "place them in a safe area",
+    "mine": 1,
+    "note": "30번 '위치해 있는지'"
+   },
+   {
+    "en": "keep",
+    "ko": "보관하다, 두다",
+    "ex": "keep a copy at your desk",
+    "mine": 1,
+    "note": "35번 '지키다'"
+   },
+   {
+    "en": "position",
+    "ko": "일자리, 직책",
+    "ex": "apply for a position",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "remote",
+    "ko": "재택의, 원격의",
+    "ex": "a fully remote position",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "moderate",
+    "ko": "(토론) 사회를 보다 / 적당한",
+    "ex": "moderate a panel",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "fill",
+    "ko": "(처방전대로) 조제하다 / (자리를) 충원하다",
+    "ex": "fill a prescription / fill a position",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "measure",
+    "ko": "조치 (= procedure)",
+    "ex": "safety measures",
+    "mine": 1,
+    "note": "2회 오답"
+   },
+   {
+    "en": "privilege",
+    "ko": "이용 권한, 혜택",
+    "ex": "library privileges",
+    "mine": 1,
+    "note": "특허 X"
+   },
+   {
+    "en": "attention",
+    "ko": "관심, 주목",
+    "ex": "receive a lot of attention",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "recognize",
+    "ko": "표창하다 (= honor)",
+    "ex": "be recognized for excellence",
+    "mine": 1,
+    "note": "인정하다(admit) 함정"
+   },
+   {
+    "en": "limited",
+    "ko": "한정된 (= restricted)",
+    "ex": "limited seating",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "accommodate",
+    "ko": "수용하다 / (요구를) 들어주다",
+    "ex": "accommodate 200 guests / dietary needs",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "issue",
+    "ko": "발행하다 / (사과를) 하다 / (잡지) 호",
+    "ex": "issue an apology / the May issue",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "pool",
+    "ko": "(자원을) 모으다",
+    "ex": "pool resources",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "observe",
+    "ko": "준수하다 / 관찰하다",
+    "ex": "observe the rules",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "outstanding",
+    "ko": "미지불된 / 뛰어난",
+    "ex": "an outstanding balance",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "sign in",
+    "ko": "방문 등록하다",
+    "ex": "sign in at the front desk",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "address",
+    "ko": "(문제를) 다루다 / 연설하다",
+    "ex": "address customer concerns",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "figure",
+    "ko": "수치",
+    "ex": "sales figures",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "appreciate",
+    "ko": "감사하다 / (가치가) 오르다",
+    "ex": "We appreciate your patience.",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "deliver",
+    "ko": "(연설을) 하다 / 배달하다",
+    "ex": "deliver a speech",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "credit",
+    "ko": "공로 / 적립금",
+    "ex": "give credit to the team / store credit",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "terms",
+    "ko": "조건",
+    "ex": "the terms of the contract",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "assume",
+    "ko": "(직책을) 맡다 / 추정하다",
+    "ex": "assume the role of manager",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "run",
+    "ko": "운영하다 / (광고를) 싣다",
+    "ex": "run a business / run an ad",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "carry",
+    "ko": "(상품을) 취급하다",
+    "ex": "We no longer carry that item.",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "cover",
+    "ko": "(비용을) 부담하다 / (근무를) 대신하다",
+    "ex": "cover travel costs / cover a shift",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "due",
+    "ko": "~할 예정인 / 마감인",
+    "ex": "The report is due Friday.",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "honor",
+    "ko": "(쿠폰·계약을) 이행하다",
+    "ex": "honor the coupon",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "direct",
+    "ko": "(문의를) ~로 보내다",
+    "ex": "direct questions to HR",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "balance",
+    "ko": "잔액",
+    "ex": "the remaining balance",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "party",
+    "ko": "당사자",
+    "ex": "both parties signed",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "position (2)",
+    "ko": "(업계) 입지",
+    "ex": "expand its position in retail",
+    "mine": 1,
+    "note": "같은 지문에 일자리·입지 둘 다"
+   },
+   {
+    "en": "structure",
+    "ko": "구조물, 건물",
+    "ex": "take down that structure",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "given that",
+    "ko": "~을 고려하면",
+    "ex": "given that business has been slow",
+    "mine": 1,
+    "note": ""
+   }
+  ]
+ },
+ {
+  "title": "3. 연어 덩어리",
+  "feature": "단어는 아는데 붙어 다니는 짝을 몰라 직역이 엉킴",
+  "why": "be honored to → '영광을 돌리다', spare no effort → '노력 없이'. 덩어리를 쪼개서 직역하면 반대 뜻이 됨.",
+  "how": "덩어리째 한 뜻으로 외운다. 카드 앞면에 덩어리 전체, 뒷면에 한 줄 뜻.",
+  "rows": [
+   {
+    "en": "be honored to V",
+    "ko": "~하게 되어 영광이다",
+    "ex": "I was honored to work with you.",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "spare no effort in V-ing",
+    "ko": "~에 노력을 아끼지 않다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "come standard",
+    "ko": "기본으로 포함되다",
+    "ex": "All services come standard.",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "result in / result from",
+    "ko": "~을 초래하다 / ~에서 비롯되다",
+    "ex": "Failure to renew will result in ~",
+    "mine": 1,
+    "note": "방향 반대"
+   },
+   {
+    "en": "take pride in V-ing",
+    "ko": "~에 자부심을 갖다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "keep A on the map",
+    "ko": "A를 계속 주목받게 하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "Please be advised that",
+    "ko": "~임을 알려드립니다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "among other things",
+    "ko": "여러 가지 중 특히",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "a full range of",
+    "ko": "모든 종류의",
+    "ex": "a full range of services",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "in recognition of",
+    "ko": "~을 인정하여",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "go into effect / take effect",
+    "ko": "시행되다",
+    "ex": "The policy goes into effect May 1.",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "tangible results",
+    "ko": "눈에 보이는 성과",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "on a seasonal basis",
+    "ko": "계절 단위로",
+    "ex": "on a weekly/regular basis",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "fill in for",
+    "ko": "~를 대신하다",
+    "ex": "fill in for a sick colleague",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "issue an apology for",
+    "ko": "~에 대해 사과하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "reduce the likelihood of",
+    "ko": "~할 가능성을 줄이다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "for your convenience",
+    "ko": "편의를 위해",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "kindly reminded to V",
+    "ko": "~하도록 정중히 안내되다",
+    "ex": "",
+    "mine": 1,
+    "note": "highly 아님"
+   },
+   {
+    "en": "ample time",
+    "ko": "충분한 시간",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "narrowed in scope",
+    "ko": "범위가 좁혀진",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "a great asset to",
+    "ko": "~에 큰 자산(인재)",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "share the cost",
+    "ko": "비용을 분담하다",
+    "ex": "",
+    "mine": 1,
+    "note": "spend X"
+   },
+   {
+    "en": "warranty coverage",
+    "ko": "보증 적용",
+    "ex": "under warranty",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "far in advance",
+    "ko": "훨씬 미리",
+    "ex": "plan far in advance",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "be eligible for / to V",
+    "ko": "~할 자격이 있다",
+    "ex": "eligible for a discount",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "meet the needs / deadline",
+    "ko": "요구를 충족하다 / 마감을 맞추다",
+    "ex": "meets all dietary needs",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "at no extra cost",
+    "ko": "추가 비용 없이",
+    "ex": "= free of charge",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "on short notice",
+    "ko": "촉박하게 통보받고",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "in a timely manner",
+    "ko": "제때에",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "until further notice",
+    "ko": "추후 공지가 있을 때까지",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "on behalf of",
+    "ko": "~를 대표하여",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "at your earliest convenience",
+    "ko": "편하신 대로 빨리",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "be subject to change",
+    "ko": "변경될 수 있다",
+    "ex": "Prices are subject to change.",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "stand out",
+    "ko": "눈에 띄다",
+    "ex": "make your property stand out",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "look to V",
+    "ko": "~하려고 하다",
+    "ex": "is looking to fill 300 positions",
+    "mine": 1,
+    "note": "'위해' X"
+   },
+   {
+    "en": "set to V / slated to V",
+    "ko": "~할 예정인",
+    "ex": "a center set to open next month",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "later this month",
+    "ko": "이번 달 중에",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "a need for",
+    "ko": "~에 대한 수요",
+    "ex": "a big need for qualified staff",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "meet the demand",
+    "ko": "수요를 충족하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "take down",
+    "ko": "철거하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "mixed feelings",
+    "ko": "복잡한 심경",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "can't afford to V",
+    "ko": "~할 여유가 없다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "pass up",
+    "ko": "(기회를) 놓치다",
+    "ex": "pass up this opportunity",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "a thing of the past",
+    "ko": "한물간 것",
+    "ex": "make lighthouses a thing of the past",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "carry out",
+    "ko": "수행하다",
+    "ex": "carry out this job",
+    "mine": 1,
+    "note": ""
+   }
+  ]
+ },
+ {
+  "title": "4. 동사·형용사 + 전치사 짝",
+  "feature": "뒤 전치사를 보고도 그 전치사와 짝인 단어를 못 고름",
+  "why": "with 단서 적고도 remind/notify 선택, proceed·refrain을 타동사처럼 씀.",
+  "how": "빈칸 뒤 전치사에 동그라미 → 그 전치사와 짝인 선지만 남긴다.",
+  "rows": [
+   {
+    "en": "refrain from V-ing",
+    "ko": "~을 삼가다",
+    "ex": "refrain from using phones",
+    "mine": 1,
+    "note": "prohibit은 목적어 필요"
+   },
+   {
+    "en": "refer to",
+    "ko": "~을 참고하다, 언급하다",
+    "ex": "refer to the manual",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "proceed with",
+    "ko": "~을 진행하다",
+    "ex": "",
+    "mine": 1,
+    "note": "launch는 타동사"
+   },
+   {
+    "en": "deliberate about",
+    "ko": "~을 숙고하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "familiarize oneself with",
+    "ko": "~에 익숙해지다",
+    "ex": "",
+    "mine": 1,
+    "note": "2회 오답"
+   },
+   {
+    "en": "compatible with",
+    "ko": "~와 호환되는",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "adapt to",
+    "ko": "~에 적응하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "extend beyond",
+    "ko": "~을 넘어 연장되다",
+    "ex": "",
+    "mine": 1,
+    "note": "3회 오답"
+   },
+   {
+    "en": "renowned for",
+    "ko": "~로 유명한",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "aimed at V-ing",
+    "ko": "~을 목표로 한",
+    "ex": "",
+    "mine": 1,
+    "note": "2회 오답"
+   },
+   {
+    "en": "identical to",
+    "ko": "~와 동일한",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "decision on",
+    "ko": "~에 대한 결정",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "presentation on",
+    "ko": "~에 대한 발표",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "apply exclusively to",
+    "ko": "~에게만 적용되다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "be promoted to",
+    "ko": "~로 승진하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "capable of",
+    "ko": "~할 수 있는",
+    "ex": "",
+    "mine": 1,
+    "note": "able to와 구분"
+   },
+   {
+    "en": "available on (website)",
+    "ko": "~에서 이용 가능한",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "be accustomed to V-ing",
+    "ko": "~에 익숙하다",
+    "ex": "",
+    "mine": 1,
+    "note": "to = 전치사"
+   },
+   {
+    "en": "comply with",
+    "ko": "~을 준수하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "consist of",
+    "ko": "~로 구성되다",
+    "ex": "",
+    "mine": 0,
+    "note": "수동 불가"
+   },
+   {
+    "en": "rely on / depend on",
+    "ko": "~에 의존하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "respond to",
+    "ko": "~에 응답하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "contribute to",
+    "ko": "~에 기여하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "be entitled to",
+    "ko": "~할 자격이 있다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "specialize in",
+    "ko": "~을 전문으로 하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "participate in / enroll in",
+    "ko": "참가하다 / 등록하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "account for",
+    "ko": "~을 차지하다, 설명하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "be responsible for",
+    "ko": "~을 책임지다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "be committed to V-ing",
+    "ko": "~에 전념하다",
+    "ex": "",
+    "mine": 0,
+    "note": "to = 전치사"
+   },
+   {
+    "en": "look forward to V-ing",
+    "ko": "~을 고대하다",
+    "ex": "",
+    "mine": 0,
+    "note": "to = 전치사"
+   }
+  ]
+ },
+ {
+  "title": "5. 동사 뒤 모양 (to V / V-ing / 원형)",
+  "feature": "동사+사람+to V를 '~하기 위해'로 읽음, 동명사 동사에 to V를 넣음",
+  "why": "ask staff to keep → '지키기 위해', ask everyone to V 3회 오답, spend time V-ing 3회 이상 오답.",
+  "how": "동사 뒤 '사람 + to V'면 → '사람이 ~하도록'. 아래 동사는 뒤 모양째로 외운다.",
+  "rows": [
+   {
+    "en": "ask / request / require + O + to V",
+    "ko": "O에게 ~하도록 요청하다",
+    "ex": "ask staff to keep a copy",
+    "mine": 1,
+    "note": "3회 이상 오답"
+   },
+   {
+    "en": "encourage / allow / permit + O + to V",
+    "ko": "O가 ~하도록 장려/허락하다",
+    "ex": "allow us to highlight",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "enable / invite / remind / urge + O + to V",
+    "ko": "O가 ~하게 하다 / 하도록 권하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "be expected / permitted to V",
+    "ko": "~할 예정이다 / ~해도 된다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "be considered to V",
+    "ko": "(후보로) 고려되다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "consider / suggest / avoid + V-ing",
+    "ko": "~하는 것을 고려/제안/피하다",
+    "ex": "consider shortening",
+    "mine": 1,
+    "note": "consider to V 아님"
+   },
+   {
+    "en": "spend 시간 V-ing",
+    "ko": "~하는 데 시간을 쓰다",
+    "ex": "",
+    "mine": 1,
+    "note": "3회 이상 오답"
+   },
+   {
+    "en": "have difficulty V-ing",
+    "ko": "~하는 데 어려움을 겪다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "help (O) (to) V",
+    "ko": "~하는 것을 돕다",
+    "ex": "help choose",
+    "mine": 1,
+    "note": "-ing 불가"
+   },
+   {
+    "en": "decide whether to V",
+    "ko": "~할지 결정하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "intend / plan / hope / fail to V",
+    "ko": "~할 의도/계획/희망/실패",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "suggest / request that S 원형",
+    "ko": "~하자고 제안/요청하다",
+    "ex": "suggest that it be postponed",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "make / have / let + O + 원형",
+    "ko": "O가 ~하게 하다",
+    "ex": "make a property look its best",
+    "mine": 1,
+    "note": "23번 목적어 빠뜨림"
+   },
+   {
+    "en": "by V-ing",
+    "ko": "~함으로써",
+    "ex": "by placing the part on its side",
+    "mine": 1,
+    "note": "to V 아님"
+   },
+   {
+    "en": "upon V-ing",
+    "ko": "~하자마자",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "before V-ing",
+    "ko": "~하기 전에",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   }
+  ]
+ },
+ {
+  "title": "6. 전치사 vs 접속사",
+  "feature": "뒤가 명사구인지 절인지 안 보고 뜻으로만 고름",
+  "why": "although/despite, during/while, except/otherwise, whenever/besides, by/until 반복 오답.",
+  "how": "빈칸 뒤에 동사가 있나? 있으면 접속사, 없으면 전치사. 그다음에 뜻.",
+  "rows": [
+   {
+    "en": "despite (전) / although (접)",
+    "ko": "~에도 불구하고",
+    "ex": "despite the delay / although it was late",
+    "mine": 1,
+    "note": "2회 이상"
+   },
+   {
+    "en": "during (전) / while (접)",
+    "ko": "~동안",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "because of (전) / because (접)",
+    "ko": "~때문에",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "except (전) / otherwise (부) / unless (접)",
+    "ko": "~을 제외하고 / 그렇지 않으면 / ~하지 않으면",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "by (완료 마감) / until (계속)",
+    "ko": "~까지 (끝내라) / ~까지 (쭉)",
+    "ex": "submit by Friday / open until 9",
+    "mine": 1,
+    "note": "3회 이상"
+   },
+   {
+    "en": "within + 기간",
+    "ko": "~이내에",
+    "ex": "within 3 days",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "upon V-ing / as soon as + 절",
+    "ko": "~하자마자",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "in case / so that / in order to V",
+    "ko": "~에 대비해 / ~하도록 / ~하기 위해",
+    "ex": "",
+    "mine": 1,
+    "note": "in case 3회 오답"
+   },
+   {
+    "en": "whenever (접) / besides (전·부)",
+    "ko": "~할 때마다 / ~외에도",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "throughout (전) / while (접)",
+    "ko": "~내내",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "up to + 숫자",
+    "ko": "최대 ~까지",
+    "ex": "up to 200 guests",
+    "mine": 1,
+    "note": "2회 오답"
+   },
+   {
+    "en": "as of + 날짜",
+    "ko": "~부로",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "prior to / following",
+    "ko": "~전에 / ~후에 (전치사)",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "in addition to (전) / in addition (부)",
+    "ko": "~에 더하여 / 게다가",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "regardless of",
+    "ko": "~와 상관없이",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   }
+  ]
+ },
+ {
+  "title": "7. 연결어 (접속부사) 의미 그룹",
+  "feature": "연결어 뜻을 대충 알아서 앞뒤 관계와 안 맞는 걸 고름",
+  "why": "Even so를 '심지어'로, In the meantime·Afterward를 아무 데나, 명령문 + or를 '또는'으로 읽음.",
+  "how": "앞 문장과 뒤 문장 관계(➕ / ↔ / → / 예 / 시간)를 먼저 적고 그룹에서 고른다.",
+  "rows": [
+   {
+    "en": "In addition / Additionally / Furthermore / Moreover",
+    "ko": "➕ 게다가",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "However / Nevertheless",
+    "ko": "↔ 그러나 / 그럼에도",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "Even so",
+    "ko": "↔ 그렇긴 해도",
+    "ex": "",
+    "mine": 1,
+    "note": "'심지어' X"
+   },
+   {
+    "en": "On the other hand / In contrast / By comparison",
+    "ko": "↔ 반면에 / 비교해 보면",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "Instead",
+    "ko": "↔ 대신에",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "Therefore / Consequently / As a result / Accordingly",
+    "ko": "→ 그래서",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "To this end",
+    "ko": "→ 이 목적을 위해",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "For example / For instance / In particular",
+    "ko": "예) 예를 들어 / 특히",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "Indeed / In fact / As a matter of fact",
+    "ko": "강조) 실제로",
+    "ex": "",
+    "mine": 1,
+    "note": "25번 Indeed"
+   },
+   {
+    "en": "Best of all",
+    "ko": "가장 좋은 점은",
+    "ex": "",
+    "mine": 1,
+    "note": "5번"
+   },
+   {
+    "en": "Afterward / Since then / Previously",
+    "ko": "시간) 그 후 / 그 이후로 / 이전에",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "In the meantime / Meanwhile",
+    "ko": "시간) 그동안에",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "Before long",
+    "ko": "시간) 머지않아",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "Otherwise / If not / If so",
+    "ko": "조건) 그렇지 않으면 / 아니면 / 그렇다면",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "명령문, or ~",
+    "ko": "~해라, 안 그러면",
+    "ex": "Store it cool, or it may spoil.",
+    "mine": 1,
+    "note": "33번"
+   },
+   {
+    "en": "Should S 원형 = If S V",
+    "ko": "만약 ~라면 (도치)",
+    "ex": "Should you decide to ~",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "Had S p.p. = If S had p.p.",
+    "ko": "만약 ~했다면 (도치)",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "that is",
+    "ko": "즉",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "There",
+    "ko": "거기서 (앞 장소 받기)",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "In any event",
+    "ko": "어쨌든",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "Then again",
+    "ko": "↔ 한편으로는, 그렇긴 한데",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "Besides (문장 앞)",
+    "ko": "➕ 게다가",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "How so?",
+    "ko": "어째서? 무슨 뜻이야?",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   }
+  ]
+ },
+ {
+  "title": "8. 덩어리 명사·이름",
+  "feature": "두 단어가 한 뜻인 명사를 쪼개서 직역",
+  "why": "Center for Horticulture → '~를 위해', fashion week → '이번 주', real estate → '실제 토지'.",
+  "how": "대문자 덩어리 = 이름 하나. 명사+명사는 붙여서 한 뜻부터 떠올린다.",
+  "rows": [
+   {
+    "en": "real estate",
+    "ko": "부동산",
+    "ex": "real estate agent",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "fashion week",
+    "ko": "패션위크 (행사)",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "Center for Horticulture",
+    "ko": "원예 센터 (기관 이름)",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "rain garden",
+    "ko": "빗물 정원",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "opening gala",
+    "ko": "개막 축하 행사",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "photo shoot",
+    "ko": "사진 촬영",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "staging techniques",
+    "ko": "(매물) 연출 기법",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "branch location",
+    "ko": "지점",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "sales forecast",
+    "ko": "매출 예측",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "front cover",
+    "ko": "앞표지",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "operational costs",
+    "ko": "운영비",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "information desk",
+    "ko": "안내 데스크",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "job opening",
+    "ko": "채용 공고, 빈자리",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "expiration date",
+    "ko": "만료일",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "return policy",
+    "ko": "반품 규정",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "office supplies",
+    "ko": "사무용품",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "product launch",
+    "ko": "제품 출시",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "performance review",
+    "ko": "인사 고과",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "quarterly earnings",
+    "ko": "분기 실적",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "keynote speaker",
+    "ko": "기조연설자",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "farm-to-table",
+    "ko": "산지 직송 (식당)",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "interoffice",
+    "ko": "사무소 간",
+    "ex": "interoffice meetings",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "distribution center",
+    "ko": "물류센터",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "press release",
+    "ko": "보도자료",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "stock inspection",
+    "ko": "재고 검사",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "competitive wages",
+    "ko": "경쟁력 있는 임금",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   }
+  ]
+ },
+ {
+  "title": "9. 비즈니스 핵심 어휘",
+  "feature": "그냥 처음 본 단어 (뜻 자체를 모름)",
+  "why": "audit, findings, prudent, retract, cease, compensation, horticulture, pollutant, drainage.",
+  "how": "예문 1개와 같이. 모르면 시험장에서 ??로 두고 구조로 푼다.",
+  "rows": [
+   {
+    "en": "likelihood",
+    "ko": "가능성",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "compensation",
+    "ko": "보상",
+    "ex": "",
+    "mine": 1,
+    "note": "qualification과 구분"
+   },
+   {
+    "en": "prudent",
+    "ko": "신중한",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "retract",
+    "ko": "철회하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "audit / findings",
+    "ko": "감사 / (조사) 결과",
+    "ex": "findings of the audit",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "substantial",
+    "ko": "상당한",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "competent",
+    "ko": "유능한",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "undertake",
+    "ko": "(일을) 맡다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "anonymous",
+    "ko": "익명의",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "lively",
+    "ko": "활기찬",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "diligently",
+    "ko": "부지런히",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "exclusively",
+    "ko": "오로지",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "periodically",
+    "ko": "주기적으로",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "adaptable",
+    "ko": "융통성 있는",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "swiftly",
+    "ko": "신속하게",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "highly",
+    "ko": "매우 (highly value)",
+    "ex": "",
+    "mine": 1,
+    "note": "high 아님"
+   },
+   {
+    "en": "expire / renew",
+    "ko": "만료되다 / 갱신하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "verify",
+    "ko": "확인하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "component",
+    "ko": "부품",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "assemble",
+    "ko": "조립하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "horticulture",
+    "ko": "원예",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "pollutant",
+    "ko": "오염물질",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "drainage",
+    "ko": "배수",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "native (plants)",
+    "ko": "토종의, 자생의",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "beneficial (to)",
+    "ko": "이로운",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "multiple",
+    "ko": "여러 번의, 다수의",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "specified",
+    "ko": "지정된",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "highlight",
+    "ko": "강조하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "overtighten",
+    "ko": "과하게 조이다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "adjacent (to)",
+    "ko": "인접한",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "expansive",
+    "ko": "넓은",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "cater",
+    "ko": "음식을 공급하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "dietary needs",
+    "ko": "식단상 요구",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "revolutionize",
+    "ko": "혁신하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "implement",
+    "ko": "시행하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "initiate",
+    "ko": "시작하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "renovation",
+    "ko": "보수 공사",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "reimburse",
+    "ko": "환급하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "inventory",
+    "ko": "재고",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "itinerary",
+    "ko": "여행 일정표",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "tenant",
+    "ko": "세입자",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "vendor",
+    "ko": "판매업체",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "patron",
+    "ko": "고객, 후원자",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "venue",
+    "ko": "장소",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "furnish",
+    "ko": "제공하다, 가구를 비치하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "demolish",
+    "ko": "철거하다",
+    "ex": "demolish the lighthouse",
+    "mine": 1,
+    "note": "'꾸미다'로 읽음"
+   },
+   {
+    "en": "lighthouse",
+    "ko": "등대",
+    "ex": "",
+    "mine": 1,
+    "note": "등불 X"
+   },
+   {
+    "en": "outdated",
+    "ko": "구식인",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "navigation",
+    "ko": "항해, 길 찾기",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "simplify",
+    "ko": "단순화하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "qualified",
+    "ko": "자격을 갖춘",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "anticipated",
+    "ko": "예상되는",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "modern",
+    "ko": "현대식의",
+    "ex": "",
+    "mine": 1,
+    "note": "최근 X"
+   },
+   {
+    "en": "novice",
+    "ko": "초보자, 초보의 (= beginner, inexperienced)",
+    "ex": "a novice supervisor",
+    "mine": 1,
+    "note": "10회 179"
+   },
+   {
+    "en": "credit A to B",
+    "ko": "A를 B 덕분으로 돌리다",
+    "ex": "credits the success to lifelong learning",
+    "mine": 1,
+    "note": "편집 X"
+   },
+   {
+    "en": "trade",
+    "ko": "(가업) 기술, 업 / 무역",
+    "ex": "learn the trade from my family",
+    "mine": 1,
+    "note": "다의어"
+   },
+   {
+    "en": "take a course",
+    "ko": "강좌를 수강하다",
+    "ex": "",
+    "mine": 1,
+    "note": "열다 X"
+   },
+   {
+    "en": "manage to V",
+    "ko": "(어렵게) ~해내다",
+    "ex": "managed to persuade hotels",
+    "mine": 1,
+    "note": "관리하다 X"
+   },
+   {
+    "en": "nestled (behind)",
+    "ko": "(~뒤에) 자리 잡은",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "in person",
+    "ko": "직접 (방문해서)",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "last-minute",
+    "ko": "막판의, 급하게 잡힌",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "toiletries",
+    "ko": "세면용품",
+    "ex": "",
+    "mine": 1,
+    "note": "변기 X"
+   },
+   {
+    "en": "tastefully",
+    "ko": "세련되게, 고상하게",
+    "ex": "",
+    "mine": 1,
+    "note": "향기롭게 X"
+   },
+   {
+    "en": "gourmet treats",
+    "ko": "고급 간식",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "while (양보)",
+    "ko": "~이긴 하지만",
+    "ex": "While it is small, ~",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "a series of",
+    "ko": "일련의 (= 여러 가지 X)",
+    "ex": "a series of tasks",
+    "mine": 1,
+    "note": "ETS Vol3 151"
+   },
+   {
+    "en": "designated",
+    "ko": "지정된",
+    "ex": "a designated area",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "post (reviews)",
+    "ko": "게시하다, 올리다",
+    "ex": "post photos and videos",
+    "mine": 1,
+    "note": "개시 X"
+   },
+   {
+    "en": "prove + 형용사",
+    "ko": "~로 판명되다",
+    "ex": "proved the most challenging",
+    "mine": 1,
+    "note": "보여주다 X"
+   },
+   {
+    "en": "challenging",
+    "ko": "어려운, 힘든",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "potential cause",
+    "ko": "잠재적 원인 (cause = 명사)",
+    "ex": "a potential cause of the delay",
+    "mine": 1,
+    "note": "a 뒤엔 명사. 동사 X"
+   },
+   {
+    "en": "intuitive",
+    "ko": "직관적인",
+    "ex": "intuitive icons",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "clearer (비교급)",
+    "ko": "더 명확한 (clearly 아님)",
+    "ex": "clearer, more intuitive icons",
+    "mine": 1,
+    "note": "clearly로 읽음"
+   },
+   {
+    "en": "more + 형용사",
+    "ko": "더 ~한 (더 많은 X)",
+    "ex": "more intuitive = 더 직관적인",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "fair",
+    "ko": "박람회, 장터 (공정한 X)",
+    "ex": "a craft fair / job fair",
+    "mine": 1,
+    "note": "Vol3 161"
+   },
+   {
+    "en": "hold (행사)",
+    "ko": "개최하다",
+    "ex": "hold the fair rain or shine",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "rain or shine",
+    "ko": "날씨와 상관없이",
+    "ex": "",
+    "mine": 1,
+    "note": "밑줄만 치고 못 읽음"
+   },
+   {
+    "en": "wares",
+    "ko": "상품, 물품 (창고 X)",
+    "ex": "protect their wares",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "application / applicant",
+    "ko": "지원서 / 지원자",
+    "ex": "",
+    "mine": 1,
+    "note": "applications를 지원자로 읽음"
+   },
+   {
+    "en": "jewelry",
+    "ko": "보석, 장신구 (귀중품 X = valuables)",
+    "ex": "jewelry makers",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "far + 비교급",
+    "ko": "훨씬 (far more)",
+    "ex": "far more applications than we can accept",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "discouraged / encouraged",
+    "ko": "낙담한 / 격려받은 (dis- = 반대)",
+    "ex": "",
+    "mine": 1,
+    "note": "독려로 읽음"
+   },
+   {
+    "en": "accept / receive",
+    "ko": "선정하다 / 접수하다",
+    "ex": "",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "protect A from B",
+    "ko": "B로부터 A를 보호하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "ask / propose",
+    "ko": "요청하다 / 제안하다 (문의하다, 약속하다 X)",
+    "ex": "we ask that you submit",
+    "mine": 1,
+    "note": "Vol3 161"
+   },
+   {
+    "en": "since (이유)",
+    "ko": "~이므로 (~이후로 X)",
+    "ex": "Since you propose to share a space",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "potter / poet",
+    "ko": "도예가 / 시인",
+    "ex": "local potter",
+    "mine": 1,
+    "note": "시인으로 읽음"
+   },
+   {
+    "en": "jointly",
+    "ko": "공동으로, 함께",
+    "ex": "use the space jointly",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "vendor",
+    "ko": "판매자, 출점자",
+    "ex": "be considered as a vendor",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "annual",
+    "ko": "매년 열리는, 연례의",
+    "ex": "the annual fair",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "assurance(s)",
+    "ko": "확답, 보장 (that절이 내용)",
+    "ex": "want assurances that he will stay",
+    "mine": 1,
+    "note": "ETS Vol3 175"
+   },
+   {
+    "en": "committed",
+    "ko": "헌신하는, 전념하는",
+    "ex": "he is committed to the company",
+    "mine": 1,
+    "note": ""
+   },
+   {
+    "en": "stick around",
+    "ko": "계속 머물다, 남아 있다",
+    "ex": "stick around for several years",
+    "mine": 1,
+    "note": "= stay"
+   },
+   {
+    "en": "take one's place",
+    "ko": "~의 자리를 대신하다",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   },
+   {
+    "en": "schedule conflict",
+    "ko": "일정 충돌",
+    "ex": "",
+    "mine": 0,
+    "note": ""
+   }
+  ]
+ }
+]

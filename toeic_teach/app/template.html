@@ -1,0 +1,121 @@
+<title>동하 오답 퀴즈</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* layout: one-column phone app. home = deck list, quiz = passage (tabs) + one question card at a time */
+:root{--bg:#f3f5f4;--card:#ffffff;--fg:#17201d;--mut:#5d6b66;--line:#d6dedb;--acc:#0b6b5c;--acc-fg:#ffffff;--ok:#1f7a3d;--okbg:#e3f4e8;--no:#b3261e;--nobg:#fbe6e4;--star:#b7791f;--pass:#fbfcfb;
+ --f:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;--fe:Georgia,"Times New Roman",serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101514;--card:#1a2220;--fg:#e8efec;--mut:#9aaaa4;--line:#2f3b38;--acc:#4fc3ad;--acc-fg:#06241f;--ok:#7fd69a;--okbg:#173524;--no:#ff9c94;--nobg:#3d1c19;--star:#e0b25a;--pass:#151c1a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101514;--card:#1a2220;--fg:#e8efec;--mut:#9aaaa4;--line:#2f3b38;--acc:#4fc3ad;--acc-fg:#06241f;--ok:#7fd69a;--okbg:#173524;--no:#ff9c94;--nobg:#3d1c19;--star:#e0b25a;--pass:#151c1a;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f);font-size:16px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 40px}
+#app{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+h1{font-size:22px;margin:0;text-wrap:balance}h2{font-size:15px;margin:10px 0 0;color:var(--mut);font-weight:600}
+.sub{color:var(--mut);font-size:13.5px;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.deck{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:center}
+.deck .i{flex:1;min-width:0}.deck b{display:block;font-size:15.5px}.deck small{color:var(--mut);font-size:12.5px}
+.deck .b{display:flex;gap:6px;flex-shrink:0}
+.btn{background:var(--acc);color:var(--acc-fg);border:0;border-radius:9px;padding:9px 12px;font-weight:700;font-size:14px}
+.btn.g{background:transparent;color:var(--acc);border:1.5px solid var(--acc)}
+.btn:disabled{opacity:.35}
+.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--acc)}
+.top{display:flex;align-items:center;gap:10px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:6px 0;z-index:5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.top .t{flex:1;min-width:0;font-size:13.5px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabs{display:flex;gap:6px;overflow-x:auto}.tabs button{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-size:13px;white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--acc);color:var(--acc-fg);border-color:var(--acc);font-weight:700}
+.pass{background:var(--pass);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-family:var(--fe);font-size:16px;line-height:1.55;max-height:46vh;overflow-y:auto}
+.pass h4{margin:0 0 8px;font-size:17px}.pass p{margin:0 0 9px}.pass .hdr{font-family:var(--f);font-size:13.5px;border-bottom:1px solid var(--line);padding-bottom:7px;margin-bottom:9px}
+.pass .url{font-family:var(--f);font-size:12px;color:var(--mut);margin-bottom:6px;word-break:break-all}.pass .by{color:var(--mut);font-size:14px}
+.pass .msg{font-family:var(--f);font-size:15px;border-top:1px solid var(--line);padding:7px 0}.pass .msg span{color:var(--mut);font-size:12.5px}
+.pass .tw{overflow-x:auto;margin-bottom:9px}.pass table{border-collapse:collapse;font-family:var(--f);font-size:13.5px}.pass td,.pass th{border:1px solid var(--line);padding:4px 7px;text-align:left}
+.pass .bl{font-family:var(--f);color:var(--acc)}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.q .m{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--mut);margin-bottom:6px}.star{color:var(--star);font-weight:700}
+.q .s{font-family:var(--fe);font-size:17px;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts button{text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;font-family:var(--fe);font-size:16.5px;display:flex;gap:10px}
+.opts button .l{font-family:var(--f);font-weight:700;color:var(--mut)}
+.opts button.ok{border-color:var(--ok);background:var(--okbg)}.opts button.no{border-color:var(--no);background:var(--nobg)}
+.ex{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;font-size:14.5px}
+.ex .r{font-weight:800}.ex .r.ok{color:var(--ok)}.ex .r.no{color:var(--no)}.ex .w{color:var(--mut);font-size:13.5px;margin-top:6px}
+.nav{display:flex;gap:8px;margin-top:12px}.nav .btn{flex:1}
+.done{text-align:center;padding:26px 14px}.done .n{font-size:40px;font-weight:800;font-variant-numeric:tabular-nums}
+</style>
+<div id="app"></div>
+<script>
+const D=/*DATA*/;
+const $=(h)=>{const d=document.createElement('div');d.innerHTML=h;return d.firstElementChild};
+let REC={};try{REC=JSON.parse(localStorage.getItem('dq1')||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem('dq1',JSON.stringify(REC))}catch(e){}};
+const app=document.getElementById('app');
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+// decks: each = {key,title,desc,items:[{q,set}]}
+function decks(){
+  const sets0=(arr)=>arr.flatMap(s=>s.qs.map(q=>({q,set:s})));
+  const d=[];
+  if(D.o_p5){d.push({key:'o5',title:'책 원문 오답 · Part 5',desc:'형 책에서 틀린 문제 그대로',items:D.o_p5.map(q=>({q}))});
+    d.push({key:'o6',title:'책 원문 오답 · Part 6',desc:'틀린 문제가 있던 세트',items:sets0(D.o_p6)});
+    d.push({key:'o7s',title:'책 원문 오답 · Part 7 단일지문',desc:'★가 형이 틀린 문제',items:sets0(D.o_p7s)});
+    d.push({key:'o7m',title:'책 원문 오답 · Part 7 이중·삼중지문',desc:'★가 형이 틀린 문제',items:sets0(D.o_p7m)})}
+  d.push({key:'p5m',title:'Part 5 · 내 오답',desc:'형이 틀린 문제 + 변형',items:D.p5_mine.map(q=>({q}))});
+  D.p5_type.forEach((t,i)=>d.push({key:'p5t'+i,title:'Part 5 · '+t.name,desc:t.algo,items:t.qs.map(q=>({q}))}));
+  const sets=(arr)=>arr.flatMap(s=>s.qs.map(q=>({q,set:s})));
+  d.push({key:'p6',title:'Part 6 · 내 오답 세트',desc:'시제 · 접속부사 · 문장삽입',items:sets(D.p6)});
+  d.push({key:'p7s',title:'Part 7 · 단일지문',desc:'명확은 주관식 답 먼저, 불명확은 선지 ✓✗',items:sets(D.p7s)});
+  d.push({key:'p7m',title:'Part 7 · 이중·삼중지문',desc:'지문 탭을 넘기며 꼬투리 연계',items:sets(D.p7m)});
+  return d;
+}
+const stat=(items)=>{let done=0,ok=0,bad=[];items.forEach(it=>{const r=REC[it.q.id];if(r){done++;if(r[2])ok++;else bad.push(it)}});return{done,ok,bad}};
+function home(){
+  app.innerHTML='';window.scrollTo(0,0);
+  const all=decks();const tot=stat(all.flatMap(d=>d.items));
+  app.append($(`<div><h1>동하 오답 퀴즈</h1><p class="sub">틀렸던 문제와 같은 유형을 폰으로 다시 푸는 곳. 푼 문제 ${tot.done}개, 마지막 시도 기준 정답 ${tot.ok}개.</p></div>`));
+  let sec='';
+  all.forEach(d=>{
+    const part=d.title.split(' · ')[0];
+    if(part!==sec){sec=part;app.append($(`<h2>${part}</h2>`))}
+    const s=stat(d.items);const pct=d.items.length?Math.round(s.done/d.items.length*100):0;
+    const el=$(`<div class="deck"><div class="i"><b>${d.title.split(' · ')[1]}</b><small>${d.items.length}문항 · ${d.desc}</small><div class="bar"><i style="width:${pct}%"></i></div><small>푼 것 ${s.done} · 정답 ${s.ok} · 다시 볼 것 ${s.bad.length}</small></div><div class="b"><button class="btn">풀기</button><button class="btn g" ${s.bad.length?'':'disabled'}>틀린 것</button></div></div>`);
+    const [b1,b2]=el.querySelectorAll('button');
+    b1.onclick=()=>run(d,d.items[0].set?d.items:shuffle(d.items));
+    b2.onclick=()=>run(d,s.bad);
+    app.append(el);
+  });
+  const rs=$(`<div class="deck"><div class="i"><b>기록 지우기</b><small>이 기기에 저장된 풀이 기록을 지워. 다른 기기와는 공유되지 않아.</small></div><div class="b"><button class="btn g" id="rs">지우기</button></div></div>`);
+  let armed=false;rs.querySelector('button').onclick=(e)=>{if(!armed){armed=true;e.target.textContent='한 번 더';return}REC={};save();home()};
+  app.append(rs);
+}
+function run(deck,items){
+  let i=0,right=0,tab=0,curSet=null;
+  function show(){
+    app.innerHTML='';
+    if(i>=items.length){
+      app.append($(`<div class="q done"><div class="n">${right} / ${items.length}</div><p class="sub">${deck.title}</p><div class="nav"><button class="btn" id="h">처음으로</button></div></div>`));
+      app.querySelector('#h').onclick=home;window.scrollTo(0,0);return}
+    const it=items[i],q=it.q,s=it.set;
+    const top=$(`<div class="top"><button class="btn g" id="x">나가기</button><div class="t">${deck.title} · ${i+1}/${items.length}</div></div>`);
+    top.querySelector('#x').onclick=home;app.append(top);
+    if(s){
+      if(s!==curSet){curSet=s;tab=0}
+      if(s.tabs.length>1){const tb=$('<div class="tabs" role="tablist"></div>');s.tabs.forEach((t,k)=>{const b=$(`<button role="tab" aria-selected="${k===tab}">${k+1}. ${t.l}</button>`);b.onclick=()=>{tab=k;ps.innerHTML=s.tabs[k].h;ps.scrollTop=0;tb.querySelectorAll('button').forEach((x,m)=>x.setAttribute('aria-selected',m===k))};tb.append(b)});app.append(tb)}
+      var ps=$('<div class="pass"></div>');ps.innerHTML=s.tabs[tab].h;app.append(ps);
+    }
+    const card=$(`<div class="q"><div class="m">${q.hit||(!s&&q.w)?'<span class="star">★ 틀렸던 문제</span>':''}<span>${q.id}${q.t?' · '+q.t:''}</span></div><p class="s"></p><div class="opts"></div></div>`);
+    card.querySelector('.s').innerHTML=q.s;
+    const box=card.querySelector('.opts');
+    q.o.forEach((o,k)=>{const b=$(`<button><span class="l">${'ABCD'[k]}</span><span></span></button>`);b.lastElementChild.innerHTML=o;
+      b.onclick=()=>{
+        const ok=k===q.a;if(ok)right++;
+        const r=REC[q.id]||[0,0,0];r[ok?0:1]++;r[2]=ok?1:0;REC[q.id]=r;save();
+        box.querySelectorAll('button').forEach((x,m)=>{x.disabled=true;if(m===q.a)x.classList.add('ok');else if(m===k)x.classList.add('no')});
+        const ex=$(`<div class="ex"><div class="r ${ok?'ok':'no'}">${ok?'정답':'오답'} · 정답 ${'ABCD'[q.a]}</div><div class="n"></div>${q.w?'<div class="w"></div>':''}<div class="nav"><button class="btn">${i+1<items.length?'다음':'결과 보기'}</button></div></div>`);
+        ex.querySelector('.n').textContent=q.n;if(q.w)ex.querySelector('.w').textContent='예전에 틀린 이유: '+q.w;
+        ex.querySelector('button').onclick=()=>{i++;show()};card.append(ex);ex.scrollIntoView({block:'nearest',behavior:'smooth'});
+      };box.append(b)});
+    app.append(card);if(!s)window.scrollTo(0,0);
+  }
+  show();
+}
+home();
+</script>
