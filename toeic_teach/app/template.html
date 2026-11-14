@@ -10,11 +10,11 @@ body{background:var(--bg);color:var(--fg);font-family:var(--f);font-size:16px;li
 #app{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
 h1{font-size:22px;margin:0;text-wrap:balance}h2{font-size:15px;margin:10px 0 0;color:var(--mut);font-weight:600}
 .sub{color:var(--mut);font-size:13.5px;margin:0}
-button{font:inherit;color:inherit;cursor:pointer}
-button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
-.deck{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:center}
-.deck .i{flex:1;min-width:0}.deck b{display:block;font-size:15.5px}.deck small{color:var(--mut);font-size:12.5px}
-.deck .b{display:flex;gap:6px;flex-shrink:0}
+button,textarea{font:inherit;color:inherit}button{cursor:pointer}
+button:focus-visible,textarea:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.deck{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.deck .i{flex:1 1 200px;min-width:0}.deck b{display:block;font-size:15.5px}.deck small{color:var(--mut);font-size:12.5px}
+.deck .b{display:flex;gap:6px;flex-wrap:wrap}
 .btn{background:var(--acc);color:var(--acc-fg);border:0;border-radius:9px;padding:9px 12px;font-weight:700;font-size:14px}
 .btn.g{background:transparent;color:var(--acc);border:1.5px solid var(--acc)}
 .btn:disabled{opacity:.35}
@@ -25,32 +25,55 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .tabs{display:flex;gap:6px;overflow-x:auto}.tabs button{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-size:13px;white-space:nowrap}
 .tabs button[aria-selected="true"]{background:var(--acc);color:var(--acc-fg);border-color:var(--acc);font-weight:700}
 .pass{background:var(--pass);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-family:var(--fe);font-size:16px;line-height:1.55;max-height:46vh;overflow-y:auto}
+.pass.ko{font-family:var(--f);font-size:15px}
 .pass h4{margin:0 0 8px;font-size:17px}.pass p{margin:0 0 9px}.pass .hdr{font-family:var(--f);font-size:13.5px;border-bottom:1px solid var(--line);padding-bottom:7px;margin-bottom:9px}
 .pass .url{font-family:var(--f);font-size:12px;color:var(--mut);margin-bottom:6px;word-break:break-all}.pass .by{color:var(--mut);font-size:14px}
 .pass .msg{font-family:var(--f);font-size:15px;border-top:1px solid var(--line);padding:7px 0}.pass .msg span{color:var(--mut);font-size:12.5px}
 .pass .tw{overflow-x:auto;margin-bottom:9px}.pass table{border-collapse:collapse;font-family:var(--f);font-size:13.5px}.pass td,.pass th{border:1px solid var(--line);padding:4px 7px;text-align:left}
 .pass .bl{font-family:var(--f);color:var(--acc)}
 .q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
-.q .m{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--mut);margin-bottom:6px}.star{color:var(--star);font-weight:700}
+.q .m{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--mut);margin-bottom:6px;flex-wrap:wrap}.star{color:var(--star);font-weight:700}
 .q .s{font-family:var(--fe);font-size:17px;margin:0 0 12px}
 .opts{display:flex;flex-direction:column;gap:8px}
 .opts button{text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;font-family:var(--fe);font-size:16.5px;display:flex;gap:10px}
 .opts button .l{font-family:var(--f);font-weight:700;color:var(--mut)}
 .opts button.ok{border-color:var(--ok);background:var(--okbg)}.opts button.no{border-color:var(--no);background:var(--nobg)}
-.ex{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;font-size:14.5px}
-.ex .n{white-space:pre-line;line-height:1.6}.ex .r{font-weight:800}.ex .r.ok{color:var(--ok)}.ex .r.no{color:var(--no)}.ex .w{color:var(--mut);font-size:13.5px;margin-top:6px}
-.nav{display:flex;gap:8px;margin-top:12px}.nav .btn{flex:1}
+.ex{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;font-size:14.5px;display:flex;flex-direction:column;gap:8px}
+.ex .n{white-space:pre-line;line-height:1.6}.ex .r{font-weight:800}.ex .r.ok{color:var(--ok)}.ex .r.no{color:var(--no)}.ex .w{color:var(--mut);font-size:13.5px}
+.ex .k{background:var(--pass);border:1px solid var(--line);border-radius:8px;padding:8px 10px;white-space:pre-line}
+.ex label{font-size:13px;color:var(--mut);font-weight:600}
+.ex textarea{width:100%;box-sizing:border-box;min-height:64px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);padding:8px 10px;font-size:15px;resize:vertical}
+.nav{display:flex;gap:8px}.nav .btn{flex:1}
 .done{text-align:center;padding:26px 14px}.done .n{font-size:40px;font-weight:800;font-variant-numeric:tabular-nums}
+.note{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px}.note b{font-size:12.5px;color:var(--mut)}.note p{margin:4px 0 0;white-space:pre-line}
+#sync{font-size:12px;color:var(--mut)}
 </style>
 <div id="app"></div>
 <script>
 const D=/*DATA*/;
 const $=(h)=>{const d=document.createElement('div');d.innerHTML=h;return d.firstElementChild};
-let REC={};try{REC=JSON.parse(localStorage.getItem('dq1')||'{}')}catch(e){}
-const save=()=>{try{localStorage.setItem('dq1',JSON.stringify(REC))}catch(e){}};
 const app=document.getElementById('app');
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-// decks: each = {key,title,desc,items:[{q,set}]}
+// ---- state: REC[id]=[right,wrong,lastOk], NOTES[id]={t,at,ok}, SESS[deckKey]={ids,i,right}. local first, db when available
+let ST={rec:{},notes:{},sess:{},at:0};
+try{const o=JSON.parse(localStorage.getItem('dq2')||'null');if(o&&o.rec)ST=o;else{const old=JSON.parse(localStorage.getItem('dq1')||'null');if(old)ST.rec=old}}catch(e){}
+let db=null,syncMsg='이 기기에만 저장 중',pushT=null,view='home';
+const noteKey=id=>id.replace(/1000제/g,'RC1000').replace(/[^A-Za-z0-9_-]/g,'_');
+function saveLocal(){ST.at=Date.now();try{localStorage.setItem('dq2',JSON.stringify(ST))}catch(e){}}
+function save(){saveLocal();if(!db)return;clearTimeout(pushT);pushT=setTimeout(async()=>{try{await db.doc('state/main').set({json:JSON.stringify({rec:ST.rec,sess:ST.sess}),at:ST.at});setSync('계정에 저장됨')}catch(e){setSync('계정 저장 실패, 이 기기에는 저장됨')}},1200)}
+async function saveNote(id){saveLocal();if(!db)return;const n=ST.notes[id];try{if(n&&n.t.trim())await db.doc('notes/'+noteKey(id)).set({id,text:n.t,at:n.at,lastCorrect:!!n.ok});else await db.doc('notes/'+noteKey(id)).delete();setSync('메모 저장됨')}catch(e){setSync('메모 계정 저장 실패, 이 기기에는 저장됨')}}
+function setSync(m){syncMsg=m;const el=document.getElementById('sync');if(el)el.textContent=m}
+(async()=>{try{
+  db=await (window.claude&&window.claude.use?window.claude.use('db'):null);if(!db)return;
+  const t=setTimeout(()=>setSync('계정 연결이 느려서 이 기기에만 저장 중'),10000);
+  const snap=await db.doc('state/main').get();const ns=await db.collection('notes').get();clearTimeout(t);
+  let changed=false;
+  if(snap.exists){const d=snap.data();if((d.at||0)>ST.at){try{const o=JSON.parse(d.json);ST.rec=o.rec||{};ST.sess=o.sess||{};ST.at=d.at;changed=true}catch(e){}}}
+  ns.docs.forEach(x=>{const d=x.data();const cur=ST.notes[d.id];if(!cur||(d.at||0)>cur.at){ST.notes[d.id]={t:d.text,at:d.at||0,ok:!!d.lastCorrect};changed=true}});
+  if(changed){try{localStorage.setItem('dq2',JSON.stringify(ST))}catch(e){}}
+  setSync('계정에 저장됨');if(changed&&view==='home')home();
+}catch(e){db=null;setSync('이 기기에만 저장 중')}})();
+
 function decks(){
   const sets0=(arr)=>arr.flatMap(s=>s.qs.map(q=>({q,set:s})));
   const d=[];
@@ -60,46 +83,66 @@ function decks(){
     d.push({key:'o7m',title:'책 원문 오답 · Part 7 이중·삼중지문',desc:'★가 형이 틀린 문제',items:sets0(D.o_p7m)})}
   d.push({key:'p5m',title:'Part 5 · 내 오답',desc:'형이 틀린 문제 + 변형',items:D.p5_mine.map(q=>({q}))});
   D.p5_type.forEach((t,i)=>d.push({key:'p5t'+i,title:'Part 5 · '+t.name,desc:t.algo,items:t.qs.map(q=>({q}))}));
-  const sets=(arr)=>arr.flatMap(s=>s.qs.map(q=>({q,set:s})));
-  d.push({key:'p6',title:'Part 6 · 내 오답 세트',desc:'시제 · 접속부사 · 문장삽입',items:sets(D.p6)});
-  d.push({key:'p7s',title:'Part 7 · 단일지문',desc:'명확은 주관식 답 먼저, 불명확은 선지 ✓✗',items:sets(D.p7s)});
-  d.push({key:'p7m',title:'Part 7 · 이중·삼중지문',desc:'지문 탭을 넘기며 꼬투리 연계',items:sets(D.p7m)});
+  d.push({key:'p6',title:'Part 6 · 내 오답 세트',desc:'시제 · 접속부사 · 문장삽입',items:sets0(D.p6)});
+  d.push({key:'p7s',title:'Part 7 · 단일지문',desc:'명확은 주관식 답 먼저, 불명확은 선지 ✓✗',items:sets0(D.p7s)});
+  d.push({key:'p7m',title:'Part 7 · 이중·삼중지문',desc:'지문 탭을 넘기며 꼬투리 연계',items:sets0(D.p7m)});
   return d;
 }
-const stat=(items)=>{let done=0,ok=0,bad=[];items.forEach(it=>{const r=REC[it.q.id];if(r){done++;if(r[2])ok++;else bad.push(it)}});return{done,ok,bad}};
+const stat=(items)=>{let done=0,ok=0,bad=[];items.forEach(it=>{const r=ST.rec[it.q.id];if(r){done++;if(r[2])ok++;else bad.push(it)}});return{done,ok,bad}};
 function home(){
-  app.innerHTML='';window.scrollTo(0,0);
-  const all=decks();const tot=stat(all.flatMap(d=>d.items));
-  app.append($(`<div><h1>동하 오답 퀴즈</h1><p class="sub">틀렸던 문제와 같은 유형을 폰으로 다시 푸는 곳. 푼 문제 ${tot.done}개, 마지막 시도 기준 정답 ${tot.ok}개.</p></div>`));
+  view='home';app.innerHTML='';window.scrollTo(0,0);
+  const all=decks();const tot=stat(all.flatMap(d=>d.items));const nn=Object.values(ST.notes).filter(n=>n.t&&n.t.trim()).length;
+  app.append($(`<div><h1>동하 오답 퀴즈</h1><p class="sub">푼 문제 ${tot.done}개, 마지막 시도 기준 정답 ${tot.ok}개. <span id="sync">${syncMsg}</span></p></div>`));
+  const nd=$(`<div class="deck"><div class="i"><b>내가 적은 틀린 이유</b><small>메모 ${nn}개. 모아 보고 한 번에 복사할 수 있어.</small></div><div class="b"><button class="btn g">모아 보기</button></div></div>`);
+  nd.querySelector('button').onclick=notesView;app.append(nd);
   let sec='';
   all.forEach(d=>{
     const part=d.title.split(' · ')[0];
     if(part!==sec){sec=part;app.append($(`<h2>${part}</h2>`))}
     const s=stat(d.items);const pct=d.items.length?Math.round(s.done/d.items.length*100):0;
-    const el=$(`<div class="deck"><div class="i"><b>${d.title.split(' · ')[1]}</b><small>${d.items.length}문항 · ${d.desc}</small><div class="bar"><i style="width:${pct}%"></i></div><small>푼 것 ${s.done} · 정답 ${s.ok} · 다시 볼 것 ${s.bad.length}</small></div><div class="b"><button class="btn">풀기</button><button class="btn g" ${s.bad.length?'':'disabled'}>틀린 것</button></div></div>`);
-    const [b1,b2]=el.querySelectorAll('button');
-    b1.onclick=()=>run(d,d.items[0].set?d.items:shuffle(d.items));
-    b2.onclick=()=>run(d,s.bad);
+    const se=ST.sess[d.key];const live=se&&se.i<se.ids.length&&se.i>0;
+    const el=$(`<div class="deck"><div class="i"><b>${d.title.split(' · ')[1]}</b><small>${d.items.length}문항 · ${d.desc}</small><div class="bar"><i style="width:${pct}%"></i></div><small>푼 것 ${s.done} · 정답 ${s.ok} · 다시 볼 것 ${s.bad.length}</small></div><div class="b"><button class="btn">${live?`이어 풀기 ${se.i+1}/${se.ids.length}`:'풀기'}</button>${live?'<button class="btn g">처음부터</button>':''}<button class="btn g" ${s.bad.length?'':'disabled'}>틀린 것</button></div></div>`);
+    const bs=el.querySelectorAll('button');const byId=Object.fromEntries(d.items.map(it=>[it.q.id,it]));
+    const fresh=()=>{const items=d.items[0].set?d.items:shuffle(d.items);ST.sess[d.key]={ids:items.map(it=>it.q.id),i:0,right:0};save();run(d,items,d.key)};
+    bs[0].onclick=()=>{if(live){const items=se.ids.map(id=>byId[id]).filter(Boolean);if(items.length===se.ids.length)return run(d,items,d.key)}fresh()};
+    if(live)bs[1].onclick=fresh;
+    bs[bs.length-1].onclick=()=>run(d,s.bad,null);
     app.append(el);
   });
-  const rs=$(`<div class="deck"><div class="i"><b>기록 지우기</b><small>이 기기에 저장된 풀이 기록을 지워. 다른 기기와는 공유되지 않아.</small></div><div class="b"><button class="btn g" id="rs">지우기</button></div></div>`);
-  let armed=false;rs.querySelector('button').onclick=(e)=>{if(!armed){armed=true;e.target.textContent='한 번 더';return}REC={};save();home()};
+  const rs=$(`<div class="deck"><div class="i"><b>풀이 기록 지우기</b><small>정답 기록과 이어 풀기 위치를 지워. 적어둔 메모는 남아.</small></div><div class="b"><button class="btn g">지우기</button></div></div>`);
+  let armed=false;rs.querySelector('button').onclick=(e)=>{if(!armed){armed=true;e.target.textContent='한 번 더 누르면 지움';return}ST.rec={};ST.sess={};save();home()};
   app.append(rs);
 }
-function run(deck,items){
-  let i=0,right=0,tab=0,curSet=null;
+function notesView(){
+  view='notes';app.innerHTML='';window.scrollTo(0,0);
+  const top=$(`<div class="top"><button class="btn g">처음으로</button><div class="t">내가 적은 틀린 이유</div></div>`);top.querySelector('button').onclick=home;app.append(top);
+  const list=Object.entries(ST.notes).filter(([,n])=>n.t&&n.t.trim()).sort((a,b)=>b[1].at-a[1].at);
+  if(!list.length){app.append($('<p class="sub">아직 메모가 없어. 문제를 풀고 해설 아래 칸에 틀린 이유를 적으면 여기에 모여.</p>'));return}
+  const text=list.map(([id,n])=>`[${id}] (${n.ok?'맞힘':'틀림'}) ${n.t.trim()}`).join('\n');
+  const cp=$('<div class="nav"><button class="btn">전체 복사</button></div>');
+  cp.querySelector('button').onclick=async(e)=>{try{await navigator.clipboard.writeText(text);e.target.textContent='복사됨'}catch(err){const ta=$('<textarea readonly></textarea>');ta.value=text;ta.style.cssText='width:100%;min-height:160px';cp.after(ta);ta.select();e.target.textContent='아래 글을 길게 눌러 복사'}};
+  app.append(cp);
+  list.forEach(([id,n])=>{const el=$('<div class="note"><b></b><p></p></div>');el.querySelector('b').textContent=id+(n.ok?' · 맞힘':' · 틀림');el.querySelector('p').textContent=n.t;app.append(el)});
+}
+function run(deck,items,sessKey){
+  view='quiz';
+  let i=sessKey&&ST.sess[sessKey]?ST.sess[sessKey].i:0,right=sessKey&&ST.sess[sessKey]?ST.sess[sessKey].right:0,tab=0,curSet=null,ko=false;
+  const keep=()=>{if(sessKey){ST.sess[sessKey].i=i;ST.sess[sessKey].right=right;save()}};
   function show(){
     app.innerHTML='';
     if(i>=items.length){
-      app.append($(`<div class="q done"><div class="n">${right} / ${items.length}</div><p class="sub">${deck.title}</p><div class="nav"><button class="btn" id="h">처음으로</button></div></div>`));
-      app.querySelector('#h').onclick=home;window.scrollTo(0,0);return}
+      if(sessKey){delete ST.sess[sessKey];save()}
+      app.append($(`<div class="q done"><div class="n">${right} / ${items.length}</div><p class="sub">${deck.title}</p><div class="nav"><button class="btn">처음으로</button></div></div>`));
+      app.querySelector('.done button').onclick=home;window.scrollTo(0,0);return}
     const it=items[i],q=it.q,s=it.set;
-    const top=$(`<div class="top"><button class="btn g" id="x">나가기</button><div class="t">${deck.title} · ${i+1}/${items.length}</div></div>`);
-    top.querySelector('#x').onclick=home;app.append(top);
+    const top=$(`<div class="top"><button class="btn g">나가기</button><div class="t">${deck.title} · ${i+1}/${items.length}</div></div>`);
+    top.querySelector('button').onclick=home;app.append(top);
+    let ps=null,tb=null;
+    const paint=()=>{if(!ps)return;const t=s.tabs[tab];ps.innerHTML=(ko&&t.k)?t.k:t.h;ps.classList.toggle('ko',!!(ko&&t.k))};
     if(s){
-      if(s!==curSet){curSet=s;tab=0}
-      if(s.tabs.length>1){const tb=$('<div class="tabs" role="tablist"></div>');s.tabs.forEach((t,k)=>{const b=$(`<button role="tab" aria-selected="${k===tab}">${k+1}. ${t.l}</button>`);b.onclick=()=>{tab=k;ps.innerHTML=s.tabs[k].h;ps.scrollTop=0;tb.querySelectorAll('button').forEach((x,m)=>x.setAttribute('aria-selected',m===k))};tb.append(b)});app.append(tb)}
-      var ps=$('<div class="pass"></div>');ps.innerHTML=s.tabs[tab].h;app.append(ps);
+      if(s!==curSet){curSet=s;tab=0;ko=false}
+      if(s.tabs.length>1){tb=$('<div class="tabs" role="tablist"></div>');s.tabs.forEach((t,k)=>{const b=$(`<button role="tab" aria-selected="${k===tab}">${k+1}. ${t.l}</button>`);b.onclick=()=>{tab=k;paint();ps.scrollTop=0;tb.querySelectorAll('button').forEach((x,m)=>x.setAttribute('aria-selected',m===k))};tb.append(b)});app.append(tb)}
+      ps=$('<div class="pass"></div>');paint();app.append(ps);
     }
     const card=$(`<div class="q"><div class="m">${q.hit||(!s&&q.w)?'<span class="star">★ 틀렸던 문제</span>':''}<span>${q.id}${q.t?' · '+q.t:''}</span></div><p class="s"></p><div class="opts"></div></div>`);
     card.querySelector('.s').innerHTML=q.s;
@@ -107,11 +150,23 @@ function run(deck,items){
     q.o.forEach((o,k)=>{const b=$(`<button><span class="l">${'ABCD'[k]}</span><span></span></button>`);b.lastElementChild.innerHTML=o;
       b.onclick=()=>{
         const ok=k===q.a;if(ok)right++;
-        const r=REC[q.id]||[0,0,0];r[ok?0:1]++;r[2]=ok?1:0;REC[q.id]=r;save();
+        const r=ST.rec[q.id]||[0,0,0];r[ok?0:1]++;r[2]=ok?1:0;ST.rec[q.id]=r;
+        if(sessKey){ST.sess[sessKey].i=i+1;ST.sess[sessKey].right=right}save();
         box.querySelectorAll('button').forEach((x,m)=>{x.disabled=true;if(m===q.a)x.classList.add('ok');else if(m===k)x.classList.add('no')});
-        const ex=$(`<div class="ex"><div class="r ${ok?'ok':'no'}">${ok?'정답':'오답'} · 정답 ${'ABCD'[q.a]}</div><div class="n"></div>${q.w?'<div class="w"></div>':''}<div class="nav"><button class="btn">${i+1<items.length?'다음':'결과 보기'}</button></div></div>`);
-        ex.querySelector('.n').textContent=q.n;if(q.w)ex.querySelector('.w').textContent='예전에 틀린 이유: '+q.w;
-        ex.querySelector('button').onclick=()=>{i++;show()};card.append(ex);ex.scrollIntoView({block:'nearest',behavior:'smooth'});
+        const ex=$(`<div class="ex"><div class="r ${ok?'ok':'no'}">${ok?'정답':'오답'} · 정답 ${'ABCD'[q.a]}</div><div class="n"></div></div>`);
+        ex.querySelector('.n').textContent=q.n;
+        if(q.k){const kk=$('<div class="k"></div>');kk.textContent='해석: '+q.k;ex.append(kk)}
+        if(q.w){const w=$('<div class="w"></div>');w.textContent='예전에 틀린 이유: '+q.w;ex.append(w)}
+        if(s&&s.tabs.some(t=>t.k)){const kb=$('<div class="nav"><button class="btn g">지문 해석 보기</button></div>');kb.querySelector('button').onclick=(e)=>{ko=!ko;paint();e.target.textContent=ko?'지문 원문 보기':'지문 해석 보기';ps.scrollIntoView({block:'nearest'})};ex.append(kb)}
+        const nid='note-'+noteKey(q.id);
+        const nt=$(`<div><label for="${nid}">내가 틀린 이유 (적으면 자동 저장)</label><textarea id="${nid}" placeholder="예: by를 수단으로 읽었다. 근거 줄을 안 찾고 골랐다."></textarea></div>`);
+        const ta=nt.querySelector('textarea');ta.value=(ST.notes[q.id]&&ST.notes[q.id].t)||'';let tt=null;
+        ta.oninput=()=>{ST.notes[q.id]={t:ta.value,at:Date.now(),ok};saveLocal();clearTimeout(tt);tt=setTimeout(()=>saveNote(q.id),900)};
+        ta.onblur=()=>{if(ST.notes[q.id]){clearTimeout(tt);saveNote(q.id)}};
+        ex.append(nt);
+        const nv=$(`<div class="nav"><button class="btn">${i+1<items.length?'다음':'결과 보기'}</button></div>`);
+        nv.querySelector('button').onclick=()=>{i++;keep();show()};ex.append(nv);
+        card.append(ex);ex.scrollIntoView({block:'nearest',behavior:'smooth'});
       };box.append(b)});
     app.append(card);if(!s)window.scrollTo(0,0);
   }
