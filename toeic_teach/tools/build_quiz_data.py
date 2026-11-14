@@ -83,6 +83,21 @@ for f in sorted(glob.glob(str(ROOT / "tools/*_items.py"))):
         for x, it in zip(nums, s["qs"]):
             q = place(it); q["id"] = f"{short}-{x}"; q["w"] = wrong.get((short, x), ""); q["hit"] = x in hit; qs.append(q)
         (p7m if len(tabs) > 1 else p7s).append({"id": f"{short}-{nums[0]}", "kind": s["intro"], "tabs": tabs, "qs": qs})
+# P5 Test A-H (tools/p5_items.py): tA ids are positional; others are matched by the English words in the logged note
+import p5_items as _p5
+for k, v in prog.items():
+    m = re.match(r"t([A-H])-(\d+)$", k)
+    if not m or not any(h.get("result") == "wrong" for h in v.get("history", [])): continue
+    T = getattr(_p5, "TEST_" + m.group(1), []); note = " / ".join(h["note"] for h in v["history"] if h.get("note"))
+    it = None
+    if m.group(1) == "A":
+        i = int(m.group(2)) - 101; it = T[i] if 0 <= i < len(T) else None
+    else:
+        words = set(w.lower() for w in re.findall(r"[A-Za-z]{3,}", note))
+        best = max(T, key=lambda x: len(words & set(w.lower() for w in re.findall(r"[A-Za-z]{3,}", x[0] + " " + x[1][0] + " " + x[2]))), default=None)
+        if best and len(words & set(w.lower() for w in re.findall(r"[A-Za-z]{3,}", best[0] + " " + best[1][0] + " " + best[2]))) >= 2: it = best
+    if it and len(it[1]) == 4:
+        q = place(it); q["id"] = k; q["t"] = classify(it[2]); q["w"] = note[:160]; p5_mine.append(q)
 for v in p5_type.values(): rng.shuffle(v)
 data = {"p5_mine": p5_mine, "p5_type": [{"name": n, "algo": a, "qs": p5_type[n][:40]} for n, a, _ in TYPES], "p6": p6, "p7s": p7s, "p7m": p7m}
 out = ROOT / "app/quiz_data.json"; out.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
