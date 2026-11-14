@@ -46,6 +46,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .nav{display:flex;gap:8px}.nav .btn{flex:1}
 .done{text-align:center;padding:26px 14px}.done .n{font-size:40px;font-weight:800;font-variant-numeric:tabular-nums}
 .note{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px}.note b{font-size:12.5px;color:var(--mut)}.note p{margin:4px 0 0;white-space:pre-line}
+.pre{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}.pre .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.pre small{color:var(--mut);font-size:12.5px;width:100%}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:5px 11px;font-size:13.5px}.chip[aria-pressed="true"]{background:var(--acc);color:var(--acc-fg);border-color:var(--acc);font-weight:700}
+.opts.lock button{opacity:.45}.warn{color:var(--no);font-size:13.5px;font-weight:600}
+.pad{position:relative}.pad canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;z-index:3}.pad canvas[hidden]{display:none}
+.tools{display:flex;gap:6px;flex-wrap:wrap;position:relative;z-index:4}.tools .chip{font-size:12.5px}
 #sync{font-size:12px;color:var(--mut)}
 </style>
 <div id="app"></div>
@@ -60,7 +65,7 @@ try{const o=JSON.parse(localStorage.getItem('dq2')||'null');if(o&&o.rec)ST=o;els
 let db=null,syncMsg='이 기기에만 저장 중',pushT=null,view='home';
 const noteKey=id=>id.replace(/1000제/g,'RC1000').replace(/[^A-Za-z0-9_-]/g,'_');
 function saveLocal(){ST.at=Date.now();try{localStorage.setItem('dq2',JSON.stringify(ST))}catch(e){}}
-function save(){saveLocal();if(!db)return;clearTimeout(pushT);pushT=setTimeout(async()=>{try{await db.doc('state/main').set({json:JSON.stringify({rec:ST.rec,sess:ST.sess}),at:ST.at});setSync('계정에 저장됨')}catch(e){setSync('계정 저장 실패, 이 기기에는 저장됨')}},1200)}
+function save(){saveLocal();if(!db)return;clearTimeout(pushT);pushT=setTimeout(async()=>{try{await db.doc('state/main').set({json:JSON.stringify({rec:ST.rec,sess:ST.sess,hab:ST.hab||{}}),at:ST.at});setSync('계정에 저장됨')}catch(e){setSync('계정 저장 실패, 이 기기에는 저장됨')}},1200)}
 async function saveNote(id){saveLocal();if(!db)return;const n=ST.notes[id];try{if(n&&n.t.trim())await db.doc('notes/'+noteKey(id)).set({id,text:n.t,at:n.at,lastCorrect:!!n.ok});else await db.doc('notes/'+noteKey(id)).delete();setSync('메모 저장됨')}catch(e){setSync('메모 계정 저장 실패, 이 기기에는 저장됨')}}
 function setSync(m){syncMsg=m;const el=document.getElementById('sync');if(el)el.textContent=m}
 (async()=>{try{
@@ -68,7 +73,7 @@ function setSync(m){syncMsg=m;const el=document.getElementById('sync');if(el)el.
   const t=setTimeout(()=>setSync('계정 연결이 느려서 이 기기에만 저장 중'),10000);
   const snap=await db.doc('state/main').get();const ns=await db.collection('notes').get();clearTimeout(t);
   let changed=false;
-  if(snap.exists){const d=snap.data();if((d.at||0)>ST.at){try{const o=JSON.parse(d.json);ST.rec=o.rec||{};ST.sess=o.sess||{};ST.at=d.at;changed=true}catch(e){}}}
+  if(snap.exists){const d=snap.data();if((d.at||0)>ST.at){try{const o=JSON.parse(d.json);ST.rec=o.rec||{};ST.sess=o.sess||{};ST.hab=o.hab||ST.hab||{};ST.at=d.at;changed=true}catch(e){}}}
   ns.docs.forEach(x=>{const d=x.data();const cur=ST.notes[d.id];if(!cur||(d.at||0)>cur.at){ST.notes[d.id]={t:d.text,at:d.at||0,ok:!!d.lastCorrect};changed=true}});
   if(changed){try{localStorage.setItem('dq2',JSON.stringify(ST))}catch(e){}}
   setSync('계정에 저장됨');if(changed&&view==='home')home();
@@ -92,7 +97,8 @@ const stat=(items)=>{let done=0,ok=0,bad=[];items.forEach(it=>{const r=ST.rec[it
 function home(){
   view='home';app.innerHTML='';window.scrollTo(0,0);
   const all=decks();const tot=stat(all.flatMap(d=>d.items));const nn=Object.values(ST.notes).filter(n=>n.t&&n.t.trim()).length;
-  app.append($(`<div><h1>동하 오답 퀴즈</h1><p class="sub">푼 문제 ${tot.done}개, 마지막 시도 기준 정답 ${tot.ok}개. <span id="sync">${syncMsg}</span></p></div>`));
+  const H=Object.values(ST.hab||{});const fastBad=H.filter(h=>!h.ok&&h.sec<15).length,sureBad=H.filter(h=>!h.ok&&h.c==='O').length;
+  app.append($(`<div><h1>동하 오답 퀴즈</h1><p class="sub">푼 문제 ${tot.done}개, 마지막 시도 기준 정답 ${tot.ok}개. <span id="sync">${syncMsg}</span></p>${H.length?`<p class="sub">습관 기록: 확신(O)했는데 틀림 <b>${sureBad}</b> · 15초 안에 고르고 틀림 <b>${fastBad}</b> · 판정 후 푼 문제 ${H.length}</p>`:''}</div>`));
   const nd=$(`<div class="deck"><div class="i"><b>내가 적은 틀린 이유</b><small>메모 ${nn}개. 모아 보고 한 번에 복사할 수 있어.</small></div><div class="b"><button class="btn g">모아 보기</button></div></div>`);
   nd.querySelector('button').onclick=notesView;app.append(nd);
   let sec='';
@@ -147,14 +153,43 @@ function run(deck,items,sessKey){
     const card=$(`<div class="q"><div class="m">${q.hit||(!s&&q.w)?'<span class="star">★ 틀렸던 문제</span>':''}<span>${q.id}${q.t?' · '+q.t:''}</span></div><p class="s"></p><div class="opts"></div></div>`);
     card.querySelector('.s').innerHTML=q.s;
     const box=card.querySelector('.opts');
+    const isP7=!!(s&&/^[A-Z?]|What|Why|Who|How|Where|When|Which|In which|According|At /.test(q.s)&&!/^빈칸/.test(q.s));
+    const types=isP7?['명확','불명확','연계','문장삽입']:['문법','전·접·부','어휘','문장삽입'];
+    const pre=$(`<div class="pre"><small>${isP7?'① 문제만 먼저 보고 유형 판정 → 명확이면 주관식 답 먼저':'① 문장 읽기 전에 선지 생김새로 유형 판정'} · ② 확신도</small><div class="row t"></div><div class="row c"></div></div>`);
+    let pick={t:null,c:null};const t0=Date.now();
+    const chips=(row,arr,key)=>arr.forEach(v=>{const b=$(`<button class="chip" aria-pressed="false">${v}</button>`);b.onclick=()=>{pick[key]=v;row.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===b));unlock()};row.append(b)});
+    chips(pre.querySelector('.t'),types,'t');chips(pre.querySelector('.c'),['O 확신','△ 고민','? 모름'],'c');
+    const unlock=()=>box.classList.toggle('lock',!(pick.t&&pick.c));
+    card.querySelector('.s').before(pre);box.classList.add('lock');
+    // 필기 (iPad·Apple Pencil): 카드 위에 그리기
+    const tools=$('<div class="tools"><button class="chip" aria-pressed="false">✎ 필기</button><button class="chip" hidden>지우개</button><button class="chip" hidden>전부 지움</button></div>');
+    const cv=document.createElement('canvas');cv.hidden=true;card.classList.add('pad');card.append(cv);
+    const nk='ink-'+q.id;let erase=false,drawing=false,ctx=null;
+    const fit=()=>{const r=card.getBoundingClientRect(),d=window.devicePixelRatio||1;const old=cv.width?cv.toDataURL():null;cv.width=r.width*d;cv.height=r.height*d;ctx=cv.getContext('2d');ctx.scale(d,d);ctx.lineCap='round';ctx.lineJoin='round';
+      const src=old||(()=>{try{return localStorage.getItem(nk)}catch(e){return null}})();if(src){const im=new Image();im.onload=()=>ctx.drawImage(im,0,0,r.width,r.height);im.src=src}};
+    const [tb1,tb2,tb3]=tools.querySelectorAll('button');
+    tb1.onclick=()=>{const on=cv.hidden;cv.hidden=!on;tb1.setAttribute('aria-pressed',on);tb2.hidden=tb3.hidden=!on;if(on)fit()};
+    tb2.onclick=()=>{erase=!erase;tb2.setAttribute('aria-pressed',erase)};
+    tb3.onclick=()=>{ctx&&ctx.clearRect(0,0,cv.width,cv.height);try{localStorage.removeItem(nk)}catch(e){}};
+    cv.onpointerdown=e=>{if(e.pointerType==='touch'&&e.width>20)return;drawing=true;cv.setPointerCapture(e.pointerId);const r=cv.getBoundingClientRect();ctx.beginPath();ctx.moveTo(e.clientX-r.left,e.clientY-r.top)};
+    cv.onpointermove=e=>{if(!drawing)return;const r=cv.getBoundingClientRect();ctx.globalCompositeOperation=erase?'destination-out':'source-over';ctx.lineWidth=erase?18:(1.2+2.2*(e.pressure||.5));ctx.strokeStyle=getComputedStyle(document.body).getPropertyValue('--no')||'#c00';ctx.lineTo(e.clientX-r.left,e.clientY-r.top);ctx.stroke()};
+    cv.onpointerup=cv.onpointercancel=()=>{if(!drawing)return;drawing=false;try{localStorage.setItem(nk,cv.toDataURL())}catch(e){}};
+    pre.before(tools);
     q.o.forEach((o,k)=>{const b=$(`<button><span class="l">${'ABCD'[k]}</span><span></span></button>`);b.lastElementChild.innerHTML=o;
       b.onclick=()=>{
-        const ok=k===q.a;if(ok)right++;
+        if(!(pick.t&&pick.c)){pre.querySelector('small').classList.add('warn');pre.scrollIntoView({block:'nearest'});return}
+        const ok=k===q.a;if(ok)right++;const sec=Math.round((Date.now()-t0)/1000);
+        ST.hab=ST.hab||{};ST.hab[q.id]={t:pick.t,c:pick.c[0],sec,ok};
         const r=ST.rec[q.id]||[0,0,0];r[ok?0:1]++;r[2]=ok?1:0;ST.rec[q.id]=r;
         if(sessKey){ST.sess[sessKey].i=i+1;ST.sess[sessKey].right=right}save();
         box.querySelectorAll('button').forEach((x,m)=>{x.disabled=true;if(m===q.a)x.classList.add('ok');else if(m===k)x.classList.add('no')});
         const ex=$(`<div class="ex"><div class="r ${ok?'ok':'no'}">${ok?'정답':'오답'} · 정답 ${'ABCD'[q.a]}</div><div class="n"></div></div>`);
         ex.querySelector('.n').textContent=q.n;
+        const tip=[];tip.push(`내 판정: ${pick.t} · 확신 ${pick.c} · ${sec}초`);
+        if(!ok&&pick.c[0]==='O')tip.push('확신했는데 틀림 → 함정에 걸린 문제. ④ 소거를 꼭 읽고 이유를 적어.');
+        if(!ok&&sec<15)tip.push('15초 안에 골랐어. 시간은 남으니 근거 줄을 찾고 고르기.');
+        if(ok&&pick.c[0]!=='O')tip.push('맞혔지만 확신이 없었어 → 운일 수 있으니 근거를 확인.');
+        const hb=$('<div class="w"></div>');hb.textContent=tip.join('\n');hb.style.whiteSpace='pre-line';ex.querySelector('.n').before(hb);
         if(q.k){const kk=$('<div class="k"></div>');kk.textContent='해석: '+q.k;ex.append(kk)}
         if(q.w){const w=$('<div class="w"></div>');w.textContent='예전에 틀린 이유: '+q.w;ex.append(w)}
         if(s&&s.tabs.some(t=>t.k)){const kb=$('<div class="nav"><button class="btn g">지문 해석 보기</button></div>');kb.querySelector('button').onclick=(e)=>{ko=!ko;paint();e.target.textContent=ko?'지문 원문 보기':'지문 해석 보기';ps.scrollIntoView({block:'nearest'})};ex.append(kb)}
