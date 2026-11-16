@@ -14,14 +14,15 @@ import { downloadReportDocx } from "./reportDoc.js";
 const KR = "'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif";
 
 // Vision 지원 모델 (앞에서부터 시도, 없으면 다음 모델로 자동 대체)
-// 2026-10 실측: 아래 네 모델은 평균 6~7초로 안정적이다.
-// gemini-flash-latest(별칭)는 평균 150초가 넘고 성공률도 낮아 맨 뒤에 둔다.
-// (별칭은 특정 버전이 폐기돼도 살아남으므로 최후 보루로만 남긴다)
+// 2026-11 실측: 3-flash-preview·lite 계열은 1~2초, 3.5-flash·3.6-flash는 15~30초로 느려졌다.
+// 순서는 출발점일 뿐이다 — 답이 늦으면 다음 모델을 함께 부르고, 먼저 답한 모델을 기억한다.
+// gemini-flash-latest(별칭)는 느리고 자주 붐벼 맨 뒤에 둔다 (폐기돼도 살아남는 최후 보루)
 const MODELS = [
-  "gemini-3.5-flash",
   "gemini-3-flash-preview",
-  "gemini-3.6-flash",
+  "gemini-3.5-flash",
+  "gemini-3.5-flash-lite",
   "gemini-3.1-flash-lite",
+  "gemini-3.6-flash",
   "gemini-flash-latest",
 ];
 
@@ -207,18 +208,38 @@ function readImage(file) {
   });
 }
 
-/* ── Gemini Vision 호출 (혼잡 시 자동 재시도 + 모델 자동 대체) ──
- * AI 서버가 붐비면(과부하·요청량 초과·일시 장애) 영어 오류를 그대로
- * 보여 주는 대신, 잠시 기다렸다 스스로 다시 시도하고 다른 모델로도
- * 넘어간다. 그래도 안 되면 우리말 안내문만 남긴다. */
+/* ── Gemini Vision 호출 (여러 모델을 함께 시도) ─────────────────────
+ * 모델 하나가 느리거나 붐벼도 앱이 멈추지 않게 한다.
+ *  1) 가장 빠를 것 같은 모델부터 부르고, 몇 초 안에 답이 없으면
+ *     다음 모델을 '함께' 부른다. 먼저 제대로 답한 쪽을 쓴다.
+ *  2) 지난번에 먼저 답한 모델을 기억해 다음에는 그 모델부터 부른다.
+ *  3) 구글이 모델을 폐기·추가해도 따라가도록 사용 가능 목록을 하루 한 번 받아 둔다.
+ * 그래도 안 되면 영어 오류 대신 우리말 안내문만 남긴다. */
 const RETRYABLE_STATUS = new Set([408, 425, 429, 500, 502, 503, 504]);
 const BUSY_TEXT = /overload|unavailable|rate.?limit|quota|too many|try again|high demand|busy/i;
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // 재시도해도 소용없는 오류(키·권한 등)는 즉시 사용자에게 알린다
 const fatalError = (m) => Object.assign(new Error(m), { fatal: true });
-// 한 모델이 응답하지 않을 때 앱이 묶이지 않도록 하는 제한값
-const REQUEST_TIMEOUT = 40000; // 한 번의 호출을 기다리는 최대 시간(느린 모바일 업로드 감안)
-const TOTAL_BUDGET = 110000; // 전체를 포기하고 안내문을 띄우기까지의 시간
+const REQUEST_TIMEOUT = 45000; // 한 번의 호출을 기다리는 최대 시간
+const TOTAL_BUDGET = 100000; // 전체를 포기하고 안내문을 띄우기까지의 시간
+const HEDGE_MS = 7000; // 이 시간 안에 답이 없으면 다음 모델을 함께 부른다
+const MAX_PARALLEL = 3; // 동시에 부르는 모델 수 상한
+const API = "https://generativelanguage.googleapis.com/v1beta/models";
+const store = {
+  get(k) {
+    try {
+      return localStorage.getItem(k);
+    } catch {
+      return null;
+    }
+  },
+  set(k, v) {
+    try {
+      localStorage.setItem(k, v);
+    } catch {
+      /* 저장소를 못 쓰는 브라우저에서도 동작은 계속한다 */
+    }
+  },
+};
 
 // 정해진 시간 안에 응답이 없으면 호출을 끊는다
 async function fetchWithTimeout(url, options, ms) {
@@ -231,7 +252,81 @@ async function fetchWithTimeout(url, options, ms) {
   }
 }
 
-async function callGeminiVision(prompt, images, apiKey, onStatus) {
+// 지금 이 키로 쓸 수 있는 flash 계열 모델 목록 (하루 동안 기억). 못 받으면 null
+async function availableModels(apiKey) {
+  try {
+    const c = JSON.parse(store.get("gemini_models") || "null");
+    if (c && Date.now() - c.at < 24 * 3600 * 1000 && c.list?.length) return c.list;
+  } catch {
+    /* 저장된 값이 깨졌으면 새로 받는다 */
+  }
+  try {
+    const res = await fetchWithTimeout(`${API}?pageSize=200`, { headers: { "X-goog-api-key": apiKey } }, 5000);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const list = (data.models || [])
+      .filter((m) => (m.supportedGenerationMethods || []).includes("generateContent"))
+      .map((m) => String(m.name).replace("models/", ""))
+      .filter((n) => /^gemini-[\d.]+-flash(-lite)?(-preview)?$/.test(n) || n === "gemini-flash-latest");
+    if (!list.length) return null;
+    store.set("gemini_models", JSON.stringify({ at: Date.now(), list }));
+    return list;
+  } catch {
+    return null;
+  }
+}
+
+// 부를 순서: 지난번에 먼저 답한 모델 → 기본 목록 → (목록에 없던) 새 모델
+function modelQueue(avail) {
+  let all = avail ? MODELS.filter((m) => avail.includes(m)) : [...MODELS];
+  if (avail) all = all.concat(avail.filter((m) => !MODELS.includes(m)));
+  if (!all.length) all = [...MODELS];
+  const last = store.get("gemini_fast_model");
+  return last && all.includes(last) ? [last, ...all.filter((m) => m !== last)] : all;
+}
+
+// 모델 하나를 한 번 부른다. 결과를 { ok, text } 또는 { dead | busy | fatal, err } 로 돌려준다
+async function callOne(model, body, apiKey, ac, ms) {
+  const timer = setTimeout(() => ac.abort(), ms);
+  try {
+    // 키는 URL이 아닌 헤더로 전달 (신형 AQ. 키·구형 AIza 키 모두 지원)
+    const res = await fetch(`${API}/${model}:generateContent`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-goog-api-key": apiKey },
+      body,
+      signal: ac.signal,
+    });
+    let data = null;
+    try {
+      data = await res.json();
+    } catch {
+      data = null;
+    }
+    if (!res.ok) {
+      const msg = data?.error?.message || `요청이 실패했습니다. (${res.status})`;
+      if (res.status === 400 && /api.?key/i.test(msg))
+        return { fatal: true, err: fatalError("Gemini API 키가 올바르지 않습니다. 설정(⚙️)에서 다시 확인해 주세요.") };
+      if (res.status === 401 || res.status === 403)
+        return { fatal: true, err: fatalError("Gemini API 키에 권한이 없습니다. 설정(⚙️)에서 키를 다시 확인해 주세요.") };
+      // 폐기됐거나 못 쓰는 모델 → 이번 실행에서 다시 부르지 않는다
+      if (res.status === 404 || /not found|not supported|no longer available/i.test(msg))
+        return { dead: true, err: new Error(msg) };
+      // 혼잡·일시 장애
+      if (RETRYABLE_STATUS.has(res.status) || BUSY_TEXT.test(msg)) return { busy: true, err: new Error(msg) };
+      return { fatal: true, err: fatalError(msg) };
+    }
+    const text = (data?.candidates?.[0]?.content?.parts || []).map((p) => p.text || "").join("");
+    return text ? { ok: true, text } : { err: new Error("응답이 비어 있습니다.") };
+  } catch (e) {
+    // 응답 지연(제한 시간 초과)·네트워크 끊김
+    return { busy: true, err: e?.name === "AbortError" ? new Error("응답이 너무 늦어 중단했습니다.") : e };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// accept(text): 응답이 쓸 만한지 검사. 어긋난 답이면 다른 모델의 답을 계속 기다린다
+async function callGeminiVision(prompt, images, apiKey, onStatus, accept) {
   if (!apiKey) throw fatalError("먼저 Gemini API 키를 입력해 주세요. (하단 ⚙️ 설정)");
   const parts = [{ text: prompt }];
   for (const img of images) {
@@ -242,91 +337,87 @@ async function callGeminiVision(prompt, images, apiKey, onStatus) {
     generationConfig: { temperature: 0.4, responseMimeType: "application/json", maxOutputTokens: 8192 },
   });
 
-  // 한 모델이 붐빈다고 거기서 기다리지 않는다. 먼저 모든 모델을 빠르게
-  // 한 바퀴 돌아 여유 있는 모델을 찾고, 전부 붐빌 때만 잠시 쉬었다 재시도한다.
-  const ROUND_WAIT = [0, 1500, 4000];
-  const dead = new Set(); // 폐기(404)된 모델은 다시 부르지 않는다
+  let queue = modelQueue(await availableModels(apiKey));
   const deadline = Date.now() + TOTAL_BUDGET; // 이 시각을 넘기면 포기하고 안내
-  let lastErr = null;
-  let busy = false; // 혼잡 때문에 실패했는지
+  const dead = new Set(); // 폐기(404)된 모델은 다시 부르지 않는다
+  const running = new Map(); // 지금 답을 기다리는 모델 → 중단 스위치
 
-  for (let round = 0; round < ROUND_WAIT.length; round++) {
-    if (Date.now() > deadline) break;
-    if (ROUND_WAIT[round]) {
-      onStatus?.("AI 서버가 붐벼서 자동으로 다시 시도하는 중이에요…");
-      await sleep(ROUND_WAIT[round]);
-    }
-    for (const model of MODELS) {
-      if (dead.has(model)) continue;
-      if (Date.now() > deadline) break;
-      try {
-        // 키는 URL이 아닌 헤더로 전달 (신형 AQ. 키·구형 AIza 키 모두 지원)
-        // 남은 예산과 호출 제한 중 짧은 쪽만 기다린다 (한 모델이 앱을 묶지 못하게)
-        const wait = Math.max(5000, Math.min(REQUEST_TIMEOUT, deadline - Date.now()));
-        const res = await fetchWithTimeout(
-          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json", "X-goog-api-key": apiKey },
-            body,
-          },
-          wait
-        );
-        let data = null;
-        try {
-          data = await res.json();
-        } catch {
-          data = null;
-        }
+  return new Promise((resolve, reject) => {
+    let done = false;
+    let idx = 0;
+    let pass = 0; // 목록을 몇 바퀴 돌았는지
+    let busy = false; // 혼잡 때문에 실패했는지
+    let lastErr = null;
+    let hedgeTimer = null;
 
-        if (!res.ok) {
-          const msg = data?.error?.message || `요청이 실패했습니다. (${res.status})`;
-          if (res.status === 400 && /api.?key/i.test(msg))
-            throw fatalError("Gemini API 키가 올바르지 않습니다. 설정(⚙️)에서 다시 확인해 주세요.");
-          if (res.status === 401 || res.status === 403)
-            throw fatalError("Gemini API 키에 권한이 없습니다. 설정(⚙️)에서 키를 다시 확인해 주세요.");
-          // 폐기됐거나 못 쓰는 모델 → 이번 실행에서 다시 부르지 않는다
-          if (res.status === 404 || /not found|not supported|no longer available/i.test(msg)) {
-            dead.add(model);
-            lastErr = new Error(msg);
-            continue;
-          }
-          // 혼잡·일시 장애 → 기다리지 말고 곧바로 다음 모델을 시도
-          if (RETRYABLE_STATUS.has(res.status) || BUSY_TEXT.test(msg)) {
-            busy = true;
-            lastErr = new Error(msg);
-            onStatus?.("지금 쓰던 AI가 붐벼서 다른 AI로 바꿔 시도하는 중이에요…");
-            continue;
-          }
-          throw fatalError(msg);
-        }
+    const finish = (settle, value) => {
+      if (done) return;
+      done = true;
+      clearTimeout(hedgeTimer);
+      clearTimeout(budgetTimer);
+      for (const ac of running.values()) ac.abort();
+      settle(value);
+    };
+    const giveUp = () =>
+      finish(
+        reject,
+        busy
+          ? Object.assign(
+              new Error(
+                "지금 AI 서버가 많이 붐벼요. 자동으로 여러 번 시도했지만 실패했습니다. 1~2분 뒤 ‘종합의견 만들기’를 다시 눌러 주세요. (올린 사진과 입력한 내용은 그대로 있어요)"
+              ),
+              { busy: true }
+            )
+          : lastErr || new Error("생성에 실패했습니다. 잠시 후 다시 시도해 주세요.")
+      );
+    const budgetTimer = setTimeout(() => {
+      busy = true;
+      giveUp();
+    }, TOTAL_BUDGET);
 
-        const text = (data?.candidates?.[0]?.content?.parts || []).map((p) => p.text || "").join("");
-        if (!text) {
-          // 빈 응답도 일시적일 수 있으니 한 번 더 시도
-          lastErr = new Error("응답이 비어 있습니다.");
-          continue;
+    const launch = (model) => {
+      const ac = new AbortController();
+      running.set(model, ac);
+      const wait = Math.max(5000, Math.min(REQUEST_TIMEOUT, deadline - Date.now()));
+      callOne(model, body, apiKey, ac, wait).then((r) => {
+        running.delete(model);
+        if (done) return;
+        if (r.ok && (!accept || accept(r.text))) {
+          store.set("gemini_fast_model", model); // 다음에는 이 모델부터
+          return finish(resolve, r.text);
         }
-        return text;
-      } catch (e) {
-        if (e?.fatal) throw e;
-        // 응답 지연(제한 시간 초과)·네트워크 끊김 → 다음 모델로 넘어간다
-        lastErr = e?.name === "AbortError" ? new Error("응답이 너무 늦어 중단했습니다.") : e;
-        busy = true;
-        onStatus?.("응답이 늦어 다른 AI로 바꿔 시도하는 중이에요…");
+        if (r.fatal) return finish(reject, r.err);
+        if (r.dead) dead.add(model);
+        if (r.busy) busy = true;
+        lastErr = r.err || new Error("AI 응답을 정리하지 못했어요. 잠시 후 버튼을 한 번만 다시 눌러 주세요.");
+        next(); // 실패한 자리는 기다리지 않고 바로 다음 모델로 채운다
+      });
+    };
+
+    const next = () => {
+      if (done) return;
+      clearTimeout(hedgeTimer);
+      if (running.size >= MAX_PARALLEL) return;
+      while (idx < queue.length && dead.has(queue[idx])) idx++;
+      if (idx >= queue.length) {
+        if (running.size) return; // 아직 답을 기다리는 모델이 있다
+        // 한 바퀴를 다 돌았다 → 잠시 쉬고 살아 있는 모델로 다시
+        queue = queue.filter((m) => !dead.has(m));
+        idx = 0;
+        pass++;
+        if (!queue.length || pass > 2 || Date.now() + 4000 > deadline) return giveUp();
+        onStatus?.("AI 서버가 붐벼서 자동으로 다시 시도하는 중이에요…");
+        hedgeTimer = setTimeout(next, pass === 1 ? 3000 : 8000);
+        return;
       }
-    }
-  }
-
-  if (busy) {
-    throw Object.assign(
-      new Error(
-        "지금 AI 서버가 많이 붐벼요. 자동으로 여러 번 시도했지만 실패했습니다. 1~2분 뒤 ‘종합의견 만들기’를 다시 눌러 주세요. (올린 사진과 입력한 내용은 그대로 있어요)"
-      ),
-      { busy: true }
-    );
-  }
-  throw lastErr || new Error("생성에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+      launch(queue[idx++]);
+      hedgeTimer = setTimeout(() => {
+        if (running.size) onStatus?.("응답이 늦어 다른 AI도 함께 시도하는 중이에요…");
+        next();
+      }, HEDGE_MS);
+    };
+    next();
+  });
 }
 
 /* ── 관대한 JSON 파서 ────────────────────────────────────────────
@@ -503,6 +594,14 @@ function AppInner() {
   const [notes, setNotes] = useState("");
 
   const [loading, setLoading] = useState(false);
+  const [elapsed, setElapsed] = useState(0); // 생성 버튼을 누른 뒤 지난 시간(초)
+  useEffect(() => {
+    if (!loading) return undefined;
+    setElapsed(0);
+    const t0 = Date.now();
+    const id = setInterval(() => setElapsed(Math.round((Date.now() - t0) / 1000)), 1000);
+    return () => clearInterval(id);
+  }, [loading]);
   const [busyNote, setBusyNote] = useState(""); // 서버 혼잡으로 자동 재시도 중일 때 안내
   const [error, setError] = useState("");
   const [result, setResult] = useState(null); // {participation, opinion, answers, name}
@@ -590,7 +689,10 @@ function AppInner() {
       let lastErr = null;
       for (let attempt = 0; attempt < 2 && !parsed; attempt++) {
         try {
-          const text = await callGeminiVision(prompt, images, apiKey, setBusyNote);
+          const text = await callGeminiVision(prompt, images, apiKey, setBusyNote, (t) => {
+            const p = parseResult(t);
+            return !!(p && String(p.opinion || "").trim());
+          });
           parsed = parseResult(text);
           if (parsed && !String(parsed.opinion || "").trim()) parsed = null;
         } catch (e) {
@@ -1017,7 +1119,7 @@ function AppInner() {
             transition: "all .15s",
           }}
         >
-          {loading ? "생성 중… 잠시만요 ⏳" : "종합의견 만들기"}
+          {loading ? `생성 중… ${elapsed}초 (보통 10~30초) ⏳` : "종합의견 만들기"}
         </button>
 
         {loading && busyNote && (
