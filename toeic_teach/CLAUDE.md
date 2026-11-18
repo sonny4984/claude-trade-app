@@ -53,3 +53,10 @@
 - 실전 동일화 기준표: data/analysis/real_test_blueprint.md (TEST 23부터 적용).
 - 실제 20회분 전수 측정(11/10)과 TEST 36부터의 규칙: data/analysis/real_20tests_measured.md. 새 세트는 출고 전 `python3 tools/measure_real.py <모듈>`로 실제 수치와 비교한다.
 - 출고 전 자체 검수: 각 선지를 빈칸에 하나씩 넣어 "문법·의미상 다른 답도 되는가?"를 확인. 하나라도 걸리면 고친다 (TEST 21 124, 변형 141에서 모호 문항 낸 적 있음).
+
+## 백지 재풀이 루틴 (11/18 동하: "앞으로 쭉 해보자")
+- 진단: 같은 문제를 3번째 틀림(and 나열, the other, whoever) → 해설 '이해'만 있고 '꺼내기' 연습이 없음.
+- 세트를 채점하면 틀린 P5를 다음 날 해설 없이 다시 풀게 한다: `python3 tools/make_retry.py <모듈> <test_no> <번호,...> <tag>`
+  → data/workbook/Retry_<tag>.pdf (유형/답/이유 한 줄 칸), Retry_<tag>_check.pdf (모범 이유: 단서 → 규칙 → 답). 모듈에 RETRY_REASON dict.
+- 채점 기준: 단서와 규칙 이름이 맞으면 ○, 답만 맞으면 △(다음 날 또), 못 쓰면 X. ○ 3번이면 졸업.
+- 세트 풀기 전 1분 '함정 카드' 5줄: and 뒤 명사면 동사 개수 X / one↔the other / to ___ + 동사 → whoever / ~에도 불구하고는 뒤 동사 유무 / this·these·our department 진짜 대상으로.

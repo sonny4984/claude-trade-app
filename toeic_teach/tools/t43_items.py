@@ -552,3 +552,13 @@ PART7 = [
     "[연계] that venue = Northern Lights 상영 장소 = Harbor Arts Center ↔ the lot next to that venue is free → 주차 무료 ✓. 새 장소는 도심 '밖' ✗, 첫 상영은 6월 6일 Grand Theater ✗."),
   ]},
 ]
+
+# 백지 재풀이용 '모범 이유 한 줄' (단서 → 규칙 → 답)
+RETRY_REASON = {
+ 105: "[동사 개수] 동사 will be held 동그라미 → and 뒤 a prize drawing = 명사 → 명사 나열이라 접속사 0개 → 동사 1개로 끝 → 빈칸은 꼬리 featuring.",
+ 107: "[대명사 짝] Two candidates + one → 2개 중 남은 하나는 정해져 있음 → the other.",
+ 110: "[전/접/부] 빈칸 뒤 콤마까지 the heavy rain throughout the afternoon = 동사 없음(명사구) → 전치사 Despite.",
+ 112: "[전치사] 매일 20분 ↔ 공휴일만 다름 = 예외 + 뒤에 on 전치사구 바로 붙음 → except.",
+ 113: "[명사절] to 뒤 빈칸 + 바로 동사 sells + 앞에 사람 명사 없음 → whoever(= anyone who).",
+ 126: "[대명사] 빈칸 뒤 명사 fares → 소유격 자리 + 회사 이름(Brightway Airlines)은 단수 → its.",
+}
