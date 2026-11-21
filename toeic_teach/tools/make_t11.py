@@ -853,7 +853,7 @@ class Stop(Flowable):
             return
         c.drawCentredString(W / 2, 22, "Stop! This is the end of the test. If you finish before time is called, you may go")
         c.drawCentredString(W / 2, 8, "back to Parts 5, 6, and 7 and check your work.")
-story += [Spacer(1, 30), Stop()]
+story += [Spacer(1, getattr(_mod, "STOP_GAP", 30)), Stop()]
 
 class Sheet(Flowable):
     def wrap(self, aw, ah):

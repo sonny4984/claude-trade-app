@@ -10,6 +10,7 @@
 DIVIDER_NOTE = "RC 실전 모의고사 TEST 44 — 기출 실측 + 동하 오답 데이터 기반. 새로 작성한 연습 문제입니다. 실제 기출 문항이 아닙니다."
 NATURAL_KEY = True
 FIRST_PRINTED = 19
+P5_GAPS = (14, 14, 16, 16, 24, 24)
 DOUBLE = [["p0", "p1"], ["q"]]
 TRIPLE = [["p0", "p1"], ["p2", "q"]]
 
