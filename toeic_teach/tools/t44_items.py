@@ -546,3 +546,10 @@ PART7 = [
     "[명확] I will pay the deposit the same day → 결제."),
   ]},
 ]
+
+# 백지 재풀이용 '모범 이유 한 줄' (단서 → 규칙 → 답)
+RETRY_REASON = {
+ 111: "[어휘: 형용사 + 전치사 짝] 빈칸 뒤 with → with와 짝인 형용사 = familiar with. aware·capable은 of, known은 for/as.",
+ 113: "[어휘: 명사 짝] on a temporary ___ → on a ~ basis(~한 방식·조건으로). on a temporary/regular/seasonal basis.",
+ 130: "[구문] ___ fast that ~ → so + 형용사 + that. such는 명사 앞(such a fast printer that), too는 to V, very는 that과 짝 없음.",
+}
