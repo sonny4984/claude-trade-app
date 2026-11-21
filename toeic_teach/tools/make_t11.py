@@ -752,7 +752,7 @@ else:  # Part 6·7-only practice set
     story = [Spacer(1, 1), NextPageTemplate("full"), PageBreak()]
 
 # Part 6
-P6_IN = st(fontSize=10.8, leading=25, spaceAfter=7)
+P6_IN = st(fontSize=10.8, leading=getattr(_mod, "P6_LEADING", 25), spaceAfter=7)
 P6_INS = st(fontSize=10.8, leading=16, spaceAfter=8)
 
 DASH = "-------"
