@@ -1,0 +1,23 @@
+[
+ {
+  "en": "remote",
+  "pos": "adj.",
+  "ko": "원격의, 재택의 (a remote position = 재택근무 자리) / 외딴",
+  "stem": "remote",
+  "ex": "This is a fully {} position, so employees can work from home."
+ },
+ {
+  "en": "position",
+  "pos": "n.",
+  "ko": "일자리, 직책 (a position at the company) / 위치, 자세",
+  "stem": "position",
+  "ex": "Ms. Lee applied for a {} in the marketing department."
+ },
+ {
+  "en": "part-time job",
+  "pos": "n. phr.",
+  "ko": "시간제 일, 아르바이트 (반대: full-time job 정규직)",
+  "stem": "part-time",
+  "ex": "Many students take a {} to cover their living costs."
+ }
+]
