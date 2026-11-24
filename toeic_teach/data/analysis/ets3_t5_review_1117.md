@@ -26,3 +26,25 @@
 
 ## 내일 할 것
 위 3개 원인별로 같은 함정 구조의 새 P6/P7 세트를 실제 시험 레이아웃(make_t11.py)으로 재구성.
+
+## 11/24 반복 오답 (다시 풀어도 또 틀림 → 토요일 전 매일 백지 재풀이)
+| 출처 | 번호 | 정답 | 동하 답 | 규칙 한 줄 |
+|---|---|---|---|---|
+| ETS 기출5 T1 | 109 | seeks | seeking (2회) | 시제 있는 동사 없으면 빈칸=동사. 부사 continuously 지우고 보기 |
+| ETS 기출5 T1 | 111 | precisely | infinitely (2회) | precisely locate. infinitely는 비교급과 짝 |
+| ETS 기출5 T1 | 117 | in | at (2회, 옆에 role in 써 놓고도) | role in + 명사/V-ing, 빈칸 앞 명사 붙여 읽기 |
+| ETS 기출5 T1 | 130 | diagnostic | diagnosable (애매) | 형용사 둘이면 뜻: diagnostic fee = 진단비 |
+| ETS 기출5 T1 | 143 | satisfactory | satisfaction | find + O + 형용사 (make it smooth와 같은 구조) |
+| 1000제 V4 T4 | 101 | for | since | for + 기간 / since + 시점 |
+| 1000제 V4 T4 | 118 | but | either | 주어 없이 동사 앞 빈칸 = and/but/or |
+| 1000제 V4 T4 | 120 | following | usually | following = ~ 후에 (전치사) |
+| 1000제 V4 T4 | 133 | continued | continuation | 명사 앞 → 형용사 |
+| 1000제 V4 T4 | 139 | location | locating | branch location 복합명사 |
+| 1000제 V4 T4 | 144 | has developed | will develop | P6 시제는 앞뒤 문장 시제로 |
+| 1000제 V4 T4 | 145 | once | even | 뒤가 절 → 접속사 (even은 부사) |
+| 1000제 V4 T4 | 169·171·172·173 | 패러프레이즈 정답 | 정답에 X | X 치기 전 "넓은 말로 바꾼 건 아닐까?" |
+| 1000제 V4 T4 | 160 | support | control | handle the weight = support |
+| 1000제 V4 T4 | 187 | A (benefits) | D | 목적 = 편지 전체가 하려는 것 |
+| ETS Vol.3 T7 | 126·129·119·134 | fill / besides / due to / In the meantime | | 짝·전치사 |
+
+토익 성적: 11/8 795 (LC440/RC355), 11/15 835 (LC465/RC370, 역대 최고).
