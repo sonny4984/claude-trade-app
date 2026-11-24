@@ -48,3 +48,8 @@
 | ETS Vol.3 T7 | 126·129·119·134 | fill / besides / due to / In the meantime | | 짝·전치사 |
 
 토익 성적: 11/8 795 (LC440/RC355), 11/15 835 (LC465/RC370, 역대 최고).
+| ETS 기출5 T1 P7 | 150 | share with all participants | A | plenty to go around = 모두에게 돌아갈 만큼 |
+| ETS 기출5 T1 P7 | 151 | moving to another company location | A | transfer to headquarters = 다른 지점으로 이동 |
+| ETS 기출5 T1 P7 | 156 | protective case | A (메모로 정답 의심함) | padded carrying case = protective case |
+| ETS 기출5 T1 P7 | 166 | working with others | B | required 질문 → 'not strictly necessary' 줄 확인 |
+| ETS 기출5 T1 P7 | 173 | account holders in one age-group | B | 보내는 사람 vs 받는 사람 (aged 55 to 65) |
