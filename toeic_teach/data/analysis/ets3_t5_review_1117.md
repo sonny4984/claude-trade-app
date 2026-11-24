@@ -53,3 +53,16 @@
 | ETS 기출5 T1 P7 | 156 | protective case | A (메모로 정답 의심함) | padded carrying case = protective case |
 | ETS 기출5 T1 P7 | 166 | working with others | B | required 질문 → 'not strictly necessary' 줄 확인 |
 | ETS 기출5 T1 P7 | 173 | account holders in one age-group | B | 보내는 사람 vs 받는 사람 (aged 55 to 65) |
+
+## 11/24 저녁 ETS Vol.3 Test 5 LC (455, 92개) · ETS 기출 Test 8 P5 (25/30, 11분)
+- LC 오답: 6, 10, 20, 66, 76, 85, 93, 98 (아까운 것: 6 정답률 90%, 20 정답률 77%)
+- P5 오답 (정답은 튜터 풀이 기준, 해설지 대조 필요)
+| 번호 | 정답 | 동하 답 | 규칙 |
+|---|---|---|---|
+| 107 | to celebrate | celebrates | Join(명령문 동사) 이미 있음 → to V |
+| 116 | imagined | imagining | the way + 주어 + ___ → 동사 |
+| 121 | reasonably | promptly | priced reasonably |
+| 127 | in spite of | even so | 뒤 명사 opposition → 전치사 (even so는 부사) |
+| 130 | dramatically | more dramatic | 완전한 문장 뒤 → 부사 |
+| 117 | ? | summer | 정답 미확인 |
+- 대책: 선지 보기 전 번호 옆에 동/부/전/접/어 한 글자. 이중삼중·P6·P7은 시끄러워서 중단, 조용한 곳에서 다시.
