@@ -60,3 +60,6 @@
   → data/workbook/Retry_<tag>.pdf (유형/답/이유 한 줄 칸), Retry_<tag>_check.pdf (모범 이유: 단서 → 규칙 → 답). 모듈에 RETRY_REASON dict.
 - 채점 기준: 단서와 규칙 이름이 맞으면 ○, 답만 맞으면 △(다음 날 또), 못 쓰면 X. ○ 3번이면 졸업.
 - 세트 풀기 전 1분 '함정 카드' 5줄: and 뒤 명사면 동사 개수 X / one↔the other / to ___ + 동사 → whoever / ~에도 불구하고는 뒤 동사 유무 / this·these·our department 진짜 대상으로.
+
+## 편입 계획
+- data/transfer_plan.md (지원 학교·인천대 데이터·면접 계획). 학교 얘기 나오면 이것부터 읽기.
