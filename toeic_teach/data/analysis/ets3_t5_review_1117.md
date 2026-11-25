@@ -76,3 +76,5 @@
 ## 11/25 ETS 1000 Vol.3 Test 8 RC
 - 86/100 (앱 예상 425). 모고 최고 (이전 80·83·82·83). P5는 카페에서 따로, P6+P7 52분 (마킹 제외). 오답 번호 대기.
 - LC ETS 1000 Vol.3 Test 5: 92/100 (앱 455). 앱 합계 880.
+- 오답 14 (사진 확인): P5 107(B→A to celebrate) 116(B→C imagined) 121(A→B reasonably) 127(C→A in spite of) 130(D→C dramatically) / P6 133(B→D It's as easy as that) 139(B→C Nevertheless) / P7 147(B→C) 148(D→A) 167(D→A photo) 172(A→C) 180(D→B Mastery of Comfort) 183(B→C account manager) 197(C→D early stage)
+- 패턴: 형/부(130) · despite+명사(127) · 동사 개수(107·116) · 짝(121 reasonably priced) · P7 바꿔 말하기 4개(147·148·183·197, 148은 지문 단어 road signs 함정)
