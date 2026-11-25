@@ -66,3 +66,9 @@
 | 130 | dramatically | more dramatic | 완전한 문장 뒤 → 부사 |
 | 117 | ? | summer | 정답 미확인 |
 - 대책: 선지 보기 전 번호 옆에 동/부/전/접/어 한 글자. 이중삼중·P6·P7은 시끄러워서 중단, 조용한 곳에서 다시.
+
+## 11/25 약점 메우기 워크북 1~51 (34/51)
+오답: 2(careful) 3(change) 5(benefited) 6(caution) 13(efficient) 14(benefited) 15(regulate) 16(shortly) 17(largest) 23(respond) 26(strength) 30(considerable) 31(entire) 36(conveniently) 43(interesting) 47(to contain) 51(expecting)
+- 형용사 vs 부사 혼동 7개(2,6,13,16,30,31,36): 빈칸이 명사를 꾸미거나 보어(be/remain/keep O/find O)면 형용사, 나머지(동사·형용사·비교급·p.p.·문장 전체)는 부사
+- 품사 자리 기본 6개(3,5,14,15,23,26): 3번은 5형식 규칙을 make 바로 뒤 목적어 자리에 잘못 적용
+- 동사 개수 2개(47,51), 감정 -ed 1개(43), even+비교급 1개(17)
