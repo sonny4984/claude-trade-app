@@ -83,3 +83,4 @@
 - LC 모고 415 (스카 소음, 멘탈) → RC 모고는 아껴 두고 워크북 풀이로 전환.
 - 오답 14: 106 beyond · 107 in writing · 108 on Friday · 109 lecture on · 110 from~until · 112 at the end of · 114 unless(in case 고름) · 115 except(+명사) · 116 from countries · 117 among · 123 for+기간(during 고름) · 131 Neither(of the two) · 132 whoever(anyone 고름) · 135 either(빈칸)
 - 패턴: 전치사 짝 7개(107·108·109·110·112·116·117) — 뜻이 아니라 짝으로 외워야 함. 정답을 X로 지운 것 2개(116 from, 132 whoever).
+- 11/26 저녁 LC ETS 1000 Vol.3 Test 7: 91/100 (앱 450), 노캔 착용. 오후 스카 소음 LC 415 → 회복.
