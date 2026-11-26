@@ -78,3 +78,8 @@
 - LC ETS 1000 Vol.3 Test 5: 92/100 (앱 455). 앱 합계 880.
 - 오답 14 (사진 확인): P5 107(B→A to celebrate) 116(B→C imagined) 121(A→B reasonably) 127(C→A in spite of) 130(D→C dramatically) / P6 133(B→D It's as easy as that) 139(B→C Nevertheless) / P7 147(B→C) 148(D→A) 167(D→A photo) 172(A→C) 180(D→B Mastery of Comfort) 183(B→C account manager) 197(C→D early stage)
 - 패턴: 형/부(130) · despite+명사(127) · 동사 개수(107·116) · 짝(121 reasonably priced) · P7 바꿔 말하기 4개(147·148·183·197, 148은 지문 단어 road signs 함정)
+
+## 11/26 약점 워크북 103-137 (21/35, 누적 91/137)
+- LC 모고 415 (스카 소음, 멘탈) → RC 모고는 아껴 두고 워크북 풀이로 전환.
+- 오답 14: 106 beyond · 107 in writing · 108 on Friday · 109 lecture on · 110 from~until · 112 at the end of · 114 unless(in case 고름) · 115 except(+명사) · 116 from countries · 117 among · 123 for+기간(during 고름) · 131 Neither(of the two) · 132 whoever(anyone 고름) · 135 either(빈칸)
+- 패턴: 전치사 짝 7개(107·108·109·110·112·116·117) — 뜻이 아니라 짝으로 외워야 함. 정답을 X로 지운 것 2개(116 from, 132 whoever).
