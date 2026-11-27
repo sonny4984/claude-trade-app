@@ -49,8 +49,9 @@ def grid(rows, widths, head=True):
 
 def qpair(qs):
     cells = [[Paragraph(f"<b>{n}.</b> {stem}", Q)] + opts(o) + [Spacer(1, 8)] for n, stem, o, *_ in qs]
-    rows = [[cells[i], cells[i + 1] if i + 1 < len(cells) else ""] for i in range(0, len(cells), 2)]
-    t = Table(rows, colWidths=[W / 2, W / 2])
+    half = (len(cells) + 1) // 2  # 실제 토익처럼 왼쪽 열 위→아래 먼저, 그다음 오른쪽 열
+    left = [x for c in cells[:half] for x in c]; right = [x for c in cells[half:] for x in c]
+    t = Table([[left, right]], colWidths=[W / 2, W / 2])
     t.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 10)]))
     return t
 
