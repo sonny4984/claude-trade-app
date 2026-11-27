@@ -98,3 +98,7 @@
 - 흐름: 질문·선지 먼저 훑으며 키워드 밑줄(0:00-0:30) → 공지(center members·$75 materials included 동그라미, 환불 문장 괄호) → 176 ✓✗ 제거로 B ✓ → 이메일(Thursday 동그라미, this summer instead 밑줄) → 180 처음 B $90 동그라미 후 90×15/100 계산해 D ✓ → 177 run 동그라미 D ✓ → 179 A ✓(Thursday 연결) → 178 A·B·D X (C로 가는 중, 영상 끝).
 - 좋음: 질문 먼저, 불명확(176) ✓✗ 진위판단, 연계 단서(center members ↔ became a member) 미리 표시.
 - 고칠 것: 180에서 표 숫자 $90를 먼저 찍고 나서 검증 = '대충 먼저 고르기' 습관 그대로. 이메일 From→To 표시 없음.
+## 11/27 기출 이메일 5지문 실험 (From→To 쓰기): 13/14
+- 매 지문 아래에 '보낸 사람 이니셜 → 받는 사람' (C→J, L→S·T, J·D→S·H·M, D·W→R·L, M·N→E) + 본문 제3자 → 역할/연락처(S·V→email·번호, H→e) 메모.
+- 연계·사람 문제(151 transfer=moving, 158 out of office, 160 Web site, 165 대부분=6:15) 전부 정답.
+- 오답: 167 문장삽입 [2] (정답 [3]: There is no need to bring a gift ↔ 임원이 전원 대표로 기념패 = 선물 대신).
