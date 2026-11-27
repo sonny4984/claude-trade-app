@@ -102,3 +102,7 @@
 - 매 지문 아래에 '보낸 사람 이니셜 → 받는 사람' (C→J, L→S·T, J·D→S·H·M, D·W→R·L, M·N→E) + 본문 제3자 → 역할/연락처(S·V→email·번호, H→e) 메모.
 - 연계·사람 문제(151 transfer=moving, 158 out of office, 160 Web site, 165 대부분=6:15) 전부 정답.
 - 오답: 167 문장삽입 [2] (정답 [3]: There is no need to bring a gift ↔ 임원이 전원 대표로 기념패 = 선물 대신).
+## 11/27 Test 7 RC 오답 백지 재풀이 (102~173, 11문항): 7/11
+- ✓ 119 due to · 126 filled · 134 In the meantime · 135 skills · 150 restored · 154 4시 · 167 list of contacts (채팅 이름 이니셜 T·C·T·C 적음)
+- ✗ 102 member 또 (뒤 절 collect her prize → winner, 2회째) · 129 무응답 (besides+명사, 워크북 126은 맞힘) · 153 interview (decide who to interview = 지원자 검토, 지문 단어 함정) · 173 B training 경험 (training program이 승진 출발점 → promotion, 역할 바꿔치기)
+- 179~198 미풀이.
