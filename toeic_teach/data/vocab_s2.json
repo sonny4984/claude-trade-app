@@ -1,0 +1,10 @@
+[
+ {"en":"tangible results","pos":"n. phr.","ko":"구체적으로 확인되는 성과 (실체가 있는, 증거·숫자로 보이는)","stem":"tangible","ex":"The new training program has already produced {} in sales."},
+ {"en":"intangible","pos":"adj.","ko":"무형의, 만질 수 없는","stem":"tangible","ex":"Good will is an {} asset that is hard to measure in money."},
+ {"en":"go into effect","pos":"v. phr.","ko":"효력이 발생하다, 시행되다","stem":"into effect","ex":"The new parking rules will {} on Monday."},
+ {"en":"in order to V","pos":"phr.","ko":"~하기 위해서 (목적, to 뒤는 동사원형)","stem":"in order","ex":"{} save energy, the office turns off the lights at night."},
+ {"en":"be accustomed to V-ing","pos":"adj. phr.","ko":"~하는 데 익숙하다 (to는 전치사)","stem":"accustom","ex":"Most of our staff are {} working overtime in December."},
+ {"en":"장소 명사, where + 절","pos":"conj. (relative)","ko":"그곳에서 ~, ~하는 (장소)","stem":"where","ex":"The conference will be held in Busan, {} the company was founded."},
+ {"en":"by + 시점","pos":"prep.","ko":"~까지는, 늦어도 (마감, 한 번에 끝내는 일)","stem":"by","ex":"Please submit the report {} 4 p.m. today."},
+ {"en":"until + 시점","pos":"prep.","ko":"~까지 (그 시점까지 계속)","stem":"until","ex":"The store stays open {} 9 p.m. on weekends."}
+]

@@ -1,0 +1,54 @@
+# 동하 프로필 (10/23 갱신본이 이전 메모보다 우선)
+- 점수 830 = LC 450 + RC 380. 목표 950. 10/31 시험 응시(점수 대기), 다음 시험 2026-11-08. (이전 메모의 LC 430/시험 10/11/"다음 주"는 폐기)
+- 자료: 풀어 본 문제 약 2,000개. 핵심 문제: 정답은 기억하지만 근거를 설명 못 함 → 외워서 맞힌 건 "숙달"로 치지 않는다.
+- 상태 3단계: 미숙 / 부분 숙달 / 숙달 (새 문장에서 정답+근거 설명해야 숙달).
+
+## 확정 오답 (선택·정답 확인됨)
+| id | 유형 | 선택→정답 | 핵심 |
+|---|---|---|---|
+| c1 | 접속사 | While→Once | all guests have been served = 서빙이 끝난 뒤. 순서 단서. have been p.p.가 항상 "완료"는 아님, 문맥 판단 |
+| c2 | 접속부사 | for instance→however | 긍정 실적 vs 매출 감소 = 대조. 예시 아님 |
+| c3 | 접속부사 | consequently→however | 만족도↑, 지연↑ = 같은 기간 반대 방향. 인과 아님 |
+| c4 | 접속사 | whenever→where | 장소(Gordon's). 문맥으로 시간/장소 판단 (문장 연결이 느슨해서 새 문제로 재검증) |
+| p1 | 품사 | convertible→conversion | the ___ of = 명사 |
+| v1 | 어휘 | fee→gift | complimentary = 무료 제공 |
+| v2 | 어휘 | position→venue | host the summit = 행사 장소 |
+| v3 | 전치사 | without→through | through the website = 수단 |
+| v4 | 연어 | execute→furnish | furnish A with B |
+- 개념 혼동(확정 오답 아님): limited to purchasing (전치사 to + V-ing vs 부정사 to). 실제 선택은 기록에 없음.
+- 정답이라 오답 아님: Because(원래 견적이 예산 초과 → 수정안). Although와의 구별만 설명 대상.
+
+## 재검증 대상 (오답 단정 금지, 새 문제로 테스트 후 틀리면 그때 등록)
+settled/settling, who/whose, well/worst, experience/feedback, expiring/to expire, lately/initially, being expected/expected, affect/effect, following/followed by, allow/are allowed, took off/gave up, considering/considered, provide/to provide
+
+## 우선순위 (초기 진단, 결과 따라 수정)
+1 접속사·접속부사 논리 관계 (풀기 전 앞뒤 관계를 한글로 한 줄 요약)
+2 동사 형태·구조 (현재완료 수동/진행, 전치사 to vs 부정사 to)
+3 연어·전치사 (eligible for, capable of, poised to, furnish A with B, commence on)
+4 문맥 어휘 (capacity, venue, complimentary 등)
+5 품사·수식
+6 Part 7 (NOT/EXCEPT, 주체·대상, nationwide, 근거 vs 추론)
+
+## 10/26 Test G 동하 직접 메모 (기억할 것)
+- 101 exclusively = "~에게만" (뜻 몰랐음)
+- 102 audit = 회계 감사 (뜻 몰랐음)
+- 104 One of the 복수N + 단수V / 106 Each of도 복수N + 단수V / 108 Neither of + 복수N + 단수V — "이거 맞아?" 질문
+- 105 who vs whose 차이 다시 정리 요청 (소유격 whose)
+- 107 Upon V-ing = ~하자마자
+- 113 in case(D)도 정답 같다고 느낌 → 의미 구별 필요 (as soon as vs in case)
+- 114 familiarize + with: 단서 적고도 notify 선택 (2회째)
+- 116 solely = 오로지
+- 112 findings = 결과, features = 특징
+- 120 accustom = 익숙하게 하다, acquaint = 숙지하다
+
+## 실제 성적 기록 (11/10 갱신)
+| 시험일 | 총점 | LC | RC | 메모 |
+|---|---|---|---|---|
+| 2026-03-15 | 700 | 435 | 265 | |
+| 2026-06-28 | 755 | 430 | 325 | |
+| 2026-10-11 | 825 | 450 | 375 | |
+| 2026-10-31 | 810 | 445 | 365 | 시험 중 화장실, 마지막 10문제 중 5개 찍음 |
+| 2026-11-08 | 발표 11/17 | | | LC 중 옆자리 소음, RC 마지막 2문제 못 풂 |
+- 보정: 실제 RC 365~375(약 73~75%)인데 내 모고(TEST 33~36)에서는 약 88% → 내 모고가 13%p쯤 쉬웠다. TEST 37부터 난이도 상향(오답을 지문 사실로 구성).
+- 다음 시험: 11/15 **접수 완료** (결과 11/24), 11/29(접수 마감 11/16 10시, 결과 12/8). 인천대 원서 마감 전 성적 발표분까지 유효.
+- 해석 진단(1000제 1회 P6~P7 147-148): ①비슷한 단어로 바꿔 읽기 ②and/or 병렬 놓침 ③V+사람+to V를 목적으로 읽음. 교정법: 동사 별표, and 화살표, 모르는 단어 ??.

@@ -1,0 +1,49 @@
+:root {
+  --bg: #fffff8;
+  --fg: #1f1f1f;
+  --muted: #666;
+  --accent: #1f5fa8;
+  --ok: #1d7a3c;
+  --bad: #b3261e;
+  --rule: #d8d6c8;
+  --card: #f6f5ea;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171a; --fg: #e8e6df; --muted: #9a9890; --accent: #7db3ee;
+    --ok: #66c285; --bad: #f08a82; --rule: #33363b; --card: #1d2024;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: "Noto Serif KR", "Apple SD Gothic Neo", "Malgun Gothic", Georgia, serif;
+  line-height: 1.75; margin: 0; padding: 32px 16px 80px;
+}
+main { max-width: 680px; margin: 0 auto; }
+h1 { font-size: 1.7rem; line-height: 1.3; margin: 0 0 4px; }
+h2 { font-size: 1.2rem; margin: 2.2em 0 .4em; border-bottom: 1px solid var(--rule); padding-bottom: 4px; }
+.sub { color: var(--muted); margin: 0 0 1.5em; }
+a { color: var(--accent); }
+code, .en { font-family: Georgia, "Times New Roman", serif; }
+.card { background: var(--card); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 18px; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border-bottom: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: .9rem; }
+.blank { border-bottom: 2px solid var(--fg); padding: 0 1.4em; }
+.q { margin: 1.4em 0; padding: 14px 18px; border: 1px solid var(--rule); border-radius: 6px; }
+.q .stem { font-size: 1.1rem; margin: 0 0 10px; }
+.q .step { color: var(--muted); font-size: .9rem; margin: 8px 0 4px; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opts button {
+  font: inherit; background: var(--bg); color: var(--fg); border: 1px solid var(--rule);
+  border-radius: 6px; padding: 6px 14px; cursor: pointer; min-width: 110px;
+}
+.opts button:hover:not(:disabled) { border-color: var(--accent); }
+.opts button.ok { border-color: var(--ok); color: var(--ok); font-weight: 600; }
+.opts button.bad { border-color: var(--bad); color: var(--bad); }
+.fb { margin: 10px 0 0; min-height: 1.5em; }
+.fb.ok { color: var(--ok); } .fb.bad { color: var(--bad); }
+.score { font-size: 1.1rem; font-weight: 600; margin-top: 1.5em; }
+.nav { margin-top: 3em; color: var(--muted); font-size: .95rem; }
+@media print { body { background: #fff; color: #000; } .q button { border-color: #999; } }
