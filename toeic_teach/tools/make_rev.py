@@ -120,7 +120,7 @@ s = [Paragraph(META["title"], H1),
                f'<span backColor="{YEL}">노랑 = 정답 근거</span>, <span backColor="{PINK}">분홍 = 함정(오답이 끌린 단어)</span>. '
                f'선지: <font color="{GREEN}"><b>초록 = 정답</b></font>, <font color="{RED}"><strike>빨강</strike> = 내 답</font>.', SUB), Spacer(1, 8),
      Paragraph("한눈에 보기", H2),
-     tbl([["번호", "내 답 → 정답", "유형", "함정 이름", "응시자 정답률"]] + META["summary"], [0.08, 0.3, 0.2, 0.3, 0.12]),
+     tbl([["번호", "내 답 → 정답", "유형", "함정 이름", "응시자 정답률"]] + META["summary"], [0.11, 0.28, 0.19, 0.3, 0.12]),
      Spacer(1, 8), Paragraph(META["diag_title"], H2), Paragraph(kfix(META["diag"]), KB)]
 if META.get("missing"): s += [Spacer(1, 4), Paragraph(kfix(META["missing"]), st("K", 9, 13.5, "#a33"))]
 s += [PageBreak()]
